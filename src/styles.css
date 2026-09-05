@@ -1,0 +1,146 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Satyam Singh Portfolio — Design System
+ * Source of truth: design-final-2.md
+ * Dark-first, minimal, premium. Two accents: blue (technical) + amber (functional).
+ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+
+  /* Semantic color tokens */
+  --color-bg-primary: var(--bg-primary);
+  --color-bg-elevated: var(--bg-elevated);
+  --color-bg-elevated-hover: var(--bg-elevated-hover);
+  --color-border-subtle: var(--border-subtle);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-tertiary: var(--text-tertiary);
+  --color-accent: var(--accent);
+  --color-accent-secondary: var(--accent-secondary);
+  --color-accent-dim: var(--accent-dim);
+
+  /* shadcn compatibility tokens */
+  --color-background: var(--bg-primary);
+  --color-foreground: var(--text-primary);
+  --color-card: var(--bg-elevated);
+  --color-card-foreground: var(--text-primary);
+  --color-popover: var(--bg-elevated);
+  --color-popover-foreground: var(--text-primary);
+  --color-primary: var(--accent);
+  --color-primary-foreground: var(--text-primary);
+  --color-secondary: var(--bg-elevated);
+  --color-secondary-foreground: var(--text-primary);
+  --color-muted: var(--bg-elevated);
+  --color-muted-foreground: var(--text-secondary);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--text-primary);
+  --color-destructive: oklch(0.577 0.245 27.325);
+  --color-destructive-foreground: oklch(0.984 0.003 247.858);
+  --color-border: var(--border-subtle);
+  --color-input: var(--border-subtle);
+  --color-ring: var(--accent-secondary);
+  --color-ring-offset-background: var(--bg-primary);
+
+  /* Font families */
+  --font-display: "Inter Tight", "Inter", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "SF Mono", ui-monospace, monospace;
+}
+
+:root {
+  --radius: 1rem;
+
+  /* Dark theme (default) */
+  --bg-primary: #0a0a0b;
+  --bg-elevated: #141416;
+  --bg-elevated-hover: #1c1c1f;
+  --border-subtle: #26262a;
+  --text-primary: #f5f5f3;
+  --text-secondary: #9a9a9f;
+  --text-tertiary: #5c5c61;
+  --accent: #7c9eff;
+  --accent-secondary: #ff8a4c;
+  --accent-dim: color-mix(in srgb, var(--accent) 12%, transparent);
+}
+
+/* Dimmed alternate dark theme */
+.dimmed {
+  --bg-primary: #161618;
+  --bg-elevated: #1e1e21;
+  --bg-elevated-hover: #26262a;
+  --border-subtle: #333338;
+  --text-primary: #f5f5f3;
+  --text-secondary: #a8a8ad;
+  --text-tertiary: #6c6c71;
+  --accent: #7c9eff;
+  --accent-secondary: #ff8a4c;
+  --accent-dim: color-mix(in srgb, var(--accent) 12%, transparent);
+}
+
+/* Phase 2 light theme tokens (specified, not active by default) */
+.light-theme {
+  --bg-primary: #fafaf8;
+  --bg-elevated: #ffffff;
+  --bg-elevated-hover: #f0f0ee;
+  --border-subtle: #e3e3e0;
+  --text-primary: #151517;
+  --text-secondary: #5c5c61;
+  --text-tertiary: #8a8a8f;
+  --accent: #4c6fe0;
+  --accent-secondary: #e06a2c;
+  --accent-dim: color-mix(in srgb, var(--accent) 8%, transparent);
+}
+
+@layer base {
+  * {
+    border-color: var(--border-subtle);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background-color: var(--accent-dim);
+    color: var(--text-primary);
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: var(--font-display);
+  }
+
+  .font-mono-label {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+}
+
+/* Reduced motion: disable ambient drift */
+@media (prefers-reduced-motion: reduce) {
+  .ambient-drift {
+    animation: none !important;
+  }
+}
