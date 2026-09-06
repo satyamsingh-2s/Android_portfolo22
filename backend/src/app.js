@@ -11,6 +11,7 @@ import healthRoutes from "./routes/health.routes.js";
 const app = express();
 
 app.disable("x-powered-by");
+app.set("trust proxy", 1);
 
 app.use(helmet());
 
@@ -26,8 +27,8 @@ app.use(
     },
     methods: ["GET", "POST", "OPTIONS"],
     allowedHeaders: ["Content-Type"],
-    credentials: false
-  })
+    credentials: false,
+  }),
 );
 
 // Keep the accepted request body deliberately small.
@@ -36,7 +37,7 @@ app.use(express.json({ limit: "10kb" }));
 app.get("/", (req, res) => {
   res.json({
     success: true,
-    service: "Sawad Portfolio API"
+    service: "Sawad Portfolio API",
   });
 });
 
