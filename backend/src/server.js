@@ -1,16 +1,8 @@
 import app from "./app.js";
 import { env } from "./config/env.js";
-// import { verifySmtp } from "./mail/smtp.js";
 
-const server = app.listen(env.port, async () => {
-  // try {
-  //   await verifySmtp();
-  //   console.log("SMTP connection verified.");
-  // } catch (error) {
-  //   console.error("SMTP verification failed:", error.message);
-  // }
-  
-  console.log(`Sawad API running on http://localhost:${env.port}`);
+const server = app.listen(env.port, "0.0.0.0", () => {
+  console.log(`API running on port ${env.port}`);
 });
 
 function shutdown(signal) {

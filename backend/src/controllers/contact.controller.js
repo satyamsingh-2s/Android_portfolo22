@@ -1,4 +1,4 @@
-import { sendContactEmail } from "../mail/smtp.js";
+import { sendContactEmail } from "../mail/resend.js";
 
 export async function submitContact(req, res, next) {
   try {

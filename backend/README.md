@@ -4,7 +4,7 @@ Node.js/Express API for the portfolio contact form.
 
 ## Features
 
-- SMTP email delivery with Nodemailer
+- Resend Email API for contact-form delivery
 - `express-validator` input validation
 - Strict allowlist for browser `Origin`
 - Helmet security headers
@@ -13,6 +13,7 @@ Node.js/Express API for the portfolio contact form.
 - Honeypot field for simple bot filtering
 - Environment variables for secrets
 - Modular folder structure
+- Render-friendly startup with no SMTP connection required
 
 ## Folder structure
 
@@ -30,7 +31,7 @@ sawad-backend/
     ├── controllers/
     │   └── contact.controller.js
     ├── mail/
-    │   └── smtp.js
+    │   └── resend.js
     ├── middleware/
     │   ├── error.middleware.js
     │   ├── not-found.middleware.js
@@ -58,11 +59,33 @@ npm install
 npm run dev
 ```
 
-## SMTP
+## Resend setup
 
-For Gmail, enable 2-Step Verification and create an **App Password**. Put that App Password in `SMTP_PASS`.
+Create a Resend API key and put it in `RESEND_API_KEY`.
 
-Do not put SMTP credentials in the React/Vite frontend.
+For production, verify the domain you want to send from in Resend and set `MAIL_FROM` to an address on that verified domain.
+
+Never put `RESEND_API_KEY` in the React/Vite frontend.
+
+## Render
+
+Use:
+
+- Build Command: `npm install`
+- Start Command: `npm start`
+
+Set these Render environment variables:
+
+```env
+NODE_ENV=production
+ALLOWED_ORIGINS=https://your-portfolio-domain.com
+RESEND_API_KEY=re_xxxxxxxxxxxxxxxxx
+MAIL_TO=your-email@example.com
+MAIL_FROM=Portfolio <hello@yourdomain.com>
+SITE_NAME=Your Portfolio
+```
+
+Render provides `PORT` automatically, so you normally do not need to set it manually.
 
 ## Contact API
 
@@ -107,32 +130,3 @@ Then submit JSON to:
 ```text
 ${import.meta.env.VITE_API_URL}/api/contact
 ```
-
-Example:
-
-```js
-await fetch(`${import.meta.env.VITE_API_URL}/api/contact`, {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify({
-    name,
-    email,
-    message,
-    website: ""
-  })
-});
-```
-
-## Production checklist
-
-1. Set `NODE_ENV=production`.
-2. Set `ALLOWED_ORIGINS` to the exact deployed frontend origin(s), e.g. `https://example.com` — no trailing slash.
-3. Use a real SMTP provider and keep credentials in server-side environment variables.
-4. Put the API behind HTTPS.
-5. Keep the contact rate limit enabled.
-6. Add centralized logging/monitoring.
-7. If deployed behind a reverse proxy, configure Express `trust proxy` correctly before relying on IP-based rate limiting.
-8. Do not add `*` to CORS.
-9. Do not expose SMTP credentials or other secrets to Vite variables.
