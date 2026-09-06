@@ -4,7 +4,6 @@ import { useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { otherProjects } from "@/lib/data";
 import { AnimatedSection, StaggerContainer } from "@/components/AnimatedSection";
-import { CursorTrail } from "@/components/CursorTrail";
 
 
 function ProjectRow({ project }: { project: (typeof otherProjects)[number] }) {
@@ -74,7 +73,6 @@ function ProjectRow({ project }: { project: (typeof otherProjects)[number] }) {
 export function OtherProjects() {
   return (
     <section id="projects" className="relative px-6 py-24 md:px-8 lg:px-12">
-      <CursorTrail />
       <div className="relative z-10 mx-auto max-w-[1200px]">
 
         <AnimatedSection>

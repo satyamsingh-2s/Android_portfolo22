@@ -6,12 +6,10 @@ import { PatternCard } from "@/components/PatternCard";
 import { Tag } from "@/components/Tag";
 import { StatBlock } from "@/components/StatBlock";
 import { AnimatedSection, StaggerContainer } from "@/components/AnimatedSection";
-import { CursorTrail } from "@/components/CursorTrail";
 
 export function Omega() {
   return (
     <section id="omega" className="relative px-6 py-24 md:px-8 lg:px-12">
-      <CursorTrail />
       <div className="relative z-10 mx-auto max-w-[1200px]">
 
         <AnimatedSection>
