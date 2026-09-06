@@ -1,10 +1,46 @@
 "use client";
 
 import { Github, Linkedin, Mail, Phone, MapPin } from "lucide-react";
+import { useState } from "react";
 import { personalInfo } from "@/lib/data";
 import { AnimatedSection, StaggerContainer } from "@/components/AnimatedSection";
+import { ContactRequestError, type ContactValidationError, sendMail } from "@/service/service";
 
 export function Contact() {
+  const [isSending, setIsSending] = useState(false);
+  const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [validationErrors, setValidationErrors] = useState<ContactValidationError[]>([]);
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setIsSending(true);
+    setStatus("idle");
+    setErrorMessage("");
+    setValidationErrors([]);
+
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+
+    try {
+      await sendMail({
+        name: String(formData.get("name") ?? ""),
+        email: String(formData.get("email") ?? ""),
+        message: String(formData.get("message") ?? ""),
+      });
+      form.reset();
+      setStatus("success");
+    } catch (error) {
+      setStatus("error");
+      setValidationErrors(error instanceof ContactRequestError ? error.errors : []);
+      setErrorMessage(
+        error instanceof Error ? error.message : "Unable to send your message. Please try again.",
+      );
+    } finally {
+      setIsSending(false);
+    }
+  };
+
   return (
     <section id="contact" className="relative px-6 py-24 md:px-8 lg:px-12">
       <div className="mx-auto max-w-[1200px]">
@@ -70,7 +106,10 @@ export function Contact() {
           </StaggerContainer>
 
           <AnimatedSection delay={0.15}>
-            <form className="rounded-2xl border border-border-subtle bg-bg-elevated p-6 md:p-8">
+            <form
+              onSubmit={handleSubmit}
+              className="rounded-2xl border border-border-subtle bg-bg-elevated p-6 md:p-8"
+            >
               <div className="space-y-4">
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-text-primary">
@@ -110,10 +149,30 @@ export function Contact() {
                 </div>
                 <button
                   type="submit"
+                  disabled={isSending}
                   className="w-full rounded-full bg-accent px-6 py-3 text-sm font-medium text-text-primary transition-transform hover:bg-accent/90 active:scale-[0.97]"
                 >
-                  Send message
+                  {isSending ? "Sending..." : "Send message"}
                 </button>
+                {status === "success" && (
+                  <p className="text-sm text-green-600" role="status">
+                    Message sent successfully.
+                  </p>
+                )}
+                {status === "error" && (
+                  <div className="text-sm text-red-600" role="alert">
+                    <p>{errorMessage}</p>
+                    {validationErrors.length > 0 && (
+                      <ul className="mt-1 list-disc pl-5">
+                        {validationErrors.map((validationError) => (
+                          <li key={`${validationError.field}-${validationError.message}`}>
+                            {validationError.message}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                )}
               </div>
             </form>
           </AnimatedSection>
