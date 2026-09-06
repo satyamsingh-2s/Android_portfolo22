@@ -6,8 +6,8 @@ export const personalInfo = {
   email: "satyamsingh92637@gmail.com",
   phone: "+91 8580160331",
   github: "https://github.com/satyamsingh-2s",
-  linkedin: "#",
-  resumeUrl: "#",
+  linkedin: "https://www.linkedin.com/in/satyamsingh-2s",
+  resumeUrl: "https://drive.google.com/file/d/10_LD9NG1UtIu-M0O8YjjZNj5A5CFiTVL/view?usp=sharing",
 };
 
 export const omegaProject = {
@@ -30,7 +30,8 @@ export const omegaProject = {
     { value: 5, suffix: "", label: "Core Workflows" },
     { value: 1, suffix: "", label: "AI Integration" },
   ],
-  link: "#",
+  link: "https://github.com/satyamsingh-2s/Omega_v1_0",
+   website: "https://omega-website1.vercel.app/",
 };
 
 export const otherProjects = [

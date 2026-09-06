@@ -101,13 +101,29 @@ export function Omega() {
               ))}
             </div>
 
-            <a
-              href={omegaProject.link}
-              className="mt-10 inline-flex items-center gap-2 text-sm font-medium text-accent transition-colors hover:text-accent-secondary"
-            >
-              View on GitHub
-              <ArrowUpRight size={16} />
-            </a>
+                      <div className="mt-10 flex flex-wrap items-center gap-4">
+              {/* GitHub */}
+              <a
+                href={omegaProject.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-sm font-medium text-accent transition-colors hover:text-accent-secondary"
+              >
+                View on GitHub
+                <ArrowUpRight size={16} />
+              </a>
+
+              {/* Website */}
+              <a
+                href={omegaProject.website}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-sm font-medium text-white transition-colors hover:text-accent-secondary"
+              >
+                Visit Website
+                <ArrowUpRight size={16} />
+              </a>
+            </div>
 
             {/* Omega UI 4-panel swipeable carousel */}
             <div className="mt-12 overflow-hidden rounded-2xl border border-border-subtle bg-bg-primary">
