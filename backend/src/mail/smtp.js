@@ -11,9 +11,9 @@ const transporter = nodemailer.createTransport({
   ...(env.smtp.secure === undefined ? {} : { secure: env.smtp.secure }),
 });
 
-export async function verifySmtp() {
-  await transporter.verify();
-}
+// export async function verifySmtp() {
+//   await transporter.verify();
+// }
 
 function escapeHtml(value) {
   return String(value)
