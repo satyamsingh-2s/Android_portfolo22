@@ -27,8 +27,8 @@ app.use(
     },
     methods: ["GET", "POST", "OPTIONS"],
     allowedHeaders: ["Content-Type"],
-    credentials: false,
-  }),
+    credentials: false
+  })
 );
 
 // Keep the accepted request body deliberately small.
@@ -37,7 +37,7 @@ app.use(express.json({ limit: "10kb" }));
 app.get("/", (req, res) => {
   res.json({
     success: true,
-    service: "Sawad Portfolio API",
+    service: "Portfolio API"
   });
 });
 
