@@ -121,17 +121,14 @@ export function Hero() {
                 </div>
 
                 {/* PROJECT IMAGE PLACEHOLDER — compact 16:9 with dashed border */}
-                <div className="mt-4 flex aspect-[16/9] w-full items-center justify-center rounded-xl border border-dashed border-border-subtle bg-bg-primary/60 p-4 text-center">
-                  <div className="flex flex-col items-center gap-1.5 opacity-70">
-                    <ImageIcon size={24} className="text-text-tertiary" strokeWidth={1.5} />
-                    <p className="font-mono-label text-[0.6rem] tracking-[0.14em] text-text-tertiary">
-                      PROJECT IMAGE
-                    </p>
-                    <p className="font-mono-label text-[0.6rem] tracking-[0.14em] text-text-tertiary">
-                      PLACEHOLDER
-                    </p>
-                  </div>
-                </div>
+                {/* PROJECT IMAGE */}
+              <div className="mt-4 aspect-[16/9] w-full overflow-hidden rounded-xl">
+                <img
+                  src="/images/omega_portfolio_hero2.png"
+                  alt="Omega productivity app"
+                  className="h-full w-full object-cover"
+                />
+              </div>
 
                 {/* CURRENT FOCUS */}
                 <div className="mt-5">
@@ -167,7 +164,7 @@ export function Hero() {
                   </div>
 
                   <p className="mt-3 text-[0.84rem] font-medium leading-snug text-text-secondary">
-                    AVAILABLE FOR ANDROID OPPORTUNITIES
+                    Intern at SunsysTechsol pvt.ltd.
                   </p>
 
                   <div className="mt-3 flex items-center gap-2">

@@ -38,7 +38,7 @@ export function Nav() {
         scrolled ? "pointer-events-none opacity-0" : "pointer-events-auto opacity-100"
       }`}
     >
-      <div className="flex items-center gap-1 rounded-full border border-border-subtle bg-bg-elevated px-2 py-2">
+      <div className="flex items-center gap-1 rounded-full border border-border-subtle bg-bg-elevated px-1 py-1">
         <Link
           to="/"
           className="px-4 py-2 font-display text-sm font-semibold text-text-primary"
