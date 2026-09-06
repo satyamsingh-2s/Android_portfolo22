@@ -58,10 +58,13 @@ export function Omega() {
               <ArrowUpRight size={16} />
             </a>
 
-            {/* Screenshot placeholder */}
-            <div className="mt-12 rounded-2xl border border-border-subtle bg-bg-primary p-8 text-center">
-              <p className="font-mono-label text-xs text-text-tertiary">Omega UI screenshots</p>
-              <p className="mt-2 text-sm text-text-secondary">Placeholder — awaiting assets</p>
+                      {/* Omega UI Screenshots */}
+            <div className="mt-12 overflow-hidden rounded-2xl border border-border-subtle bg-bg-primary">
+              <img
+                src="/images/omega_portfolio_2nd.png"
+                alt="Omega productivity app interface showcasing AI workspace creation, Desk Omega, project planning, and history"
+                className="block w-full h-auto"
+              />
             </div>
           </StaggerContainer>
         </PatternCard>
