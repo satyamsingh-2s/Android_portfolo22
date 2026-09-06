@@ -1,13 +1,6 @@
 import "dotenv/config";
 
-const required = [
-  "SMTP_HOST",
-  "SMTP_PORT",
-  "SMTP_USER",
-  "SMTP_PASS",
-  "MAIL_TO",
-  "MAIL_FROM"
-];
+const required = ["SMTP_HOST", "SMTP_USER", "SMTP_PASS", "MAIL_TO", "MAIL_FROM"];
 
 for (const key of required) {
   if (!process.env[key]) {
@@ -27,14 +20,17 @@ export const env = {
   allowedOrigins: parseOrigins(process.env.ALLOWED_ORIGINS),
   smtp: {
     host: process.env.SMTP_HOST,
-    port: Number(process.env.SMTP_PORT || 465),
-    secure: String(process.env.SMTP_SECURE).toLowerCase() === "true",
+    port: process.env.SMTP_PORT ? Number(process.env.SMTP_PORT) : undefined,
+    secure:
+      process.env.SMTP_SECURE === undefined
+        ? undefined
+        : String(process.env.SMTP_SECURE).toLowerCase() === "true",
     user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS
+    pass: process.env.SMTP_PASS,
   },
   mail: {
     to: process.env.MAIL_TO,
     from: process.env.MAIL_FROM,
-    siteName: process.env.SITE_NAME || "Sawad Portfolio"
-  }
+    siteName: process.env.SITE_NAME || "Portfolio",
+  },
 };

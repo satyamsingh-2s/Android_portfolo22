@@ -1,9 +1,11 @@
 import axios from "axios";
 
 const baseUrl = import.meta.env["VITE_API_BASE_URL"];
+const requestTimeout = 10000;
 
 export const apiClient = axios.create({
   baseURL: baseUrl,
+  timeout: requestTimeout,
   headers: {
     "Content-Type": "application/json",
   },
@@ -41,6 +43,10 @@ export const sendMail = async (data: ISendMail) => {
         data: error.response?.data,
         message: error.message,
       });
+
+      if (error.code === "ECONNABORTED" || error.code === "ETIMEDOUT") {
+        throw new Error("The contact service took too long to respond. Please try again.");
+      }
 
       if (error.response?.status === 404) {
         throw new Error("The contact service is unavailable.");

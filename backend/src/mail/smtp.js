@@ -3,12 +3,12 @@ import { env } from "../config/env.js";
 
 const transporter = nodemailer.createTransport({
   host: env.smtp.host,
-  port: env.smtp.port,
-  secure: env.smtp.secure,
   auth: {
     user: env.smtp.user,
-    pass: env.smtp.pass
-  }
+    pass: env.smtp.pass,
+  },
+  ...(env.smtp.port === undefined ? {} : { port: env.smtp.port }),
+  ...(env.smtp.secure === undefined ? {} : { secure: env.smtp.secure }),
 });
 
 export async function verifySmtp() {
@@ -34,13 +34,7 @@ export async function sendContactEmail({ name, email, message }) {
     to: env.mail.to,
     replyTo: email,
     subject: `${env.mail.siteName} — New contact from ${name}`,
-    text: [
-      `Name: ${name}`,
-      `Email: ${email}`,
-      "",
-      "Message:",
-      message
-    ].join("\n"),
+    text: [`Name: ${name}`, `Email: ${email}`, "", "Message:", message].join("\n"),
     html: `
       <div style="font-family:Arial,sans-serif;line-height:1.6">
         <h2>New portfolio contact message</h2>
@@ -49,6 +43,6 @@ export async function sendContactEmail({ name, email, message }) {
         <p><strong>Message:</strong></p>
         <p>${safeMessage}</p>
       </div>
-    `
+    `,
   });
 }
