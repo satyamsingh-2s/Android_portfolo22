@@ -43,6 +43,8 @@ export const otherProjects = [
       "An event-driven screenshot organizer built around Android's modern storage constraints.",
     stack: "Kotlin · Jetpack Compose · MediaStore · FileObserver",
     link: "#",
+    accentColor: "#1C7ED6",
+    pattern: "dot-grid" as const,
   },
   {
     title: "Secura",
@@ -52,6 +54,8 @@ export const otherProjects = [
       "An Android app-locking project exploring system permissions, usage access, and background execution.",
     stack: "Java · Android Services · UsageStatsManager",
     link: "#",
+    accentColor: "#2F9E44",
+    pattern: "hex-grid" as const,
   },
   {
     title: "Macer",
@@ -61,6 +65,8 @@ export const otherProjects = [
       "A lightweight Windows automation utility built around mouse hooks, gesture recognition, and event-driven input.",
     stack: "C++ · Win32 API · Windows Hooks",
     link: "#",
+    accentColor: "#7048E8",
+    pattern: "diagonal" as const,
   },
   {
     title: "Portfolio Website",
@@ -70,6 +76,8 @@ export const otherProjects = [
       "A full-stack portfolio combining frontend development, backend architecture, and deliberate design decisions.",
     stack: "Next.js · React · Prisma · PostgreSQL",
     link: "#",
+    accentColor: "#E8590C",
+    pattern: "contour" as const,
   },
   {
     title: "AI Financial Assistant",
@@ -79,6 +87,8 @@ export const otherProjects = [
       "A financial-query system combining backend APIs, data analysis, and AI-assisted retrieval workflows.",
     stack: "Python · FastAPI · Pandas · RAG",
     link: "#",
+    accentColor: "#0CA678",
+    pattern: "radial" as const,
   },
 ];
 

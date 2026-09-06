@@ -6,6 +6,7 @@ import { X, ArrowRight, Plus } from "lucide-react";
 import { designUXContent } from "@/lib/data";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { diagrams } from "@/components/design/DesignDiagrams";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const BOARD = "#F5F2EC";
 const INK = "#1A1A1A";
@@ -38,12 +39,26 @@ function CaseCard({
   index: number;
   onOpen: () => void;
 }) {
+  const isMobile = useIsMobile();
   const num = String(index + 1).padStart(2, "0");
+
+  const cardStyle = isMobile
+    ? {
+        background: BOARD,
+        borderColor: INK,
+        borderLeft: `4px solid ${study.color}`,
+        boxShadow: "none",
+      }
+    : {
+        background: BOARD,
+        borderColor: INK,
+        boxShadow: `8px 8px 0 0 ${study.color}`,
+      };
 
   return (
     <div className="relative">
-      {/* escaping fragments — decorative */}
-      <div aria-hidden className="pointer-events-none absolute inset-0">
+      {/* escaping fragments — decorative, hidden on mobile */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 hidden md:block">
         <span
           className="absolute -left-5 -top-4 block h-12 w-12 rotate-[18deg] border-2"
           style={{ background: study.palette[1], borderColor: INK }}
@@ -65,10 +80,10 @@ function CaseCard({
       <motion.button
         type="button"
         onClick={onOpen}
-        whileHover={{ x: -3, y: -3 }}
+        whileHover={isMobile ? undefined : { x: -3, y: -3 }}
         transition={{ duration: 0.15 }}
         className="group relative z-10 flex w-full flex-col border-2 p-6 text-left"
-        style={{ background: BOARD, borderColor: INK, boxShadow: `8px 8px 0 0 ${study.color}` }}
+        style={cardStyle}
       >
         <div className="flex items-start justify-between">
           <span

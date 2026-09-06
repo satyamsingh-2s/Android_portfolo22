@@ -8,6 +8,17 @@ import { AnimatedSection, StaggerContainer } from "@/components/AnimatedSection"
 export function Leadership() {
   return (
     <section id="leadership" className="relative px-6 py-24 md:px-8 lg:px-12">
+      <style>{`
+        /* Any decorative SVG/CSS connector lines linking bullets ↔ stats:
+           hide below 768px per mobile-responsive-spec §5.
+           Mark with class="leadership-connector" when adding. */
+        @media (max-width: 767px) {
+          .leadership-connector {
+            display: none !important;
+          }
+        }
+      `}</style>
+
       <div className="mx-auto max-w-[1200px]">
         <AnimatedSection>
           <div className="font-mono-label mb-4 text-xs text-text-tertiary">Beyond Code</div>
@@ -17,6 +28,9 @@ export function Leadership() {
         </AnimatedSection>
 
         <div className="mt-12 grid gap-6 lg:grid-cols-3">
+          {/* Dominant Dakshh card — if decorative connector lines between bullets and stats are added later,
+              wrap them in a container with class="leadership-connector hidden md:block" or rely on the
+              @media rule above. Stat rows still display cleanly beneath each card's text on mobile. */}
           {/* Dominant Dakshh card */}
           <PatternCard pattern="circuit-trace" tint="neutral" className="lg:col-span-2">
             <StaggerContainer staggerDelay={0.06} distance={20}>

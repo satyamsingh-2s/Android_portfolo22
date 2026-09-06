@@ -1,6 +1,10 @@
 "use client";
 
+import { useIsMobile } from "@/hooks/use-mobile";
+
 export function BackgroundPattern() {
+  const isMobile = useIsMobile();
+
   return (
     <div
       className="ambient-drift pointer-events-none fixed inset-0 z-0 opacity-[0.035]"
@@ -18,7 +22,14 @@ export function BackgroundPattern() {
             <stop offset="100%" stopColor="var(--accent)" stopOpacity="0.1" />
           </linearGradient>
         </defs>
-        <g className="origin-center" style={{ animation: "drift 28s ease-in-out infinite" }}>
+        <g
+          className="origin-center"
+          style={{
+            animation: isMobile
+              ? "none"
+              : "drift 28s ease-in-out infinite",
+          }}
+        >
           <path
             d="M-100,400 Q200,200 500,400 T1300,400"
             fill="none"

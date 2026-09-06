@@ -17,7 +17,7 @@ export function ThemeToggle() {
   return (
     <button
       onClick={() => setDimmed(!dimmed)}
-      className="fixed right-6 top-6 z-50 flex h-10 w-10 items-center justify-center rounded-full border border-border-subtle bg-bg-elevated text-text-secondary transition-colors hover:text-text-primary"
+      className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-border-subtle bg-bg-elevated text-text-secondary transition-colors hover:bg-bg-elevated-hover hover:text-text-primary"
       aria-label="Toggle theme"
     >
       {dimmed ? <Sun size={18} /> : <Moon size={18} />}

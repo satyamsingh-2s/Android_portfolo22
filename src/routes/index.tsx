@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { BackgroundPattern } from "@/components/BackgroundPattern";
 import { Nav } from "@/components/Nav";
-import { ThemeToggle } from "@/components/ThemeToggle";
 import { Hero } from "@/components/sections/Hero";
 import { Omega } from "@/components/sections/Omega";
 import { OtherProjects } from "@/components/sections/OtherProjects";
@@ -41,7 +40,6 @@ function Index() {
     <main className="relative min-h-screen bg-bg-primary text-text-primary">
       <BackgroundPattern />
       <Nav />
-      <ThemeToggle />
       <Hero />
       <Omega />
       <OtherProjects />

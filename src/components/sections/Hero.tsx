@@ -18,7 +18,7 @@ export function Hero() {
       className="relative flex min-h-screen flex-col items-center justify-center px-6 py-24 md:px-8 lg:px-12"
     >
       <style>{`
-        @media (min-width: 900px) {
+        @media (min-width: 768px) {
           .hero-grid-v2 {
             grid-template-columns: minmax(0, 1fr) 0.42fr !important;
             align-items: flex-start !important;
@@ -74,11 +74,11 @@ export function Hero() {
                 </p>
 
                 <div
-                  className="hero-actions-row mt-11 flex flex-wrap items-center gap-3"
+                  className="hero-actions-row mt-11 flex flex-col flex-wrap items-stretch gap-3 md:flex-row md:items-center"
                 >
                   <button
                     onClick={() => handleScroll("#projects")}
-                    className="inline-flex h-12 items-center gap-2 rounded-xl bg-accent px-6 text-sm font-medium text-text-primary transition-transform hover:bg-accent/92 active:scale-[0.97]"
+                    className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-accent px-6 text-sm font-medium text-text-primary transition-transform hover:bg-accent/92 active:scale-[0.97] md:w-auto md:justify-start"
                   >
                     <span className="flex h-[18px] w-[18px] items-center justify-center rounded-[5px] border border-white/20">
                       <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
@@ -91,14 +91,14 @@ export function Hero() {
                   </button>
                   <a
                     href={personalInfo.resumeUrl}
-                    className="inline-flex h-12 items-center gap-2 rounded-xl border border-border-subtle bg-bg-elevated px-6 text-sm font-medium text-text-primary transition-colors hover:bg-bg-elevated-hover active:scale-[0.97]"
+                    className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl border border-border-subtle bg-bg-elevated px-6 text-sm font-medium text-text-primary transition-colors hover:bg-bg-elevated-hover active:scale-[0.97] md:w-auto md:justify-start"
                   >
                     <Download size={16} strokeWidth={2} />
                     Download Resume
                   </a>
                   <button
                     onClick={() => handleScroll("#contact")}
-                    className="inline-flex h-12 items-center gap-2 rounded-xl border border-border-subtle px-6 text-sm font-medium text-text-primary transition-colors hover:bg-bg-elevated active:scale-[0.97]"
+                    className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl border border-border-subtle px-6 text-sm font-medium text-text-primary transition-colors hover:bg-bg-elevated active:scale-[0.97] md:w-auto md:justify-start"
                   >
                     <Mail size={16} strokeWidth={2} />
                     Contact

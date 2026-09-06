@@ -119,7 +119,7 @@ export function Contact() {
                     type="text"
                     id="name"
                     name="name"
-                    className="mt-2 w-full rounded-xl border border-border-subtle bg-bg-primary px-4 py-3 text-sm text-text-primary outline-none transition-colors focus:border-accent-secondary"
+                    className="mt-2 w-full min-h-[44px] rounded-xl border border-border-subtle bg-bg-primary px-4 py-3 text-sm text-text-primary outline-none transition-colors focus:border-accent-secondary"
                     placeholder="Your name"
                   />
                 </div>
@@ -131,7 +131,7 @@ export function Contact() {
                     type="email"
                     id="email"
                     name="email"
-                    className="mt-2 w-full rounded-xl border border-border-subtle bg-bg-primary px-4 py-3 text-sm text-text-primary outline-none transition-colors focus:border-accent-secondary"
+                    className="mt-2 w-full min-h-[44px] rounded-xl border border-border-subtle bg-bg-primary px-4 py-3 text-sm text-text-primary outline-none transition-colors focus:border-accent-secondary"
                     placeholder="your@email.com"
                   />
                 </div>
@@ -143,14 +143,14 @@ export function Contact() {
                     id="message"
                     name="message"
                     rows={4}
-                    className="mt-2 w-full rounded-xl border border-border-subtle bg-bg-primary px-4 py-3 text-sm text-text-primary outline-none transition-colors focus:border-accent-secondary"
+                    className="mt-2 w-full min-h-[112px] rounded-xl border border-border-subtle bg-bg-primary px-4 py-3 text-sm text-text-primary outline-none transition-colors focus:border-accent-secondary"
                     placeholder="Tell me about the opportunity..."
                   />
                 </div>
                 <button
                   type="submit"
                   disabled={isSending}
-                  className="w-full rounded-full bg-accent px-6 py-3 text-sm font-medium text-text-primary transition-transform hover:bg-accent/90 active:scale-[0.97]"
+                  className="w-full min-h-[44px] rounded-full bg-accent px-6 py-3 text-sm font-medium text-text-primary transition-transform hover:bg-accent/90 active:scale-[0.97]"
                 >
                   {isSending ? "Sending..." : "Send message"}
                 </button>

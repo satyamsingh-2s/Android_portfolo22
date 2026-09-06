@@ -2,6 +2,7 @@
 
 import { motion } from "motion/react";
 import { designUXContent } from "@/lib/data";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const INK = "#1A1A1A";
 const MUTED = "#6B675F";
@@ -18,6 +19,80 @@ export function LayersDiagram() {
   const study = designUXContent.caseStudies[0]!;
   const layers = study.layers!;
   const center = study.center!;
+  const isMobile = useIsMobile();
+
+  if (isMobile) {
+    return (
+      <div className="relative mx-auto w-full max-w-full select-none py-4">
+        <div className="flex flex-col items-stretch gap-3">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={step(0)}
+            className="w-full border-2 px-4 py-3 text-center"
+            style={{ background: layers[0]!.color, borderColor: INK, color: INK }}
+          >
+            <span className="font-mono-label text-[11px] font-semibold">
+              {layers[0]!.label}
+            </span>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={step(1)}
+            className="w-full border-2 px-4 py-3 text-center"
+            style={{ background: layers[1]!.color, borderColor: INK, color: "#FFF8F0" }}
+          >
+            <span className="font-mono-label text-[11px] font-semibold leading-tight">
+              {layers[1]!.label}
+            </span>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.94 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={step(3)}
+            className="relative z-10 w-full"
+          >
+            <div className="relative border-2 px-4 py-5 text-center"
+              style={{ background: center.color, borderColor: INK, color: "#FFF8F0" }}
+            >
+              <div className="font-display text-xl font-semibold tracking-tight">
+                {center.label}
+              </div>
+              <div className="font-mono-label mt-1 text-[10px] opacity-90">
+                {center.sub}
+              </div>
+            </div>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={step(2)}
+            className="w-full border-2 px-4 py-3 text-center"
+            style={{ background: layers[2]!.color, borderColor: INK, color: "#FFF8F0" }}
+          >
+            <span className="font-mono-label text-[11px] font-semibold leading-tight">
+              {layers[2]!.label}
+            </span>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: -24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={step(4)}
+            className="w-full border-2 px-4 py-3 text-center"
+            style={{ background: layers[3]!.color, borderColor: INK, color: INK }}
+          >
+            <span className="font-mono-label text-[11px] font-semibold">
+              {layers[3]!.label}
+            </span>
+          </motion.div>
+        </div>
+        <div className="font-mono-label mt-6 text-center text-[9px]" style={{ color: MUTED }}>
+          Range supports identity — it does not compete with it
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="relative mx-auto w-full max-w-[420px] select-none py-4">
@@ -133,6 +208,7 @@ function Node({
 
 export function TreeDiagram() {
   const tree = designUXContent.caseStudies[1]!.tree!;
+  const isMobile = useIsMobile();
 
   return (
     <div className="relative mx-auto w-full max-w-[440px] select-none py-4">
@@ -148,20 +224,22 @@ export function TreeDiagram() {
         style={{ background: INK }}
         aria-hidden
       />
-      <motion.div
-        initial={{ scaleX: 0 }}
-        animate={{ scaleX: 1 }}
-        transition={{ duration: 0.4, delay: 0.28, ease }}
-        className="mx-auto h-px w-[70%]"
-        style={{ background: INK }}
-        aria-hidden
-      />
+      {!isMobile && (
+        <motion.div
+          initial={{ scaleX: 0 }}
+          animate={{ scaleX: 1 }}
+          transition={{ duration: 0.4, delay: 0.28, ease }}
+          className="mx-auto h-px w-[70%]"
+          style={{ background: INK }}
+          aria-hidden
+        />
+      )}
 
-      <div className="mt-0 grid grid-cols-2 gap-4">
+      <div className={`mt-0 grid gap-4 ${isMobile ? "grid-cols-1" : "grid-cols-2"}`}>
         {tree.branches.map((branch, i) => (
           <div key={branch.label} className="flex flex-col items-center">
             <div
-              className="h-5 w-px"
+              className={isMobile ? "h-4 w-px mt-2" : "h-5 w-px"}
               style={{ background: INK, opacity: branch.active ? 1 : 0.35 }}
               aria-hidden
             />
@@ -176,7 +254,7 @@ export function TreeDiagram() {
               style={{ background: INK, opacity: branch.active ? 1 : 0.35 }}
               aria-hidden
             />
-            <div className="flex gap-3">
+            <div className={`flex ${isMobile ? "gap-2" : "gap-3"}`}>
               {branch.children.map((child, j) => (
                 <Node
                   key={j}
@@ -229,14 +307,17 @@ export function TreeDiagram() {
 
 export function MarkDiagram() {
   const zones = designUXContent.caseStudies[2]!.zones!;
+  const isMobile = useIsMobile();
 
   return (
     <div className="relative mx-auto w-full max-w-[420px] select-none py-4">
-      <div className="flex items-end justify-center gap-8">
+      <div
+        className={`flex items-end justify-center ${isMobile ? "flex-col gap-5" : "gap-8"}`}
+      >
         {zones.map((zone, i) => (
           <motion.div
             key={zone.code}
-            initial={{ opacity: 0, y: -18, rotate: i === 1 ? 0 : i === 0 ? -12 : 12 }}
+            initial={{ opacity: 0, y: -18, rotate: isMobile ? 0 : i === 1 ? 0 : i === 0 ? -12 : 12 }}
             animate={{ opacity: 1, y: 0, rotate: 0 }}
             transition={step(i)}
             className="flex flex-col items-center gap-2"
