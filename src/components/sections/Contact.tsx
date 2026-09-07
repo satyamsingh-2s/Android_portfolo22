@@ -1,6 +1,6 @@
 "use client";
 
-import { Github, Linkedin, Mail, Phone, MapPin } from "lucide-react";
+import { Github, Linkedin, Mail, Phone, MapPin, Instagram } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { personalInfo } from "@/lib/data";
@@ -171,6 +171,15 @@ export function Contact() {
                 aria-label="LinkedIn"
               >
                 <Linkedin size={18} />
+              </a>
+              <a
+                href={personalInfo.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex h-11 w-11 items-center justify-center rounded-full border border-border-subtle bg-bg-elevated text-text-secondary transition-colors hover:bg-bg-elevated-hover hover:text-text-primary"
+                aria-label="Instagram"
+              >
+                <Instagram size={18} />
               </a>
               <a
                 href={`mailto:${personalInfo.email}`}
