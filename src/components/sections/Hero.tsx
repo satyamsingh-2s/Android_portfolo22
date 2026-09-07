@@ -1,7 +1,6 @@
 "use client";
-
-import { ArrowDown, Download, ImageIcon, Mail } from "lucide-react";
-import { personalInfo } from "@/lib/data";
+import { ArrowDown, Download, Globe2, Github, ImageIcon, Mail } from "lucide-react";
+import { personalInfo, omegaProject } from "@/lib/data";
 import { AnimatedSection, StaggerContainer } from "@/components/AnimatedSection";
 
 export function Hero() {
@@ -130,15 +129,38 @@ export function Hero() {
                 />
               </div>
 
+              {/* Project Links */}
+                <div className="mt-5 flex items-center gap-2">
+                  {/* GitHub */}
+                  <a
+                    href={omegaProject.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="View Omega on GitHub"
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border-subtle bg-bg-primary text-text-secondary transition-all duration-200 hover:border-accent hover:text-accent"
+                  >
+                    <Github size={17} strokeWidth={1.8} />
+                  </a>
+
+                  {/* Website */}
+                  <a
+                    href={omegaProject.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Visit Omega website"
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border-subtle bg-bg-primary text-text-secondary transition-all duration-200 hover:border-accent hover:text-accent"
+                  >
+                    <Globe2 size={17} strokeWidth={1.8} />
+                  </a>
+                </div>
+
                 {/* CURRENT FOCUS */}
                 <div className="mt-5">
-                  <p className="font-mono-label text-[0.64rem] tracking-[0.14em] text-text-tertiary">
-                    CURRENT FOCUS
+                  <p className="font-mono-label text-[0.58rem] tracking-[0.14em] text-text-tertiary">
+                    CURRENTLY BUILDING
                   </p>
-                  <p className="mt-2 font-display text-[0.95rem] font-semibold uppercase leading-[1.22] tracking-[0.02em] text-accent sm:text-[1rem]">
-                    AI-Assisted Project
-                    <br />
-                    Planning Workflows
+                  <p className="mt-2 font-display text-[0.65rem] font-semibold uppercase leading-[1.22] tracking-[0.02em] text-accent sm:text-[0.7rem]">
+                    feature - Task Organiser
                   </p>
                 </div>
 
@@ -164,7 +186,7 @@ export function Hero() {
                   </div>
 
                   <p className="mt-3 text-[0.84rem] font-medium leading-snug text-text-secondary">
-                    Intern at SunsysTechsol pvt.ltd.
+                    Intern at SunsysTechsol pvt. Ltd.
                   </p>
 
                   <div className="mt-3 flex items-center gap-2">
