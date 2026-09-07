@@ -7,6 +7,7 @@ export const personalInfo = {
   phone: "+91 8580160331",
   github: "https://github.com/satyamsingh-2s",
   linkedin: "https://www.linkedin.com/in/satyamsingh-2s",
+  instagram: "https://www.instagram.com/satyamsingh_2s",
   resumeUrl: "https://drive.google.com/file/d/10_LD9NG1UtIu-M0O8YjjZNj5A5CFiTVL/view?usp=sharing",
 };
 
@@ -140,6 +141,12 @@ export const skillCategories = [
 
 export const designUXContent = {
   eyebrow: "Design / UX Sensibility",
+  certificateUrl: "https://drive.google.com/file/d/19ZQNaoR1dawfLRJKT6KTvgp0WnYDsQJi/view",
+  gallery: [
+    "/images/athletics/1.webp",
+    "/images/athletics/2.webp",
+    "/images/athletics/3.webp",
+  ],
   header: "Designing the experience, not just the interface",
   supporting: "Three design decisions / select to deconstruct",
   intro:
@@ -245,6 +252,13 @@ export const leadership = {
     role: "Finance Head & Operations Lead",
     org: "Dakshh (Technical Fest)",
     school: "Heritage Institute of Technology",
+    instagramUrl: "https://www.instagram.com/dakshh_hitk",
+    gallery: [
+      "/images/leadership/dakshh/1.webp",
+      "/images/leadership/dakshh/2.webp",
+      "/images/leadership/dakshh/3.webp",
+      "/images/leadership/dakshh/4.webp",
+    ],
     description: [
       "Led end-to-end operations for Dakshh — the college's technical fest's first edition in 9 years — taking ownership of reviving it from scratch.",
       "Owned budget and financial coordination pre-event; ran live operations and on-ground execution on event day.",
@@ -260,6 +274,12 @@ export const leadership = {
     role: "Operations Head",
     org: "Lakshaya (Sports Fest)",
     school: "Heritage Institute of Technology",
+    instagramUrl: "https://www.instagram.com/lakshya.hitk",
+    gallery: [
+      "/images/leadership/lakshaya/1.webp",
+      "/images/leadership/lakshaya/2.webp",
+      "/images/leadership/lakshaya/3.webp",
+    ],
     description: [
       "Headed operations for the institute's annual sports fest — scheduling, resource allocation, and coordination across multiple sporting events.",
       "Led a team of volunteers and coordinators handling on-ground execution, participant experience, and last-minute problem-solving.",
@@ -275,11 +295,17 @@ export const leadership = {
     org: "Tata Steel Limited, Jamshedpur",
     period: "June 2026",
     note: "3-week training program in Electrical T&D and Power Systems; authored a technical report covering drive architecture, protection systems, and IEC/ISO compliance.",
+    certificateUrl: "https://drive.google.com/file/d/1Fzmn7BJkYNrucEe65mueaNI-S_B9S8c3/view",
   },
 };
 
 export const athletics = {
   title: "100m & 200m Sprinter",
+  gallery: [
+    "/images/athletics/1.webp",
+    "/images/athletics/2.webp",
+    "/images/athletics/3.webp",
+  ],
   achievements: [
     "Gold medalist, East Singhbhum District (2019) — 100m & 200m",
     "Represented at state-level competitions in both events",
