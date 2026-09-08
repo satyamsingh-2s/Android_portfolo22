@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { X, ArrowRight, Plus } from "lucide-react";
+import { X, ArrowRight, Plus, ExternalLink, Image as ImageIcon, ChevronLeft, ChevronRight } from "lucide-react";
 import { designUXContent } from "@/lib/data";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { diagrams } from "@/components/design/DesignDiagrams";
@@ -16,6 +16,148 @@ const LINE = "#D6D0C4";
 const ease = [0.16, 1, 0.3, 1] as const;
 
 type Study = (typeof designUXContent.caseStudies)[number];
+
+
+function DesignGallery({
+  images,
+  open,
+  onOpenChange,
+}: {
+  images: string[];
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+}) {
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => {
+    if (!open) return;
+    setActiveIndex(0);
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onOpenChange(false);
+      if (event.key === "ArrowRight" && images.length > 1) {
+        setActiveIndex((current) => (current + 1) % images.length);
+      }
+      if (event.key === "ArrowLeft" && images.length > 1) {
+        setActiveIndex((current) => (current - 1 + images.length) % images.length);
+      }
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [open, images.length, onOpenChange]);
+
+  useEffect(() => {
+    if (!open || images.length <= 1) return;
+    const nextIndex = (activeIndex + 1) % images.length;
+    const nextImage = new Image();
+    nextImage.src = images[nextIndex]!;
+  }, [activeIndex, images, open]);
+
+  return (
+    <AnimatePresence>
+      {open && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6"
+          role="dialog"
+          aria-modal="true"
+          aria-label="My design gallery"
+        >
+          <button
+            type="button"
+            aria-label="Close gallery"
+            className="absolute inset-0 cursor-default"
+            style={{ background: "rgba(15, 15, 15, 0.78)", backdropFilter: "blur(10px)" }}
+            onClick={() => onOpenChange(false)}
+          />
+
+          <motion.div
+            initial={{ opacity: 0, y: 18, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 12, scale: 0.98 }}
+            transition={{ duration: 0.32, ease }}
+            className="relative z-10 w-full max-w-5xl overflow-hidden rounded-2xl border-2 p-4 shadow-[10px_10px_0_0_#E8590C] sm:p-6"
+            style={{ background: BOARD, borderColor: INK }}
+          >
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <div className="font-mono-label text-[9px] font-semibold" style={{ color: MUTED }}>
+                  SELECTED WORK / MY DESIGN
+                </div>
+                <h3 className="font-display mt-1 text-2xl font-semibold tracking-tight" style={{ color: INK }}>
+                  My Design
+                </h3>
+              </div>
+              <button
+                type="button"
+                onClick={() => onOpenChange(false)}
+                aria-label="Close gallery"
+                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 transition-transform hover:-translate-y-0.5"
+                style={{ borderColor: INK, color: INK }}
+              >
+                <X size={15} />
+              </button>
+            </div>
+
+            {images.length === 0 ? (
+              <div className="mt-6 flex min-h-[45vh] flex-col items-center justify-center border-2 border-dashed text-center" style={{ borderColor: LINE, color: MUTED }}>
+                <ImageIcon size={28} strokeWidth={1.5} />
+                <p className="font-mono-label mt-4 text-[10px] font-semibold">Design images are ready to be added.</p>
+                <p className="mt-1 max-w-sm text-xs">Add your work to <code>public/images/design/</code> and list the paths in <code>src/lib/data.ts</code>.</p>
+              </div>
+            ) : (
+              <>
+                <div className="relative mt-6 overflow-hidden border-2 p-2 sm:p-4" style={{ borderColor: LINE, background: "#EEEAE1" }}>
+                  <AnimatePresence mode="wait" initial={false}>
+                    <motion.img
+                      key={images[activeIndex]}
+                      src={images[activeIndex]}
+                      loading="lazy"
+                      decoding="async"
+                      alt={`Design work ${activeIndex + 1}`}
+                      initial={{ opacity: 0, x: 34, scale: 0.985 }}
+                      animate={{ opacity: 1, x: 0, scale: 1 }}
+                      exit={{ opacity: 0, x: -34, scale: 0.985 }}
+                      transition={{ duration: 0.3, ease }}
+                      className="mx-auto max-h-[65vh] w-full rounded-lg object-contain"
+                    />
+                  </AnimatePresence>
+
+                  {images.length > 1 && (
+                    <>
+                      <button type="button" onClick={() => setActiveIndex((current) => (current - 1 + images.length) % images.length)} aria-label="Previous design" className="absolute left-3 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border-2 transition-transform hover:-translate-x-0.5" style={{ borderColor: INK, background: BOARD, color: INK }}>
+                        <ChevronLeft size={16} />
+                      </button>
+                      <button type="button" onClick={() => setActiveIndex((current) => (current + 1) % images.length)} aria-label="Next design" className="absolute right-3 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border-2 transition-transform hover:translate-x-0.5" style={{ borderColor: INK, background: BOARD, color: INK }}>
+                        <ChevronRight size={16} />
+                      </button>
+                    </>
+                  )}
+                </div>
+
+                {images.length > 1 && (
+                  <div className="mt-4 flex justify-center gap-1.5" aria-label="Design gallery pagination">
+                    {images.map((image, index) => (
+                      <button key={image} type="button" onClick={() => setActiveIndex(index)} aria-label={`Show design ${index + 1}`} className="h-1.5 rounded-full transition-all" style={{ width: index === activeIndex ? 28 : 6, background: index === activeIndex ? INK : LINE }} />
+                    ))}
+                  </div>
+                )}
+              </>
+            )}
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
 
 function DotGrid({ color }: { color: string }) {
   return (
@@ -220,6 +362,7 @@ function ExpandedCase({ study, index, onClose }: { study: Study; index: number; 
 
 export function DesignUX() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [designGalleryOpen, setDesignGalleryOpen] = useState(false);
   const studies = designUXContent.caseStudies;
   const active = openIndex !== null ? studies[openIndex] : undefined;
 
@@ -264,14 +407,47 @@ export function DesignUX() {
                 </p>
               </div>
 
-              <div className="mt-10 flex items-center gap-4">
+              <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center">
                 <span
                   className="font-mono-label text-[9px] md:whitespace-nowrap md:text-[10px] font-semibold"
                   style={{ color: INK }}
                 >
                   {designUXContent.supporting}
                 </span>
-                <span className="h-px flex-1" style={{ background: LINE }} aria-hidden />
+                <span className="hidden h-px flex-1 sm:block" style={{ background: LINE }} aria-hidden />
+                <div className="flex flex-wrap gap-2.5">
+                  <a
+                    href={designUXContent.certificateUrl || undefined}
+                    target={designUXContent.certificateUrl ? "_blank" : undefined}
+                    rel={designUXContent.certificateUrl ? "noreferrer" : undefined}
+                    aria-disabled={!designUXContent.certificateUrl}
+                    onClick={(event) => {
+                      if (!designUXContent.certificateUrl) event.preventDefault();
+                    }}
+                    className={`inline-flex h-9 items-center gap-2 rounded-full border-2 px-3.5 text-[10px] font-semibold transition-all duration-200 ${
+                      designUXContent.certificateUrl
+                        ? "hover:-translate-y-0.5"
+                        : "cursor-not-allowed opacity-50"
+                    }`}
+                    style={{ borderColor: INK, color: INK, background: "transparent" }}
+                    title={designUXContent.certificateUrl ? "Open certificate" : "Add your certificate link in src/lib/data.ts"}
+                  >
+                    My Certificate
+                    <ExternalLink size={12} />
+                  </a>
+                  <button
+                    type="button"
+                    onClick={() => setDesignGalleryOpen(true)}
+                    className="inline-flex h-9 items-center gap-2 rounded-full border-2 px-3.5 text-[10px] font-semibold transition-all duration-200 hover:-translate-y-0.5"
+                    style={{ borderColor: INK, color: INK, background: "transparent" }}
+                  >
+                    <ImageIcon size={13} />
+                    My Design
+                    {designUXContent.gallery.length > 0 && (
+                      <span className="font-mono text-[9px]" style={{ color: MUTED }}>{designUXContent.gallery.length}</span>
+                    )}
+                  </button>
+                </div>
               </div>
 
               <div className="mt-10">
@@ -325,6 +501,12 @@ export function DesignUX() {
           </div>
         </AnimatedSection>
       </div>
+
+      <DesignGallery
+        images={designUXContent.gallery}
+        open={designGalleryOpen}
+        onOpenChange={setDesignGalleryOpen}
+      />
     </section>
   );
 }

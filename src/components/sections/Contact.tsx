@@ -1,45 +1,122 @@
 "use client";
 
-import { Github, Linkedin, Mail, Phone, MapPin } from "lucide-react";
+import { Github, Linkedin, Mail, Phone, MapPin, Instagram } from "lucide-react";
 import { useState } from "react";
+import { toast } from "sonner";
 import { personalInfo } from "@/lib/data";
 import { AnimatedSection, StaggerContainer } from "@/components/AnimatedSection";
 import { ContactRequestError, type ContactValidationError, sendMail } from "@/service/service";
 
+interface ContactFormValues {
+  name: string;
+  email: string;
+  message: string;
+}
+
+type FieldErrors = Partial<Record<keyof ContactFormValues, string>>;
+
+const validateContactForm = (values: ContactFormValues): FieldErrors => {
+  const errors: FieldErrors = {};
+  const name = values.name.trim();
+  const email = values.email.trim();
+  const message = values.message.trim();
+
+  if (!name) {
+    errors.name = "Please enter your name.";
+  } else if (name.length < 2 || name.length > 80) {
+    errors.name = "Name must be between 2 and 80 characters.";
+  } else if (!/^[\p{L}\p{M} .,'-]+$/u.test(name)) {
+    errors.name = "Name contains invalid characters.";
+  }
+
+  if (!email) {
+    errors.email = "Please enter your email address.";
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    errors.email = "Please enter a valid email address.";
+  } else if (email.length > 254) {
+    errors.email = "Email is too long.";
+  }
+
+  if (!message) {
+    errors.message = "Please enter a message.";
+  } else if (message.length < 10 || message.length > 3000) {
+    errors.message = "Message must be between 10 and 3000 characters.";
+  }
+
+  return errors;
+};
+
+const mapServerErrors = (errors: ContactValidationError[]): FieldErrors => {
+  const mapped: FieldErrors = {};
+
+  for (const error of errors) {
+    if (error.field === "name" || error.field === "email" || error.field === "message") {
+      mapped[error.field] ??= error.message;
+    }
+  }
+
+  return mapped;
+};
+
 export function Contact() {
   const [isSending, setIsSending] = useState(false);
-  const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
-  const [errorMessage, setErrorMessage] = useState("");
-  const [validationErrors, setValidationErrors] = useState<ContactValidationError[]>([]);
+  const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setIsSending(true);
-    setStatus("idle");
-    setErrorMessage("");
-    setValidationErrors([]);
 
     const form = event.currentTarget;
     const formData = new FormData(form);
+    const values: ContactFormValues = {
+      name: String(formData.get("name") ?? ""),
+      email: String(formData.get("email") ?? ""),
+      message: String(formData.get("message") ?? ""),
+    };
+
+    const clientErrors = validateContactForm(values);
+    setFieldErrors(clientErrors);
+
+    if (Object.keys(clientErrors).length > 0) {
+      const firstInvalidField = Object.keys(clientErrors)[0] as keyof ContactFormValues;
+      document.getElementById(firstInvalidField)?.focus();
+      toast.error("Please check the highlighted fields.");
+      return;
+    }
+
+    setIsSending(true);
+    setFieldErrors({});
 
     try {
       await sendMail({
-        name: String(formData.get("name") ?? ""),
-        email: String(formData.get("email") ?? ""),
-        message: String(formData.get("message") ?? ""),
+        name: values.name.trim(),
+        email: values.email.trim(),
+        message: values.message.trim(),
       });
+
       form.reset();
-      setStatus("success");
+      setFieldErrors({});
+      toast.success("Message sent successfully.", {
+        description: "Thanks for reaching out. I'll get back to you soon.",
+      });
     } catch (error) {
-      setStatus("error");
-      setValidationErrors(error instanceof ContactRequestError ? error.errors : []);
-      setErrorMessage(
-        error instanceof Error ? error.message : "Unable to send your message. Please try again.",
-      );
+      const serverErrors = error instanceof ContactRequestError ? mapServerErrors(error.errors) : {};
+      setFieldErrors(serverErrors);
+
+      toast.error("Unable to send your message.", {
+        description:
+          error instanceof Error ? error.message : "Something went wrong. Please try again.",
+      });
     } finally {
       setIsSending(false);
     }
   };
+
+  const inputClass = (field: keyof ContactFormValues) =>
+    `mt-2 w-full min-h-[44px] rounded-xl border bg-bg-primary px-4 py-3 text-sm text-text-primary outline-none transition-colors placeholder:text-text-tertiary focus:border-accent-secondary ${
+      fieldErrors[field]
+        ? "border-red-400/80 ring-1 ring-red-400/30 focus:border-red-400"
+        : "border-border-subtle"
+    }`;
 
   return (
     <section id="contact" className="relative px-6 py-24 md:px-8 lg:px-12">
@@ -96,6 +173,15 @@ export function Contact() {
                 <Linkedin size={18} />
               </a>
               <a
+                href={personalInfo.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex h-11 w-11 items-center justify-center rounded-full border border-border-subtle bg-bg-elevated text-text-secondary transition-colors hover:bg-bg-elevated-hover hover:text-text-primary"
+                aria-label="Instagram"
+              >
+                <Instagram size={18} />
+              </a>
+              <a
                 href={`mailto:${personalInfo.email}`}
                 className="flex h-11 w-11 items-center justify-center rounded-full border border-border-subtle bg-bg-elevated text-text-secondary transition-colors hover:bg-bg-elevated-hover hover:text-text-primary"
                 aria-label="Email"
@@ -108,6 +194,7 @@ export function Contact() {
           <AnimatedSection delay={0.15}>
             <form
               onSubmit={handleSubmit}
+              noValidate
               className="rounded-2xl border border-border-subtle bg-bg-elevated p-6 md:p-8"
             >
               <div className="space-y-4">
@@ -119,10 +206,19 @@ export function Contact() {
                     type="text"
                     id="name"
                     name="name"
-                    className="mt-2 w-full min-h-[44px] rounded-xl border border-border-subtle bg-bg-primary px-4 py-3 text-sm text-text-primary outline-none transition-colors focus:border-accent-secondary"
+                    aria-invalid={Boolean(fieldErrors.name)}
+                    aria-describedby={fieldErrors.name ? "name-error" : undefined}
+                    className={inputClass("name")}
                     placeholder="Your name"
+                    autoComplete="name"
                   />
+                  {fieldErrors.name && (
+                    <p id="name-error" className="mt-1.5 text-xs text-red-300" role="alert">
+                      {fieldErrors.name}
+                    </p>
+                  )}
                 </div>
+
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-text-primary">
                     Email
@@ -131,10 +227,19 @@ export function Contact() {
                     type="email"
                     id="email"
                     name="email"
-                    className="mt-2 w-full min-h-[44px] rounded-xl border border-border-subtle bg-bg-primary px-4 py-3 text-sm text-text-primary outline-none transition-colors focus:border-accent-secondary"
+                    aria-invalid={Boolean(fieldErrors.email)}
+                    aria-describedby={fieldErrors.email ? "email-error" : undefined}
+                    className={inputClass("email")}
                     placeholder="your@email.com"
+                    autoComplete="email"
                   />
+                  {fieldErrors.email && (
+                    <p id="email-error" className="mt-1.5 text-xs text-red-300" role="alert">
+                      {fieldErrors.email}
+                    </p>
+                  )}
                 </div>
+
                 <div>
                   <label htmlFor="message" className="block text-sm font-medium text-text-primary">
                     Message
@@ -143,36 +248,25 @@ export function Contact() {
                     id="message"
                     name="message"
                     rows={4}
-                    className="mt-2 w-full min-h-[112px] rounded-xl border border-border-subtle bg-bg-primary px-4 py-3 text-sm text-text-primary outline-none transition-colors focus:border-accent-secondary"
+                    aria-invalid={Boolean(fieldErrors.message)}
+                    aria-describedby={fieldErrors.message ? "message-error" : undefined}
+                    className={`${inputClass("message")} min-h-[112px]`}
                     placeholder="Tell me about the opportunity..."
                   />
+                  {fieldErrors.message && (
+                    <p id="message-error" className="mt-1.5 text-xs text-red-300" role="alert">
+                      {fieldErrors.message}
+                    </p>
+                  )}
                 </div>
+
                 <button
                   type="submit"
                   disabled={isSending}
-                  className="w-full min-h-[44px] rounded-full bg-accent px-6 py-3 text-sm font-medium text-text-primary transition-transform hover:bg-accent/90 active:scale-[0.97]"
+                  className="w-full min-h-[44px] rounded-full bg-accent px-6 py-3 text-sm font-medium text-text-primary transition-all hover:bg-accent/90 active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   {isSending ? "Sending..." : "Send message"}
                 </button>
-                {status === "success" && (
-                  <p className="text-sm text-green-600" role="status">
-                    Message sent successfully.
-                  </p>
-                )}
-                {status === "error" && (
-                  <div className="text-sm text-red-600" role="alert">
-                    <p>{errorMessage}</p>
-                    {validationErrors.length > 0 && (
-                      <ul className="mt-1 list-disc pl-5">
-                        {validationErrors.map((validationError) => (
-                          <li key={`${validationError.field}-${validationError.message}`}>
-                            {validationError.message}
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                  </div>
-                )}
               </div>
             </form>
           </AnimatedSection>
