@@ -7,7 +7,7 @@ export function BackgroundPattern() {
 
   return (
     <div
-      className="ambient-drift pointer-events-none fixed inset-0 z-0 opacity-[0.035]"
+      className="ambient-drift pointer-events-none fixed inset-0 z-0"
       aria-hidden="true"
     >
       <svg
@@ -18,8 +18,8 @@ export function BackgroundPattern() {
       >
         <defs>
           <linearGradient id="bg-fade" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="var(--accent)" stopOpacity="0.6" />
-            <stop offset="100%" stopColor="var(--accent)" stopOpacity="0.1" />
+            <stop offset="0%" stopColor="var(--pattern)" stopOpacity="1" />
+            <stop offset="100%" stopColor="var(--pattern)" stopOpacity="0.25" />
           </linearGradient>
         </defs>
         <g

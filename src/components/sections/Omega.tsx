@@ -101,16 +101,34 @@ export function Omega() {
               ))}
             </div>
 
-                      <div className="mt-10 flex flex-wrap items-center gap-4">
+                          <div className="mt-10 flex flex-wrap items-center gap-6">
               {/* GitHub */}
               <a
                 href={omegaProject.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-sm font-medium text-accent transition-colors hover:text-accent-secondary"
+                className="
+                  group
+                  inline-flex
+                  items-center
+                  gap-2
+                  text-sm
+                  font-medium
+                  text-accent
+                  transition-colors
+                  hover:text-accent-secondary
+                "
               >
                 View on GitHub
-                <ArrowUpRight size={16} />
+                <ArrowUpRight
+                  size={16}
+                  className="
+                    transition-transform
+                    duration-200
+                    group-hover:translate-x-0.5
+                    group-hover:-translate-y-0.5
+                  "
+                />
               </a>
 
               {/* Website */}
@@ -118,10 +136,28 @@ export function Omega() {
                 href={omegaProject.website}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-sm font-medium text-white transition-colors hover:text-accent-secondary"
+                className="
+                  group
+                  inline-flex
+                  items-center
+                  gap-2
+                  text-sm
+                  font-medium
+                  text-text-primary
+                  transition-colors
+                  hover:text-accent-secondary
+                "
               >
                 Visit Website
-                <ArrowUpRight size={16} />
+                <ArrowUpRight
+                  size={16}
+                  className="
+                    transition-transform
+                    duration-200
+                    group-hover:translate-x-0.5
+                    group-hover:-translate-y-0.5
+                  "
+                />
               </a>
             </div>
 

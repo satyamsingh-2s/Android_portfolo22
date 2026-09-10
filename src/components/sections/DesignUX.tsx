@@ -8,10 +8,11 @@ import { AnimatedSection } from "@/components/AnimatedSection";
 import { diagrams } from "@/components/design/DesignDiagrams";
 import { useIsMobile } from "@/hooks/use-mobile";
 
-const BOARD = "#F5F2EC";
-const INK = "#1A1A1A";
-const MUTED = "#6B675F";
-const LINE = "#D6D0C4";
+const BOARD = "var(--design-bg)";
+const SURFACE = "var(--design-surface)";
+const INK = "var(--design-text)";
+const MUTED = "var(--design-secondary)";
+const LINE = "var(--design-line)";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -85,7 +86,7 @@ function DesignGallery({
             exit={{ opacity: 0, y: 12, scale: 0.98 }}
             transition={{ duration: 0.32, ease }}
             className="relative z-10 w-full max-w-5xl overflow-hidden rounded-2xl border-2 p-4 shadow-[10px_10px_0_0_#E8590C] sm:p-6"
-            style={{ background: BOARD, borderColor: INK }}
+            style={{ background: SURFACE, borderColor: "var(--design-border)" }}
           >
             <div className="flex items-start justify-between gap-4">
               <div>
@@ -115,7 +116,7 @@ function DesignGallery({
               </div>
             ) : (
               <>
-                <div className="relative mt-6 overflow-hidden border-2 p-2 sm:p-4" style={{ borderColor: LINE, background: "#EEEAE1" }}>
+                <div className="relative mt-6 overflow-hidden border-2 p-2 sm:p-4" style={{ borderColor: LINE, background: SURFACE }}>
                   <AnimatePresence mode="wait" initial={false}>
                     <motion.img
                       key={images[activeIndex]}
@@ -186,14 +187,14 @@ function CaseCard({
 
   const cardStyle = isMobile
     ? {
-        background: BOARD,
-        borderColor: INK,
+        background: SURFACE,
+        borderColor: "var(--design-border)",
         borderLeft: `4px solid ${study.color}`,
         boxShadow: "none",
       }
     : {
-        background: BOARD,
-        borderColor: INK,
+        background: SURFACE,
+        borderColor: "var(--design-border)",
         boxShadow: `8px 8px 0 0 ${study.color}`,
       };
 
@@ -291,7 +292,7 @@ function ExpandedCase({ study, index, onClose }: { study: Study; index: number; 
       exit={{ opacity: 0, y: 12 }}
       transition={{ duration: 0.4, ease }}
       className="relative border-2 p-6 md:p-10"
-      style={{ background: BOARD, borderColor: INK, boxShadow: `10px 10px 0 0 ${study.color}` }}
+      style={{ background: SURFACE, borderColor: "var(--design-border)", boxShadow: `10px 10px 0 0 ${study.color}` }}
     >
       <div className="flex items-start justify-between gap-6">
         <div>
@@ -338,7 +339,7 @@ function ExpandedCase({ study, index, onClose }: { study: Study; index: number; 
                 style={{
                   borderColor: INK,
                   background: i === 3 ? study.color : "transparent",
-                  color: i === 3 ? "#FFF8F0" : INK,
+                  color: i === 3 ? "#ffffff" : INK,
                 }}
               >
                 {String(i + 1).padStart(2, "0")}
@@ -367,7 +368,7 @@ export function DesignUX() {
   const active = openIndex !== null ? studies[openIndex] : undefined;
 
   return (
-    <section id="design" className="relative px-6 py-24 md:px-8 lg:px-12">
+    <section id="design" className="design-lab relative px-6 py-24 md:px-8 lg:px-12">
       <div className="mx-auto max-w-[1200px]">
         <AnimatedSection>
           <div className="font-mono-label mb-4 text-xs text-text-tertiary">
@@ -380,14 +381,14 @@ export function DesignUX() {
         <AnimatedSection distance={28}>
           <div
             className="relative mt-10 overflow-hidden rounded-3xl border-2 p-6 md:p-12"
-            style={{ background: BOARD, borderColor: INK }}
+            style={{ background: BOARD, borderColor: "var(--design-border)" }}
           >
             {/* paper grain */}
             <div
               aria-hidden
               className="pointer-events-none absolute inset-0 opacity-[0.05]"
               style={{
-                backgroundImage: `radial-gradient(${INK} 1px, transparent 1px)`,
+                backgroundImage: "radial-gradient(var(--design-pattern) 1px, transparent 1px)",
                 backgroundSize: "16px 16px",
               }}
             />
@@ -429,7 +430,7 @@ export function DesignUX() {
                         ? "hover:-translate-y-0.5"
                         : "cursor-not-allowed opacity-50"
                     }`}
-                    style={{ borderColor: INK, color: INK, background: "transparent" }}
+                    style={{ borderColor: "var(--design-border)", color: INK, background: "transparent" }}
                     title={designUXContent.certificateUrl ? "Open certificate" : "Add your certificate link in src/lib/data.ts"}
                   >
                     My Certificate
@@ -439,7 +440,7 @@ export function DesignUX() {
                     type="button"
                     onClick={() => setDesignGalleryOpen(true)}
                     className="inline-flex h-9 items-center gap-2 rounded-full border-2 px-3.5 text-[10px] font-semibold transition-all duration-200 hover:-translate-y-0.5"
-                    style={{ borderColor: INK, color: INK, background: "transparent" }}
+                    style={{ borderColor: "var(--design-border)", color: INK, background: "transparent" }}
                   >
                     <ImageIcon size={13} />
                     My Design

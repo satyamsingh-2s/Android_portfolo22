@@ -44,7 +44,7 @@ export const otherProjects = [
     expandedDescription:
       "An event-driven screenshot organizer built around Android's modern storage constraints.",
     stack: "Kotlin · Jetpack Compose · MediaStore · FileObserver",
-    link: "#",
+    link: "https://github.com/satyamsingh-2s/Scressher_v2",
     accentColor: "#1C7ED6",
     pattern: "dot-grid" as const,
   },
@@ -55,7 +55,7 @@ export const otherProjects = [
     expandedDescription:
       "An Android app-locking project exploring system permissions, usage access, and background execution.",
     stack: "Java · Android Services · UsageStatsManager",
-    link: "#",
+    link: "https://github.com/satyamsingh-2s/secura_v4",
     accentColor: "#2F9E44",
     pattern: "hex-grid" as const,
   },
@@ -66,7 +66,7 @@ export const otherProjects = [
     expandedDescription:
       "A lightweight Windows automation utility built around mouse hooks, gesture recognition, and event-driven input.",
     stack: "C++ · Win32 API · Windows Hooks",
-    link: "#",
+    link: "https://github.com/satyamsingh-2s/Macer",
     accentColor: "#7048E8",
     pattern: "diagonal" as const,
   },
@@ -77,7 +77,7 @@ export const otherProjects = [
     expandedDescription:
       "A full-stack portfolio combining frontend development, backend architecture, and deliberate design decisions.",
     stack: "Next.js · React · Prisma · PostgreSQL",
-    link: "#",
+    link: "https://github.com/satyamsingh-2s/Android_portfolo22",
     accentColor: "#E8590C",
     pattern: "contour" as const,
   },
@@ -88,7 +88,7 @@ export const otherProjects = [
     expandedDescription:
       "A financial-query system combining backend APIs, data analysis, and AI-assisted retrieval workflows.",
     stack: "Python · FastAPI · Pandas · RAG",
-    link: "#",
+    link: "https://github.com/satyamsingh-2s/AI_Financial_Assistant",
     accentColor: "#0CA678",
     pattern: "radial" as const,
   },

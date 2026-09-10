@@ -88,7 +88,7 @@ export function Nav() {
                 href="#contact"
                 onClick={(e) => handleNavClick(e, "#contact")}
                 aria-label="Let's talk"
-                className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-accent text-text-primary transition-transform hover:bg-accent/90 active:scale-[0.97]"
+                className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-accent text-[var(--text-on-accent)] transition-transform hover:bg-accent/90 active:scale-[0.97]"
               >
                 <MessageCircle size={18} strokeWidth={2} />
               </a>
@@ -112,7 +112,7 @@ export function Nav() {
             <a
               href="#contact"
               onClick={(e) => handleNavClick(e, "#contact")}
-              className="ml-1 shrink-0 rounded-full bg-accent px-4 py-2 text-sm font-medium text-text-primary transition-transform hover:bg-accent/90 active:scale-[0.97] md:block hidden"
+              className="ml-1 shrink-0 rounded-full bg-accent px-4 py-2 text-sm font-medium text-[var(--text-on-accent)] transition-transform hover:bg-accent/90 active:scale-[0.97] md:block hidden"
             >
               Let's talk
             </a>

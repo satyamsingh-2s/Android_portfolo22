@@ -4,8 +4,8 @@ import { motion } from "motion/react";
 import { designUXContent } from "@/lib/data";
 import { useIsMobile } from "@/hooks/use-mobile";
 
-const INK = "#1A1A1A";
-const MUTED = "#6B675F";
+const INK = "var(--design-text)";
+const MUTED = "var(--design-secondary)";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -41,7 +41,7 @@ export function LayersDiagram() {
             animate={{ opacity: 1, x: 0 }}
             transition={step(1)}
             className="w-full border-2 px-4 py-3 text-center"
-            style={{ background: layers[1]!.color, borderColor: INK, color: "#FFF8F0" }}
+            style={{ background: layers[1]!.color, borderColor: INK, color: "#ffffff" }}
           >
             <span className="font-mono-label text-[11px] font-semibold leading-tight">
               {layers[1]!.label}
@@ -54,7 +54,7 @@ export function LayersDiagram() {
             className="relative z-10 w-full"
           >
             <div className="relative border-2 px-4 py-5 text-center"
-              style={{ background: center.color, borderColor: INK, color: "#FFF8F0" }}
+              style={{ background: center.color, borderColor: INK, color: "#ffffff" }}
             >
               <div className="font-display text-xl font-semibold tracking-tight">
                 {center.label}
@@ -69,7 +69,7 @@ export function LayersDiagram() {
             animate={{ opacity: 1, x: 0 }}
             transition={step(2)}
             className="w-full border-2 px-4 py-3 text-center"
-            style={{ background: layers[2]!.color, borderColor: INK, color: "#FFF8F0" }}
+            style={{ background: layers[2]!.color, borderColor: INK, color: "#ffffff" }}
           >
             <span className="font-mono-label text-[11px] font-semibold leading-tight">
               {layers[2]!.label}
@@ -113,7 +113,7 @@ export function LayersDiagram() {
           animate={{ opacity: 1, x: 0 }}
           transition={step(1)}
           className="absolute left-0 top-1/2 w-[26%] -translate-y-1/2 -rotate-6 border-2 px-2 py-2 text-center"
-          style={{ background: layers[1]!.color, borderColor: INK, color: "#FFF8F0" }}
+          style={{ background: layers[1]!.color, borderColor: INK, color: "#ffffff" }}
         >
           <span className="font-mono-label text-[9px] font-semibold leading-tight">
             {layers[1]!.label}
@@ -134,7 +134,7 @@ export function LayersDiagram() {
           />
           <div
             className="relative border-2 px-4 py-6 text-center"
-            style={{ background: center.color, borderColor: INK, color: "#FFF8F0" }}
+            style={{ background: center.color, borderColor: INK, color: "#ffffff" }}
           >
             <div className="font-display text-xl font-semibold tracking-tight">{center.label}</div>
             <div className="font-mono-label mt-1 text-[9px] opacity-90">{center.sub}</div>
@@ -146,7 +146,7 @@ export function LayersDiagram() {
           animate={{ opacity: 1, x: 0 }}
           transition={step(2)}
           className="absolute right-0 top-1/2 w-[26%] -translate-y-1/2 rotate-6 border-2 px-2 py-2 text-center"
-          style={{ background: layers[2]!.color, borderColor: INK, color: "#FFF8F0" }}
+          style={{ background: layers[2]!.color, borderColor: INK, color: "#ffffff" }}
         >
           <span className="font-mono-label text-[9px] font-semibold leading-tight">
             {layers[2]!.label}
@@ -193,12 +193,12 @@ function Node({
       style={{
         borderColor: solid ? INK : color,
         background: solid ? color : "transparent",
-        color: solid ? "#FFF8F0" : INK,
+        color: solid ? "#ffffff" : INK,
       }}
     >
       <span
         className="inline-block h-2 w-2 rounded-full border-2"
-        style={{ borderColor: solid ? "#FFF8F0" : color }}
+        style={{ borderColor: solid ? "#ffffff" : color }}
         aria-hidden
       />
       <span className="font-mono-label text-[9px] font-semibold">{label}</span>
@@ -283,7 +283,7 @@ export function TreeDiagram() {
               style={{
                 borderColor: INK,
                 background: i === tree.breadcrumb.length - 1 ? "#7048E8" : "transparent",
-                color: i === tree.breadcrumb.length - 1 ? "#FFF8F0" : INK,
+                color: i === tree.breadcrumb.length - 1 ? "#ffffff" : INK,
               }}
             >
               <span className="font-mono-label text-[9px] font-semibold">{crumb}</span>
@@ -329,13 +329,13 @@ export function MarkDiagram() {
               {zone.shape === "pie" && (
                 <>
                   <circle cx="26" cy="26" r="24" fill={zone.color} stroke={INK} strokeWidth="2" />
-                  <path d="M26 26 L26 2 A24 24 0 0 1 50 26 Z" fill="#F5F2EC" stroke={INK} strokeWidth="2" />
+                  <path d="M26 26 L26 2 A24 24 0 0 1 50 26 Z" fill="var(--design-surface)" stroke={INK} strokeWidth="2" />
                 </>
               )}
               {zone.shape === "ring" && (
                 <>
                   <circle cx="26" cy="26" r="24" fill={zone.color} stroke={INK} strokeWidth="2" />
-                  <circle cx="26" cy="26" r="11" fill="#F5F2EC" stroke={INK} strokeWidth="2" />
+                  <circle cx="26" cy="26" r="11" fill="var(--design-surface)" stroke={INK} strokeWidth="2" />
                 </>
               )}
             </svg>
@@ -381,7 +381,7 @@ export function MarkDiagram() {
           />
           <div
             className="relative flex h-20 w-20 items-center justify-center border-2"
-            style={{ background: INK, borderColor: INK, color: "#FFF8F0" }}
+            style={{ background: INK, borderColor: INK, color: "#ffffff" }}
           >
             <span className="font-display text-3xl leading-none">Ω</span>
           </div>

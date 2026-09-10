@@ -263,7 +263,7 @@ export function Contact() {
                 <button
                   type="submit"
                   disabled={isSending}
-                  className="w-full min-h-[44px] rounded-full bg-accent px-6 py-3 text-sm font-medium text-text-primary transition-all hover:bg-accent/90 active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-60"
+                  className="w-full min-h-[44px] rounded-full bg-accent px-6 py-3 text-sm font-medium text-[var(--text-on-accent)] transition-all hover:bg-accent/90 active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   {isSending ? "Sending..." : "Send message"}
                 </button>

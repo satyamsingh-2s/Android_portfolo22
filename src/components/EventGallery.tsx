@@ -75,13 +75,13 @@ export function EventGallery({ title, images, open, onOpenChange }: EventGallery
           />
 
           <motion.div
-            className="relative z-10 w-full max-w-6xl overflow-hidden rounded-2xl border border-white/10 bg-[#111113] shadow-2xl"
+            className="relative z-10 w-full max-w-6xl overflow-hidden rounded-2xl border border-border-subtle bg-bg-elevated shadow-2xl"
             initial={{ opacity: 0, y: reduceMotion ? 0 : 24, scale: reduceMotion ? 1 : 0.97 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: reduceMotion ? 0 : 24, scale: reduceMotion ? 1 : 0.97 }}
             transition={{ duration: reduceMotion ? 0 : 0.3, ease: [0.22, 1, 0.36, 1] }}
           >
-            <div className="flex items-center justify-between border-b border-white/10 px-5 py-4 sm:px-6">
+            <div className="flex items-center justify-between border-b border-border-subtle px-5 py-4 sm:px-6">
               <div>
                 <div className="font-mono-label text-[10px] text-text-tertiary">Event Gallery</div>
                 <h4 className="mt-1 font-display text-lg font-semibold text-text-primary">{title}</h4>
@@ -90,7 +90,7 @@ export function EventGallery({ title, images, open, onOpenChange }: EventGallery
                 type="button"
                 onClick={() => onOpenChange(false)}
                 aria-label="Close gallery"
-                className="grid h-9 w-9 place-items-center rounded-full border border-white/10 text-text-secondary transition-colors hover:bg-white/5 hover:text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                className="grid h-9 w-9 place-items-center rounded-full border border-border-subtle text-text-secondary transition-colors hover:bg-bg-elevated-hover hover:text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
               >
                 <X className="h-4 w-4" />
               </button>
@@ -145,7 +145,7 @@ export function EventGallery({ title, images, open, onOpenChange }: EventGallery
             </div>
 
             {images.length > 1 && (
-              <div className="flex items-center justify-center gap-2 border-t border-white/10 px-5 py-4">
+              <div className="flex items-center justify-center gap-2 border-t border-border-subtle px-5 py-4">
                 {images.map((image, index) => (
                   <button
                     type="button"

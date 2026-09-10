@@ -4,23 +4,33 @@ import { useState, useEffect } from "react";
 import { Moon, Sun } from "lucide-react";
 
 export function ThemeToggle() {
-  const [dimmed, setDimmed] = useState(false);
+  const [theme, setTheme] = useState<"dark" | "light">("dark");
 
   useEffect(() => {
-    if (dimmed) {
-      document.documentElement.classList.add("dimmed");
-    } else {
-      document.documentElement.classList.remove("dimmed");
-    }
-  }, [dimmed]);
+    const savedTheme = localStorage.getItem("theme");
+    const resolvedTheme = savedTheme === "light" || savedTheme === "dark"
+      ? savedTheme
+      : window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+    setTheme(resolvedTheme);
+    document.documentElement.dataset.theme = resolvedTheme;
+  }, []);
+
+  const toggleTheme = () => {
+    const nextTheme = theme === "dark" ? "light" : "dark";
+    setTheme(nextTheme);
+    document.documentElement.dataset.theme = nextTheme;
+    localStorage.setItem("theme", nextTheme);
+  };
 
   return (
     <button
-      onClick={() => setDimmed(!dimmed)}
+      onClick={toggleTheme}
       className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-border-subtle bg-bg-elevated text-text-secondary transition-colors hover:bg-bg-elevated-hover hover:text-text-primary"
-      aria-label="Toggle theme"
+      aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+      aria-pressed={theme === "light"}
+      title={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
     >
-      {dimmed ? <Sun size={18} /> : <Moon size={18} />}
+      {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
     </button>
   );
 }

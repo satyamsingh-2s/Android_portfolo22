@@ -77,7 +77,7 @@ export function Hero() {
                 >
                   <button
                     onClick={() => handleScroll("#projects")}
-                    className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-accent px-6 text-sm font-medium text-text-primary transition-transform hover:bg-accent/92 active:scale-[0.97] md:w-auto md:justify-start"
+                    className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-accent px-6 text-sm font-medium text-[var(--text-on-accent)] transition-transform hover:bg-accent/92 active:scale-[0.97] md:w-auto md:justify-start"
                   >
                     <span className="flex h-[18px] w-[18px] items-center justify-center rounded-[5px] border border-white/20">
                       <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
@@ -137,7 +137,7 @@ export function Hero() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="View Omega on GitHub"
-                    className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border-subtle bg-bg-primary text-text-secondary transition-all duration-200 hover:border-accent hover:text-accent"
+                   className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border-subtle bg-bg-primary text-text-secondary transition-all duration-200 hover:border-accent hover:text-accent"
                   >
                     <Github size={17} strokeWidth={1.8} />
                   </a>
@@ -148,7 +148,7 @@ export function Hero() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="Visit Omega website"
-                    className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border-subtle bg-bg-primary text-text-secondary transition-all duration-200 hover:border-accent hover:text-accent"
+                     className="website-nudge inline-flex h-9 w-9 items-center justify-center rounded-full border border-border-subtle bg-bg-primary text-text-secondary transition-all duration-200 hover:border-accent hover:text-accent"
                   >
                     <Globe2 size={17} strokeWidth={1.8} />
                   </a>
@@ -157,7 +157,7 @@ export function Hero() {
                 {/* CURRENT FOCUS */}
                 <div className="mt-5">
                   <p className="font-mono-label text-[0.58rem] tracking-[0.14em] text-text-tertiary">
-                    CURRENTLY BUILDING
+                    CURRENTLY
                   </p>
                   <p className="mt-2 font-display text-[0.65rem] font-semibold uppercase leading-[1.22] tracking-[0.02em] text-accent sm:text-[0.7rem]">
                     feature - Task Organiser
@@ -182,7 +182,7 @@ export function Hero() {
                     <span className="font-mono-label text-[0.64rem] tracking-[0.14em] text-text-tertiary">
                       CURRENT STATUS
                     </span>
-                    <span className="live-dot live-dot-available" aria-hidden="true" />
+                    <span className="live-dot live-dot-available status-live-dot" aria-hidden="true" />
                   </div>
 
                   <p className="mt-3 text-[0.84rem] font-medium leading-snug text-text-secondary">
@@ -190,14 +190,9 @@ export function Hero() {
                   </p>
 
                   <div className="mt-3 flex items-center gap-2">
-                    <span className="font-mono-label text-[0.66rem] font-medium tracking-[0.12em] text-[#34d399]">
+                    <span className="font-mono-label text-[0.66rem] font-medium tracking-[0.12em] text-[var(--status-green)]">
                       OPEN TO WORK
                     </span>
-                    <span
-                      className="inline-flex rounded-full"
-                      style={{ backgroundColor: "#34d399", width: 7, height: 7 }}
-                      aria-hidden="true"
-                    />
                   </div>
                 </div>
               </StaggerContainer>
