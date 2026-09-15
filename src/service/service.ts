@@ -2,6 +2,7 @@ import axios from "axios";
 
 const baseUrl = import.meta.env["VITE_API_BASE_URL"];
 const requestTimeout = 10000;
+const healthCheckTimeout = 5000;
 
 export const apiClient = axios.create({
   baseURL: baseUrl,
@@ -31,6 +32,33 @@ export class ContactRequestError extends Error {
     this.errors = errors;
   }
 }
+
+export const checkBackendAvailability = async () => {
+  try {
+    await apiClient.get("/api/health", {
+      timeout: healthCheckTimeout,
+    });
+  } catch (error) {
+    let message = "The contact service could not be reached. Please try again shortly.";
+
+    if (axios.isAxiosError(error)) {
+      console.error("Contact service health check failed", {
+        status: error.response?.status,
+        message: error.message,
+      });
+
+      if (error.code === "ECONNABORTED" || error.code === "ETIMEDOUT") {
+        message = "The contact service is starting up. Please try again in a few seconds.";
+      } else if (error.response) {
+        message = "The contact service is unavailable. Please try again shortly.";
+      }
+    } else {
+      console.error("Unexpected contact service health check error", error);
+    }
+
+    throw new Error(message);
+  }
+};
 
 export const sendMail = async (data: ISendMail) => {
   try {

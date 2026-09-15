@@ -5,7 +5,12 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { personalInfo } from "@/lib/data";
 import { AnimatedSection, StaggerContainer } from "@/components/AnimatedSection";
-import { ContactRequestError, type ContactValidationError, sendMail } from "@/service/service";
+import {
+  checkBackendAvailability,
+  ContactRequestError,
+  type ContactValidationError,
+  sendMail,
+} from "@/service/service";
 
 interface ContactFormValues {
   name: string;
@@ -87,6 +92,8 @@ export function Contact() {
     setFieldErrors({});
 
     try {
+      await checkBackendAvailability();
+
       await sendMail({
         name: values.name.trim(),
         email: values.email.trim(),
