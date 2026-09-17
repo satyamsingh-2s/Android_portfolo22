@@ -14,9 +14,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Toaster } from "../components/ui/sonner";
 
-// Google Analytics 4 measurement ID for this site. An environment value can
-// override this when deploying another environment.
-const GA_MEASUREMENT_ID = import.meta.env.VITE_GA_MEASUREMENT_ID ?? "G-6SVB84PQ4M";
+const GA_MEASUREMENT_ID = "G-6SVB84PQ4M";
 
 declare global {
   interface Window {
@@ -128,9 +126,7 @@ function GoogleAnalyticsScript() {
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', '${GA_MEASUREMENT_ID}', {
-              page_path: window.location.pathname + window.location.search,
-            });
+            gtag('config', '${GA_MEASUREMENT_ID}');
           `,
         }}
       />
