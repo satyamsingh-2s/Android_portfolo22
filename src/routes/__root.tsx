@@ -3,6 +3,7 @@ import {
   Outlet,
   Link,
   createRootRouteWithContext,
+  useLocation,
   useRouter,
   HeadContent,
   Scripts,
@@ -12,6 +13,15 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Toaster } from "../components/ui/sonner";
+
+const GA_MEASUREMENT_ID = import.meta.env.VITE_GA_MEASUREMENT_ID ?? "G-6SVB84PQM4";
+
+declare global {
+  interface Window {
+    dataLayer?: unknown[];
+    gtag?: (...args: unknown[]) => void;
+  }
+}
 
 function NotFoundComponent() {
   return (
@@ -106,11 +116,32 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   errorComponent: ErrorComponent,
 });
 
+function GoogleAnalyticsScript() {
+  return (
+    <>
+      <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`} />
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${GA_MEASUREMENT_ID}', {
+              page_path: window.location.pathname + window.location.search,
+            });
+          `,
+        }}
+      />
+    </>
+  );
+}
+
 function RootShell({ children }: { children: ReactNode }) {
   return (
     <html lang="en" data-theme="dark">
       <head>
         <script dangerouslySetInnerHTML={{ __html: `(function(){try{var t=localStorage.getItem('theme');document.documentElement.dataset.theme=t==='light'||t==='dark'?t:(window.matchMedia('(prefers-color-scheme: light)').matches?'light':'dark')}catch(e){}})()` }} />
+        <GoogleAnalyticsScript />
         <HeadContent />
       </head>
       <body>
@@ -123,6 +154,15 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (typeof window === "undefined" || !window.gtag) return;
+
+    window.gtag("config", GA_MEASUREMENT_ID, {
+      page_path: location.pathname + location.search,
+    });
+  }, [location.pathname, location.search]);
 
   return (
     <QueryClientProvider client={queryClient}>
