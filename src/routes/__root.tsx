@@ -161,9 +161,15 @@ function RootComponent() {
   useEffect(() => {
     if (typeof window === "undefined" || !window.gtag) return;
 
-    window.gtag("config", GA_MEASUREMENT_ID, {
-      page_path: location.pathname + location.search,
-    });
+    // Analytics is non-critical. A third-party tag failure must never trigger
+    // the app's error boundary or prevent the portfolio from rendering.
+    try {
+      window.gtag("config", GA_MEASUREMENT_ID, {
+        page_path: location.pathname + location.search,
+      });
+    } catch (error) {
+      console.warn("Google Analytics page-view tracking failed.", error);
+    }
   }, [location.pathname, location.search]);
 
   return (
