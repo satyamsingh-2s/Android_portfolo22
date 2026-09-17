@@ -14,7 +14,9 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Toaster } from "../components/ui/sonner";
 
-const GA_MEASUREMENT_ID = import.meta.env.VITE_GA_MEASUREMENT_ID ?? "G-6SVB84PQM4";
+// Google Analytics 4 measurement ID for this site. An environment value can
+// override this when deploying another environment.
+const GA_MEASUREMENT_ID = import.meta.env.VITE_GA_MEASUREMENT_ID ?? "G-6SVB84PQ4M";
 
 declare global {
   interface Window {
