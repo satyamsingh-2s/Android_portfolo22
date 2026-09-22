@@ -2,6 +2,7 @@
 import { ArrowDown, Download, Globe2, Github, ImageIcon, Mail } from "lucide-react";
 import { personalInfo, omegaProject } from "@/lib/data";
 import { AnimatedSection, StaggerContainer } from "@/components/AnimatedSection";
+import { HeroCardStack } from "./HeroCardStack";
 
 export function Hero() {
   const handleScroll = (href: string) => {
@@ -118,7 +119,7 @@ export function Hero() {
           </AnimatedSection>
 
           {/* ===== RIGHT COLUMN — COMPACT SUPPORTING PANEL ===== */}
-          <AnimatedSection className="w-full" delay={0.08} distance={16}>
+          <AnimatedSection className="hidden w-full" delay={0.08} distance={16}>
             <div className="rounded-[18px] border border-border-subtle bg-bg-elevated/70 p-5 sm:p-6">
               <StaggerContainer staggerDelay={0.07} distance={10}>
                 {/* CURRENTLY BUILDING */}
@@ -207,6 +208,9 @@ export function Hero() {
                 </div>
               </StaggerContainer>
             </div>
+          </AnimatedSection>
+          <AnimatedSection className="w-full" delay={0.08} distance={16}>
+            <HeroCardStack />
           </AnimatedSection>
         </div>
       </div>

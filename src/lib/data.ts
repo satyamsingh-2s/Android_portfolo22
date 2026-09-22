@@ -11,6 +11,18 @@ export const personalInfo = {
   resumeUrl: "https://drive.google.com/file/d/10_LD9NG1UtIu-M0O8YjjZNj5A5CFiTVL/view?usp=sharing",
 };
 
+export const profileCard = {
+  name: "CURIOUS BY DEFAULT",
+  description: "I like understanding how things work, then building them myself.",
+  // Add the final portrait at public/images/satyam-profile.jpg to replace the fallback.
+  image: "/images/satyam_profile.png",
+  social: {
+    instagram: personalInfo.instagram,
+    website: "https://omega-productivity.vercel.app/",
+    linkedin: personalInfo.linkedin,
+  },
+};
+
 export const omegaProject = {
   title: "Omega",
   subtitle: "AI-Assisted Productivity & Planning Platform",
