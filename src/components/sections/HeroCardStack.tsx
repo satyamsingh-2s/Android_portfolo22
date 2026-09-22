@@ -6,9 +6,124 @@ import { ProfileCard } from "./ProfileCard";
 
 type ActiveCard = "building" | "profile";
 
+function AndroidCatPeek() {
+  return (
+    <div className="android-cat-peek" aria-hidden="true">
+      {/* Face + ears — moves down behind the card */}
+      <div className="android-cat-face-layer">
+        <svg
+          viewBox="0 0 180 100"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+                  {/* Left ear */}
+          <path
+            className="android-cat-ear"
+            d="M48 42L36 12L62 30Z"
+          />
+          <path
+            className="android-cat-ear-inner"
+            d="M43 22L48 34L54 29"
+          />
+
+          {/* Right ear */}
+          <path
+            className="android-cat-ear"
+            d="M132 42L144 12L118 30Z"
+          />
+          <path
+            className="android-cat-ear-inner"
+            d="M137 22L132 34L126 29"
+          />
+
+          {/* Android head */}
+          <rect
+            x="43"
+            y="27"
+            width="94"
+            height="62"
+            rx="29"
+            fill="#0d0f0e"
+            stroke="currentColor"
+            strokeWidth="4"
+          />
+
+          {/* Eyes */}
+          <circle
+            cx="70"
+            cy="53"
+            r="4"
+            fill="#ffffff"
+            stroke="none"
+          />
+
+          <circle
+            cx="110"
+            cy="53"
+            r="4"
+            fill="#ffffff"
+            stroke="none"
+          />
+
+          {/* Small cat mouth */}
+          <path
+            d="M82 68Q90 75 98 68"
+            stroke="currentColor"
+            strokeWidth="3"
+            strokeLinecap="round"
+          />
+        </svg>
+      </div>
+
+      {/* Paws — remain visible while face hides */}
+      <svg
+        className="android-cat-paws"
+        viewBox="0 0 180 100"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+              <path
+          d="M49 82C42 78 34 80 31 87C28 94 33 98 40 97C46 96 50 93 54 89"
+          fill="currentColor"
+          stroke="currentColor"
+          strokeWidth="4"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+
+        <path
+          d="M131 82C138 78 146 80 149 87C152 94 147 98 140 97C134 96 130 93 126 89"
+          fill="currentColor"
+          stroke="currentColor"
+          strokeWidth="4"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+
+    {/* Three orange curiosity lines */}
+<svg
+  className="android-cat-spark"
+  viewBox="0 0 40 40"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  {/* Short vertical line */}
+  <path d="M14 15L14 7" />
+
+  {/* Middle diagonal line */}
+  <path d="M22 17L25 9" />
+
+  {/* Outer diagonal line */}
+  <path d="M29 21L35 15" />
+</svg>
+    </div>
+  );
+}
+
 function CurrentlyBuildingCard() {
   return (
-    <div className="h-full rounded-[28px] border border-border-subtle bg-bg-elevated p-5 sm:p-6">
+  <div className="currently-building-card h-full rounded-[28px] border border-border-subtle bg-bg-elevated p-5 sm:p-6">
       <StaggerContainer staggerDelay={0.07} distance={10}>
         <div className="flex items-center justify-between">
           <span className="font-mono-label text-[0.66rem] tracking-[0.15em] text-text-tertiary">
@@ -102,6 +217,8 @@ export function HeroCardStack() {
         )}
       </div>
       <div className="hero-current-card">
+          {profileIsActive && <AndroidCatPeek />}
+
         <div className="hero-card-face" inert={profileIsActive}>
           <CurrentlyBuildingCard />
         </div>

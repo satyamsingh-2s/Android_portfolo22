@@ -373,6 +373,261 @@ html[data-theme="light"] .design-lab {
   min-height: 520px;
 }
 
+
+/* =========================================================
+   ANDROID CAT
+   PEEK → HOLD + 3 LINES → PAW ONLY → PEEK
+   ========================================================= */
+
+.android-cat-peek {
+  position: absolute;
+  top: -24px;
+  right: 10%;
+  z-index: 4;
+
+  width: 80px;
+  height: 24px;
+
+  pointer-events: none;
+  color: #ff8a1c;
+
+  filter:
+    drop-shadow(0 0 4px rgba(255, 138, 28, 0.45))
+    drop-shadow(0 0 9px rgba(255, 138, 28, 0.18));
+}
+
+
+/* =========================================================
+   FACE + EARS
+   Top of this layer is above the card.
+   Bottom is exactly at the card border.
+   ========================================================= */
+
+.android-cat-face-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 24px;
+
+  overflow: hidden;
+}
+
+
+/* Move the face slightly lower so it meets the paws */
+
+.android-cat-face-layer svg {
+  position: absolute;
+  left: 0;
+  bottom: -15px;
+
+  width: 100%;
+  height: auto;
+
+  animation: android-cat-peek 2.8s ease-in-out infinite;
+}
+
+
+/* =========================================================
+   ANDROID HEAD
+   ========================================================= */
+
+.android-cat-face-layer rect {
+  fill: #0d0f0e;
+  stroke: currentColor;
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+
+/* =========================================================
+   EARS
+   ========================================================= */
+
+.android-cat-ear {
+  fill: currentColor;
+  stroke: currentColor;
+  stroke-width: 3.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+
+/* Black inner ear detail */
+
+.android-cat-ear-inner {
+  fill: none;
+  stroke: #0d0f0e;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+
+/* =========================================================
+   FACE DETAILS
+   ========================================================= */
+
+.android-cat-face-layer path:not(.android-cat-ear):not(.android-cat-ear-inner) {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+
+/* Eyes */
+
+.android-cat-face-layer circle {
+  fill: #ff8a1c;
+  stroke: none;
+}
+
+
+/* =========================================================
+   PAWS
+   Fixed in position while face moves behind card.
+   ========================================================= */
+
+.android-cat-paws {
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+
+  width: 100%;
+  height: auto;
+
+  z-index: 2;
+}
+
+.android-cat-paws path {
+  fill: currentColor;
+  stroke: currentColor;
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+
+/* =========================================================
+   THREE CURIOSITY LINES
+   ========================================================= */
+
+.android-cat-spark {
+  position: absolute;
+  top: -17px;
+  right: -8px;
+
+  width: 25px;
+  height: 25px;
+
+  z-index: 5;
+
+  opacity: 0;
+  transform: scale(0.7);
+
+  animation: android-cat-spark 2.8s ease-in-out infinite;
+}
+
+.android-cat-spark path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+
+/* =========================================================
+   CAT MOVEMENT
+
+   0–25%   PEEK
+   25–50%  HOLD
+   50–65%  HIDE
+   65–100% PAW ONLY
+   ========================================================= */
+
+@keyframes android-cat-peek {
+
+  /* PEEK */
+  0%,
+  25% {
+    transform: translateY(0);
+  }
+
+  /* HOLD */
+  25%,
+  50% {
+    transform: translateY(0);
+  }
+
+  /* HIDE */
+  50%,
+  65% {
+    transform: translateY(42px);
+  }
+
+  /* PAW ONLY */
+  65%,
+  100% {
+    transform: translateY(42px);
+  }
+}
+
+
+/* =========================================================
+   THREE-LINE ANIMATION
+
+   Lines appear only during HOLD.
+   ========================================================= */
+
+@keyframes android-cat-spark {
+
+  /* Hidden */
+  0%,
+  24% {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+
+  /* Appear */
+  28%,
+  48% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  /* Disappear before face hides */
+  52%,
+  100% {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .android-cat-face-layer svg,
+  .android-cat-spark {
+    animation: none;
+  }
+
+  .android-cat-face-layer svg {
+    transform: translateY(0);
+  }
+
+  .android-cat-spark {
+    opacity: 0;
+  }
+}
+
+
 .hero-current-card,
 .hero-profile-card {
   position: absolute;
@@ -401,7 +656,7 @@ html[data-theme="light"] .design-lab {
 .hero-current-card {
   z-index: 1;
   border-radius: 30px;
-  overflow: hidden;
+  overflow: visible;
   background: var(--bg-primary);
 }
 
@@ -423,29 +678,13 @@ html[data-theme="light"] .design-lab {
 .hero-card-stack.is-building-active .hero-profile-card,
 .hero-card-stack.is-profile-active .hero-current-card {
   z-index: 1;
-  transform: translateY(-10%) scaleX(0.92);
+  transform: translateY(-6.5%) scaleX(0.92);
   filter: brightness(0.92);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
 }
-
-/* Subtle motion to reveal that another card is behind */
-@keyframes back-card-nudge {
-  0%,
-  100% {
-    transform: translateY(-8%) scaleX(0.92);
-  }
-
-  50% {
-    transform: translateY(-9%) scaleX(0.92);
-  }
-}
-
-.hero-card-stack.is-profile-active .hero-current-card {
-  animation: back-card-nudge 3.5s ease-in-out infinite;
-}
-
-.hero-card-stack.is-building-active .hero-profile-card {
-  animation: back-card-nudge 3.5s ease-in-out infinite;
+/* Reduce top padding only when Currently Building is the peek card */
+.hero-card-stack.is-profile-active .hero-current-card .currently-building-card {
+  padding-top: 10px;
 }
 
 .hero-card-preview-trigger {
@@ -719,6 +958,27 @@ html[data-theme="light"] .profile-card {
 html[data-theme="light"] .profile-photo {
   background: #edf3ed;
   box-shadow: 0 8px 24px rgba(21, 154, 104, 0.08);
+}
+
+/* =========================================================
+   ANDROID CAT — LIGHT MODE
+   Only invert the black/white details.
+   Orange remains exactly the same.
+   ========================================================= */
+
+/* Face becomes white */
+html[data-theme="light"] .android-cat-face-layer rect {
+  fill: #edf3ed;
+}
+
+/* Inner ears become white */
+html[data-theme="light"] .android-cat-ear-inner {
+  stroke: #edf3ed;
+}
+
+/* Eyes become black */
+html[data-theme="light"] .android-cat-face-layer circle {
+  fill: #ff8a1c;
 }
 
 html[data-theme="light"] .profile-photo-dark {
