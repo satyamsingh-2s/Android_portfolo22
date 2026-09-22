@@ -436,7 +436,7 @@ html[data-theme="light"] .design-lab {
 .android-cat-face-layer rect {
   fill: #0d0f0e;
   stroke: currentColor;
-  stroke-width: 4;
+  stroke-width: 6;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
@@ -449,7 +449,7 @@ html[data-theme="light"] .design-lab {
 .android-cat-ear {
   fill: currentColor;
   stroke: currentColor;
-  stroke-width: 3.5;
+  stroke-width: 4.5;
   stroke-linecap: round;
   stroke-linejoin: round;
 }

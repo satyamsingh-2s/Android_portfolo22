@@ -52,7 +52,7 @@ function AndroidCatPeek() {
           <circle
             cx="70"
             cy="53"
-            r="4"
+            r="6.5"
             fill="#ffffff"
             stroke="none"
           />
@@ -60,7 +60,7 @@ function AndroidCatPeek() {
           <circle
             cx="110"
             cy="53"
-            r="4"
+            r="6.5"
             fill="#ffffff"
             stroke="none"
           />
