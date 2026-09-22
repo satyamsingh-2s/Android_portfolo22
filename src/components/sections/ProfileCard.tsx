@@ -313,7 +313,7 @@ export function ProfileCard() {
         <div className="profile-identity">
           <aside className="profile-mantra" aria-hidden="true">
             <span>LEARN</span>
-            <span>CODE</span>
+            <span className="typing-code">CODE </span>
             <span>REPEAT</span>
             <i />
           </aside>

@@ -592,6 +592,42 @@ html[data-theme="light"] .design-lab {
   margin-top: 6px;
   background: rgba(57, 230, 165, 0.65);
 }
+.typing-code {
+  display: inline-block;
+  width: 4ch;
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 1px solid currentColor;
+  animation:
+    typing-code 3.0s steps(4, end) infinite,
+    typing-cursor 0.7s step-end infinite;
+}
+
+@keyframes typing-code {
+  0% {
+    width: 0;
+  }
+
+  45%,
+  70% {
+    width: 5ch;
+  }
+
+  100% {
+    width: 0;
+  }
+}
+
+@keyframes typing-cursor {
+  0%,
+  100% {
+    border-color: currentColor;
+  }
+
+  50% {
+    border-color: transparent;
+  }
+}
 
 .profile-identity p {
   max-width: 270px;
