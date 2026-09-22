@@ -50,7 +50,7 @@ function Index() {
       <Athletics />
       <Contact />
       <footer className="border-t border-border-subtle px-6 py-8 text-center text-sm text-text-tertiary">
-        © {new Date().getFullYear()} Satyam Singh. Built with restraint.
+        © {new Date().getFullYear()} Satyam Singh. All rights reserved.
       </footer>
     </main>
   );
