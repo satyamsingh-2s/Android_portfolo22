@@ -110,7 +110,7 @@ function DeveloperMotif() {
         {/* =========================
     ANDROID MASCOT
 ========================== */}
-<g transform="translate(99 17)">
+<g transform="translate(99 17) scale(0.8)">
   <g
     className="android-mascot"
     stroke="currentColor"
@@ -318,9 +318,9 @@ export function ProfileCard() {
             <i />
           </aside>
           <div className="profile-photo">
-            <img src={profileCard.image} alt={profileCard.name} />
+            <img className="profile-photo-dark" src={profileCard.image} alt={profileCard.name} />
+            <img className="profile-photo-light" src={profileCard.lightImage} alt={profileCard.name} />
           </div>
-          <h3>{profileCard.name}</h3>
           <p>{profileCard.description}</p>
           <nav className="profile-socials" aria-label="Profile links">
             <a
@@ -351,7 +351,6 @@ export function ProfileCard() {
         </div>
         <DeveloperMotif />
         <footer className="profile-card-footer">
-          <span>KOLKATA, INDIA</span>
           <i />
           <span>KEEP BUILDING</span>
         </footer>

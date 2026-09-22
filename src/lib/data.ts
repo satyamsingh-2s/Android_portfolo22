@@ -16,6 +16,7 @@ export const profileCard = {
   description: "I like understanding how things work, then building them myself.",
   // Add the final portrait at public/images/satyam-profile.jpg to replace the fallback.
   image: "/images/satyam_profile.png",
+  lightImage: "/images/satyam_singh_light.png",
   social: {
     instagram: personalInfo.instagram,
     website: "https://omega-productivity.vercel.app/",

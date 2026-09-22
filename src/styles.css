@@ -394,17 +394,22 @@ html[data-theme="light"] .design-lab {
 .hero-card-face {
   width: 100%;
   height: 100%;
+  overflow: hidden;
+  border-radius: 30px;
 }
 
-.hero-current-card .hero-card-face > div {
-  opacity: 1;
-  background: var(--bg-elevated);
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
+.hero-current-card {
+  z-index: 1;
+  border-radius: 30px;
+  overflow: hidden;
+  background: var(--bg-primary);
 }
 
 .hero-profile-card {
   z-index: 2;
+  border-radius: 30px;
+  overflow: hidden;
+  background: var(--bg-primary);
 }
 
 .hero-card-stack.is-building-active .hero-current-card,
@@ -421,6 +426,26 @@ html[data-theme="light"] .design-lab {
   transform: translateY(-10%) scaleX(0.92);
   filter: brightness(0.92);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+}
+
+/* Subtle motion to reveal that another card is behind */
+@keyframes back-card-nudge {
+  0%,
+  100% {
+    transform: translateY(-8%) scaleX(0.92);
+  }
+
+  50% {
+    transform: translateY(-9%) scaleX(0.92);
+  }
+}
+
+.hero-card-stack.is-profile-active .hero-current-card {
+  animation: back-card-nudge 3.5s ease-in-out infinite;
+}
+
+.hero-card-stack.is-building-active .hero-profile-card {
+  animation: back-card-nudge 3.5s ease-in-out infinite;
 }
 
 .hero-card-preview-trigger {
@@ -456,15 +481,30 @@ html[data-theme="light"] .design-lab {
 }
 
 .profile-card {
+  --profile-surface: #0a0d0c;
   --profile-green: #39e6a5;
+  --profile-green-strong: #39e6a5;
+  --profile-green-soft: #237854;
+  --profile-green-faint: rgba(57, 230, 165, 0.08);
+  --profile-green-border: rgba(57, 230, 165, 0.38);
+  --profile-green-glow: rgba(57, 230, 165, 0.09);
   --profile-card-surface: #0b0e0d;
+  --profile-border: rgba(84, 125, 104, 0.24);
+  --profile-shadow: 0 16px 45px rgba(0, 0, 0, 0.22);
+  --profile-grid: #237854;
+  --profile-grid-opacity: 0.22;
+  --profile-heading: #f2f4f2;
+  --profile-body: #9aa39e;
+  --profile-muted: #77847e;
+  --profile-control: #d9e1dc;
+  --profile-control-surface: rgba(11, 16, 14, 0.55);
   position: relative;
   overflow: hidden;
-  border: 1px solid rgba(84, 125, 104, 0.24);
+  border: 1px solid var(--profile-border);
   border-radius: 30px;
-  background: #0a0d0c;
+  background: var(--profile-surface);
   box-shadow:
-    0 16px 45px rgba(0, 0, 0, 0.22),
+    var(--profile-shadow),
     inset 0 1px rgba(255, 255, 255, 0.015);
 }
 .profile-card-backdrop {
@@ -472,8 +512,8 @@ html[data-theme="light"] .design-lab {
   inset: 0;
   width: 100%;
   height: 100%;
-  color: #237854;
-  opacity: 0.22;
+  color: var(--profile-grid);
+  opacity: var(--profile-grid-opacity);
 }
 .profile-card-content {
   position: relative;
@@ -491,7 +531,7 @@ html[data-theme="light"] .design-lab {
   font-family: var(--font-mono);
   font-size: clamp(0.58rem, 1.55vw, 0.7rem);
   letter-spacing: 0.17em;
-  color: #77847e;
+  color: var(--profile-muted);
 }
 .profile-status-dot {
   width: 8px;
@@ -508,19 +548,19 @@ html[data-theme="light"] .design-lab {
   flex: 1;
   flex-direction: column;
   align-items: center;
-  padding-top: clamp(26px, 7%, 43px);
+ padding-top: clamp(20px, 5%, 32px);
   text-align: center;
 }
 .profile-photo {
-  width: 44%;
+  width: 64%;
   aspect-ratio: 4/5;
   overflow: hidden;
-  border: 1px solid rgba(57, 230, 165, 0.38);
+  border: 1px solid var(--profile-green-border);
   border-radius: 28px;
   background: linear-gradient(145deg, #151b18, #090c0b 78%);
   box-shadow:
-    0 0 0 1px rgba(57, 230, 165, 0.03),
-    0 0 22px rgba(57, 230, 165, 0.09);
+    0 0 0 1px var(--profile-green-faint),
+    0 0 22px var(--profile-green-glow);
 }
 .profile-photo img {
   display: block;
@@ -528,6 +568,9 @@ html[data-theme="light"] .design-lab {
   height: 100%;
   object-fit: cover;
   object-position: center;
+}
+.profile-photo-light {
+  display: none;
 }
 .profile-mantra {
   position: absolute;
@@ -549,38 +592,30 @@ html[data-theme="light"] .design-lab {
   margin-top: 6px;
   background: rgba(57, 230, 165, 0.65);
 }
-.profile-identity h3 {
-  margin: 15px 0 0;
-  color: #f2f4f2;
-  font-family: var(--font-display);
-  font-size: clamp(1.15rem, 3.5vw, 1.45rem);
-  font-weight: 600;
-  line-height: 1.15;
-  letter-spacing: -0.03em;
-}
+
 .profile-identity p {
   max-width: 270px;
-  margin:9px 0 0;
-  color: #9aa39e;
-  font-size: clamp(0.75rem, 2vw, 1rem);
-  line-height: 1.45;
+  margin: 7px 0 0;
+  color: var(--profile-body);
+  font-size: clamp(0.65rem, 1.7vw, 0.86rem);
+  line-height: 1.4;
 }
 .profile-socials {
   display: flex;
   align-items: center;
-  gap: clamp(11px, 3vw, 17px);
-  margin-top: clamp(18px, 5%, 27px);
+  gap: clamp(8px, 2vw, 12px);
+  margin-top: clamp(12px, 3%, 18px);
 }
 .profile-socials a {
   display: inline-flex;
-  width: clamp(39px, 10vw, 54px);
-  height: clamp(39px, 10vw, 54px);
+  width: clamp(22px, 4vw, 32px);
+  height: clamp(22px, 4vw, 32px);
   align-items: center;
   justify-content: center;
-  border: 1px solid rgba(57, 230, 165, 0.25);
+  border: 1px solid var(--profile-green-border);
   border-radius: 999px;
-  color: #d9e1dc;
-  background: rgba(11, 16, 14, 0.55);
+  color: var(--profile-control);
+  background: var(--profile-control-surface);
   transition:
     transform 180ms ease,
     border-color 180ms ease,
@@ -595,8 +630,8 @@ html[data-theme="light"] .design-lab {
   background: rgba(57, 230, 165, 0.08);
 }
 .profile-socials svg {
-  width: clamp(15px, 4vw, 20px);
-  height: clamp(15px, 4vw, 20px);
+  width: clamp(13px, 3vw, 16px);
+  height: clamp(13px, 3vw, 16px);
   stroke-width: 1.55;
 }
 .developer-motif {
@@ -621,6 +656,73 @@ html[data-theme="light"] .design-lab {
   flex: 1;
   max-width: 45px;
   background: rgba(57, 230, 165, 0.62);
+}
+
+/* The profile card has its own visual language, so give it a complete light palette
+   instead of leaving the intentionally dark card surface visible after a theme swap. */
+html[data-theme="light"] .profile-card {
+  --profile-surface: #f7f8f4;
+  --profile-green: #159a68;
+  --profile-green-strong: #087a52;
+  --profile-green-soft: #57b894;
+  --profile-green-faint: rgba(21, 154, 104, 0.1);
+  --profile-green-border: rgba(21, 154, 104, 0.32);
+  --profile-green-glow: rgba(21, 154, 104, 0.14);
+  --profile-card-surface: #f7f8f4;
+  --profile-border: rgba(21, 154, 104, 0.28);
+  --profile-shadow: 0 14px 40px rgba(21, 154, 104, 0.08), 0 4px 16px rgba(0, 0, 0, 0.04);
+  --profile-grid: #159a68;
+  --profile-grid-opacity: 0.18;
+  --profile-heading: #111613;
+  --profile-body: #4f5753;
+  --profile-muted: #526b61;
+  --profile-control: #26312c;
+  --profile-control-surface: rgba(255, 255, 255, 0.45);
+}
+
+html[data-theme="light"] .profile-photo {
+  background: #edf3ed;
+  box-shadow: 0 8px 24px rgba(21, 154, 104, 0.08);
+}
+
+html[data-theme="light"] .profile-photo-dark {
+  display: none;
+}
+
+html[data-theme="light"] .profile-photo-light {
+  display: block;
+}
+
+html[data-theme="light"] .profile-mantra {
+  color: var(--profile-muted);
+}
+
+html[data-theme="light"] .profile-mantra i,
+html[data-theme="light"] .profile-card-footer i {
+  background: var(--profile-green-border);
+}
+
+html[data-theme="light"] .profile-status-dot {
+  box-shadow:
+    0 0 0 4px rgba(21, 154, 104, 0.08),
+    0 0 10px rgba(21, 154, 104, 0.16);
+}
+
+html[data-theme="light"] .profile-socials a:hover,
+html[data-theme="light"] .profile-socials a:focus-visible {
+  border-color: var(--profile-green);
+  color: var(--profile-green-strong);
+  background: rgba(21, 154, 104, 0.07);
+}
+
+html[data-theme="light"] .developer-motif {
+  filter: drop-shadow(0 0 4px rgba(21, 154, 104, 0.1));
+}
+
+/* Explicitly retain the hero project card's opaque theme surface in light mode. */
+html[data-theme="light"] .hero-current-card .hero-card-face > div {
+  background: var(--bg-elevated);
+  border-color: var(--border-subtle);
 }
 
 .profile-social-link {
@@ -666,4 +768,8 @@ html[data-theme="light"] .design-lab {
   .hero-profile-card {
     transition: none;
   }
+  .hero-card-stack.is-profile-active .hero-current-card,
+.hero-card-stack.is-building-active .hero-profile-card {
+  animation: none;
+}
 }

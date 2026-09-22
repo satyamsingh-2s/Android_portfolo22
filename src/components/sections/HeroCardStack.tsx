@@ -81,7 +81,7 @@ function CurrentlyBuildingCard() {
 }
 
 export function HeroCardStack() {
-  const [activeCard, setActiveCard] = useState<ActiveCard>("building");
+  const [activeCard, setActiveCard] = useState<ActiveCard>("profile");
   const profileIsActive = activeCard === "profile";
 
   return (
