@@ -37,15 +37,23 @@ function AndroidCatPeek() {
           />
 
           {/* Android head */}
-          <rect
-            x="43"
-            y="27"
-            width="94"
-            height="62"
-            rx="29"
+         {/* Android-style semicircular head */}
+          <path
+            className="android-cat-head"
+            d="
+              M43 56
+              A47 29 0 0 1 137 56
+              V76
+              Q137 89 124 89
+              H56
+              Q43 89 43 76
+              Z
+            "
             fill="#0d0f0e"
             stroke="currentColor"
-            strokeWidth="4"
+            strokeWidth="5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           />
 
           {/* Eyes */}
