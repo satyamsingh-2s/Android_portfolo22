@@ -153,7 +153,7 @@ export const skillCategories = [
 ];
 
 export const designUXContent = {
-  eyebrow: "Design / UX Sensibility",
+  eyebrow: "---- Design / UX Sensibility -------",
   certificateUrl: "https://drive.google.com/file/d/19ZQNaoR1dawfLRJKT6KTvgp0WnYDsQJi/view",
   gallery: [
     "/images/athletics/1.webp",
@@ -161,7 +161,7 @@ export const designUXContent = {
     "/images/athletics/3.webp",
   ],
   header: "Designing the experience, not just the interface",
-  supporting: "Three design decisions / select to deconstruct",
+  supporting: "Four design decisions / select to deconstruct",
   intro:
     "Design isn't a separate phase for me — it's part of how I think through a product. Before implementing a screen, I consider what someone needs to see first, how much information should be visible at once, how users move through the product, and how visual decisions can make complex features easier to understand.",
   caseStudies: [

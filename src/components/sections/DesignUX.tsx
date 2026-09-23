@@ -330,42 +330,86 @@ function CaseCard({
 
   return (
     <div className="relative">
-      {/* Decorative fragments */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 hidden md:block"
-      >
-        <span
-          className="absolute -left-5 -top-4 block h-12 w-12 rotate-[18deg] border-2"
-          style={{
-            background: study.palette[1],
-            borderColor: INK,
-          }}
-        />
+     {/* Decorative fragments */}
+<div
+  aria-hidden
+  className="pointer-events-none absolute inset-0 hidden md:block"
+>
+  {/* Orange square */}
+  <motion.span
+    className="absolute -left-5 -top-4 block h-12 w-12 border-2"
+    style={{
+      background: study.palette[1],
+      borderColor: INK,
+    }}
+    animate={{
+      y: [0, -9, 0, 12, 0],
+      rotate: [18, 24, 18, 12, 18],
+    }}
+    transition={{
+      duration: 5,
+      repeat: Infinity,
+      ease: "easeInOut",
+    }}
+  />
 
-        <span
-          className="absolute -right-6 top-16 block h-10 w-10 -rotate-12 border-2"
-          style={{
-            background: study.palette[2],
-            borderColor: INK,
-          }}
-        />
+  {/* Top circle */}
+  <motion.span
+    className="absolute -right-3 -top-3 block h-6 w-6 rounded-full border-2"
+    style={{
+      background: SURFACE,
+      borderColor: study.color,
+    }}
+    animate={{
+      y: [0, -10, 0, 10, 0],
+      scale: [1, 1.15, 1, 0.9, 1],
+    }}
+    transition={{
+      duration: 3.5,
+      repeat: Infinity,
+      ease: "easeInOut",
+    }}
+  />
 
-        <span
-          className="absolute -bottom-4 -left-3 block h-9 w-9 rounded-full border-2"
-          style={{
-            background: study.palette[3],
-            borderColor: INK,
-          }}
-        />
+  {/* Blue / secondary square */}
+  <motion.span
+    className="absolute -right-6 top-16 block h-10 w-10 border-2"
+    style={{
+      background: study.palette[2],
+      borderColor: INK,
+    }}
+    animate={{
+      y: [0, 8, 0, -8, 0],
+      rotate: [-12, -20, -12, -7, -12],
+    }}
+    transition={{
+      duration: 3.5,
+      repeat: Infinity,
+      ease: "easeInOut",
+      delay: 0.5,
+    }}
+  />
 
-        <span
-          className="absolute -right-3 -top-3 block h-6 w-6 rounded-full border-2"
-          style={{
-            borderColor: study.color,
-          }}
-        />
-      </div>
+  {/* Bottom circle */}
+  <motion.span
+    className="absolute -bottom-4 -left-3 block h-9 w-9 rounded-full border-2"
+    style={{
+      background: study.palette[3],
+      borderColor: INK,
+    }}
+    animate={{
+      y: [0, -9, 0, 8, 0],
+      x: [0, 5, 0, -4, 0],
+      scale: [1, 1.1, 1, 0.95, 1],
+    }}
+    transition={{
+      duration: 5,
+      repeat: Infinity,
+      ease: "easeInOut",
+      delay: 1,
+    }}
+  />
+</div>
 
       <motion.button
         type="button"
@@ -681,10 +725,10 @@ export function DesignUX() {
 
   return (
     <section
-      id="design"
-      className="design-lab relative px-6 py-24 md:px-8 lg:px-12"
-    >
-      <div className="mx-auto max-w-[1200px]">
+        id="design"
+        className="design-lab relative w-full py-24"
+      >
+      <div className="w-full">
         <AnimatedSection>
           <div className="font-mono-label mb-4 text-xs text-text-tertiary">
             {designUXContent.eyebrow}
@@ -694,12 +738,12 @@ export function DesignUX() {
         {/* Inverted chalk design board */}
         <AnimatedSection distance={28}>
           <div
-            className="relative mt-10 overflow-hidden rounded-3xl border-2 p-6 md:p-12"
-            style={{
-              background: BOARD,
-              borderColor: "var(--design-border)",
-            }}
-          >
+              className="relative mt-10 w-full overflow-hidden border-y-2 p-6 md:p-12"
+              style={{
+                background: BOARD,
+                borderColor: "var(--design-border)",
+              }}
+            >
             {/* Paper grain */}
             <div
               aria-hidden

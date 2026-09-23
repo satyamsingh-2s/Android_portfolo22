@@ -172,26 +172,13 @@ export function Nav() {
    * -----------------------------------------
    */
 
-  const getExpandedWidth = () => {
-    if (typeof window === "undefined") {
-      return 410;
-    }
+ const widthProgress = 1 - compression;
 
-    if (window.innerWidth < 480) {
-      return Math.min(window.innerWidth - 24, 320);
-    }
-
-    if (window.innerWidth < 768) {
-      return 360;
-    }
-
-    return 410;
-  };
-
-  const expandedWidth = getExpandedWidth();
-
-  const width =
-    expandedWidth - compression * (expandedWidth - 54);
+    const width = `calc(
+      54px +
+      ${widthProgress} *
+      (min(410px, calc(100vw - 24px)) - 54px)
+    )`;
 
   /*
    * -----------------------------------------
@@ -402,17 +389,16 @@ export function Nav() {
             shadow-[0_12px_40px_rgba(0,0,0,0.28)]
             backdrop-blur-xl
           "
-          style={{
-            width: `${width}px`,
-            height: `${height}px`,
-            padding: `${padding}px`,
-            gap: `${gap}px`,
-            opacity,
-            filter: `blur(${blur}px)`,
-            transform: `scale(${scale})`,
-            transformOrigin:
-              "center center",
-          }}
+         style={{
+                width,
+                height: `${height}px`,
+                padding: `${padding}px`,
+                gap: `${gap}px`,
+                opacity,
+                filter: `blur(${blur}px)`,
+                transform: `scale(${scale})`,
+                transformOrigin: "center center",
+              }}
         >
           {/*
            * -----------------------------------
