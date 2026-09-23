@@ -2,7 +2,15 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { X, ArrowRight, Plus, ExternalLink, Image as ImageIcon, ChevronLeft, ChevronRight } from "lucide-react";
+import {
+  X,
+  ArrowRight,
+  Plus,
+  ExternalLink,
+  Image as ImageIcon,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
 import { designUXContent } from "@/lib/data";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { diagrams } from "@/components/design/DesignDiagrams";
@@ -18,6 +26,9 @@ const ease = [0.16, 1, 0.3, 1] as const;
 
 type Study = (typeof designUXContent.caseStudies)[number];
 
+/* -------------------------------------------------------------------------- */
+/* Design Gallery                                                             */
+/* -------------------------------------------------------------------------- */
 
 function DesignGallery({
   images,
@@ -32,21 +43,30 @@ function DesignGallery({
 
   useEffect(() => {
     if (!open) return;
+
     setActiveIndex(0);
+
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
 
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") onOpenChange(false);
+      if (event.key === "Escape") {
+        onOpenChange(false);
+      }
+
       if (event.key === "ArrowRight" && images.length > 1) {
         setActiveIndex((current) => (current + 1) % images.length);
       }
+
       if (event.key === "ArrowLeft" && images.length > 1) {
-        setActiveIndex((current) => (current - 1 + images.length) % images.length);
+        setActiveIndex(
+          (current) => (current - 1 + images.length) % images.length
+        );
       }
     };
 
     window.addEventListener("keydown", onKeyDown);
+
     return () => {
       document.body.style.overflow = previousOverflow;
       window.removeEventListener("keydown", onKeyDown);
@@ -55,8 +75,10 @@ function DesignGallery({
 
   useEffect(() => {
     if (!open || images.length <= 1) return;
+
     const nextIndex = (activeIndex + 1) % images.length;
     const nextImage = new Image();
+
     nextImage.src = images[nextIndex]!;
   }, [activeIndex, images, open]);
 
@@ -76,7 +98,10 @@ function DesignGallery({
             type="button"
             aria-label="Close gallery"
             className="absolute inset-0 cursor-default"
-            style={{ background: "rgba(15, 15, 15, 0.78)", backdropFilter: "blur(10px)" }}
+            style={{
+              background: "rgba(15, 15, 15, 0.78)",
+              backdropFilter: "blur(10px)",
+            }}
             onClick={() => onOpenChange(false)}
           />
 
@@ -86,17 +111,28 @@ function DesignGallery({
             exit={{ opacity: 0, y: 12, scale: 0.98 }}
             transition={{ duration: 0.32, ease }}
             className="relative z-10 w-full max-w-5xl overflow-hidden rounded-2xl border-2 p-4 shadow-[10px_10px_0_0_#E8590C] sm:p-6"
-            style={{ background: SURFACE, borderColor: "var(--design-border)" }}
+            style={{
+              background: SURFACE,
+              borderColor: "var(--design-border)",
+            }}
           >
             <div className="flex items-start justify-between gap-4">
               <div>
-                <div className="font-mono-label text-[9px] font-semibold" style={{ color: MUTED }}>
+                <div
+                  className="font-mono-label text-[9px] font-semibold"
+                  style={{ color: MUTED }}
+                >
                   SELECTED WORK / MY DESIGN
                 </div>
-                <h3 className="font-display mt-1 text-2xl font-semibold tracking-tight" style={{ color: INK }}>
+
+                <h3
+                  className="font-display mt-1 text-2xl font-semibold tracking-tight"
+                  style={{ color: INK }}
+                >
                   My Design
                 </h3>
               </div>
+
               <button
                 type="button"
                 onClick={() => onOpenChange(false)}
@@ -109,14 +145,31 @@ function DesignGallery({
             </div>
 
             {images.length === 0 ? (
-              <div className="mt-6 flex min-h-[45vh] flex-col items-center justify-center border-2 border-dashed text-center" style={{ borderColor: LINE, color: MUTED }}>
+              <div
+                className="mt-6 flex min-h-[45vh] flex-col items-center justify-center border-2 border-dashed text-center"
+                style={{ borderColor: LINE, color: MUTED }}
+              >
                 <ImageIcon size={28} strokeWidth={1.5} />
-                <p className="font-mono-label mt-4 text-[10px] font-semibold">Design images are ready to be added.</p>
-                <p className="mt-1 max-w-sm text-xs">Add your work to <code>public/images/design/</code> and list the paths in <code>src/lib/data.ts</code>.</p>
+
+                <p className="font-mono-label mt-4 text-[10px] font-semibold">
+                  Design images are ready to be added.
+                </p>
+
+                <p className="mt-1 max-w-sm text-xs">
+                  Add your work to{" "}
+                  <code>public/images/design/</code> and list the paths in{" "}
+                  <code>src/lib/data.ts</code>.
+                </p>
               </div>
             ) : (
               <>
-                <div className="relative mt-6 overflow-hidden border-2 p-2 sm:p-4" style={{ borderColor: LINE, background: SURFACE }}>
+                <div
+                  className="relative mt-6 overflow-hidden border-2 p-2 sm:p-4"
+                  style={{
+                    borderColor: LINE,
+                    background: SURFACE,
+                  }}
+                >
                   <AnimatePresence mode="wait" initial={false}>
                     <motion.img
                       key={images[activeIndex]}
@@ -124,20 +177,65 @@ function DesignGallery({
                       loading="lazy"
                       decoding="async"
                       alt={`Design work ${activeIndex + 1}`}
-                      initial={{ opacity: 0, x: 34, scale: 0.985 }}
-                      animate={{ opacity: 1, x: 0, scale: 1 }}
-                      exit={{ opacity: 0, x: -34, scale: 0.985 }}
-                      transition={{ duration: 0.3, ease }}
+                      initial={{
+                        opacity: 0,
+                        x: 34,
+                        scale: 0.985,
+                      }}
+                      animate={{
+                        opacity: 1,
+                        x: 0,
+                        scale: 1,
+                      }}
+                      exit={{
+                        opacity: 0,
+                        x: -34,
+                        scale: 0.985,
+                      }}
+                      transition={{
+                        duration: 0.3,
+                        ease,
+                      }}
                       className="mx-auto max-h-[65vh] w-full rounded-lg object-contain"
                     />
                   </AnimatePresence>
 
                   {images.length > 1 && (
                     <>
-                      <button type="button" onClick={() => setActiveIndex((current) => (current - 1 + images.length) % images.length)} aria-label="Previous design" className="absolute left-3 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border-2 transition-transform hover:-translate-x-0.5" style={{ borderColor: INK, background: BOARD, color: INK }}>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setActiveIndex(
+                            (current) =>
+                              (current - 1 + images.length) % images.length
+                          )
+                        }
+                        aria-label="Previous design"
+                        className="absolute left-3 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border-2 transition-transform hover:-translate-x-0.5"
+                        style={{
+                          borderColor: INK,
+                          background: BOARD,
+                          color: INK,
+                        }}
+                      >
                         <ChevronLeft size={16} />
                       </button>
-                      <button type="button" onClick={() => setActiveIndex((current) => (current + 1) % images.length)} aria-label="Next design" className="absolute right-3 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border-2 transition-transform hover:translate-x-0.5" style={{ borderColor: INK, background: BOARD, color: INK }}>
+
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setActiveIndex(
+                            (current) => (current + 1) % images.length
+                          )
+                        }
+                        aria-label="Next design"
+                        className="absolute right-3 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border-2 transition-transform hover:translate-x-0.5"
+                        style={{
+                          borderColor: INK,
+                          background: BOARD,
+                          color: INK,
+                        }}
+                      >
                         <ChevronRight size={16} />
                       </button>
                     </>
@@ -145,9 +243,23 @@ function DesignGallery({
                 </div>
 
                 {images.length > 1 && (
-                  <div className="mt-4 flex justify-center gap-1.5" aria-label="Design gallery pagination">
+                  <div
+                    className="mt-4 flex justify-center gap-1.5"
+                    aria-label="Design gallery pagination"
+                  >
                     {images.map((image, index) => (
-                      <button key={image} type="button" onClick={() => setActiveIndex(index)} aria-label={`Show design ${index + 1}`} className="h-1.5 rounded-full transition-all" style={{ width: index === activeIndex ? 28 : 6, background: index === activeIndex ? INK : LINE }} />
+                      <button
+                        key={image}
+                        type="button"
+                        onClick={() => setActiveIndex(index)}
+                        aria-label={`Show design ${index + 1}`}
+                        className="h-1.5 rounded-full transition-all"
+                        style={{
+                          width: index === activeIndex ? 28 : 6,
+                          background:
+                            index === activeIndex ? INK : LINE,
+                        }}
+                      />
                     ))}
                   </div>
                 )}
@@ -160,19 +272,37 @@ function DesignGallery({
   );
 }
 
+/* -------------------------------------------------------------------------- */
+/* Decorative Dot Grid                                                        */
+/* -------------------------------------------------------------------------- */
+
 function DotGrid({ color }: { color: string }) {
   return (
-    <svg width="42" height="30" viewBox="0 0 42 30" aria-hidden>
+    <svg
+      width="42"
+      height="30"
+      viewBox="0 0 42 30"
+      aria-hidden
+    >
       {[0, 1, 2].map((r) =>
         [0, 1, 2, 3].map((c) => (
-          <circle key={`${r}-${c}`} cx={4 + c * 11} cy={4 + r * 11} r="2.4" fill={color} />
-        )),
+          <circle
+            key={`${r}-${c}`}
+            cx={4 + c * 11}
+            cy={4 + r * 11}
+            r="2.4"
+            fill={color}
+          />
+        ))
       )}
     </svg>
   );
 }
 
-/* Collapsed summary module with fragments escaping its boundary */
+/* -------------------------------------------------------------------------- */
+/* Case Study Card                                                            */
+/* -------------------------------------------------------------------------- */
+
 function CaseCard({
   study,
   index,
@@ -200,23 +330,40 @@ function CaseCard({
 
   return (
     <div className="relative">
-      {/* escaping fragments — decorative, hidden on mobile */}
-      <div aria-hidden className="pointer-events-none absolute inset-0 hidden md:block">
+      {/* Decorative fragments */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 hidden md:block"
+      >
         <span
           className="absolute -left-5 -top-4 block h-12 w-12 rotate-[18deg] border-2"
-          style={{ background: study.palette[1], borderColor: INK }}
+          style={{
+            background: study.palette[1],
+            borderColor: INK,
+          }}
         />
+
         <span
           className="absolute -right-6 top-16 block h-10 w-10 -rotate-12 border-2"
-          style={{ background: study.palette[2], borderColor: INK }}
+          style={{
+            background: study.palette[2],
+            borderColor: INK,
+          }}
         />
+
         <span
           className="absolute -bottom-4 -left-3 block h-9 w-9 rounded-full border-2"
-          style={{ background: study.palette[3], borderColor: INK }}
+          style={{
+            background: study.palette[3],
+            borderColor: INK,
+          }}
         />
+
         <span
           className="absolute -right-3 -top-3 block h-6 w-6 rounded-full border-2"
-          style={{ borderColor: study.color }}
+          style={{
+            borderColor: study.color,
+          }}
         />
       </div>
 
@@ -235,9 +382,13 @@ function CaseCard({
           >
             {num}
           </span>
+
           <span
             className="font-mono-label border-b-2 pb-0.5 text-[9px] font-semibold"
-            style={{ color: study.color, borderColor: study.color }}
+            style={{
+              color: study.color,
+              borderColor: study.color,
+            }}
           >
             Case Study
           </span>
@@ -254,7 +405,10 @@ function CaseCard({
           ))}
         </h3>
 
-        <p className="mt-3 text-sm leading-relaxed" style={{ color: MUTED }}>
+        <p
+          className="mt-3 text-sm leading-relaxed"
+          style={{ color: MUTED }}
+        >
           {study.summary}
         </p>
 
@@ -264,11 +418,13 @@ function CaseCard({
             style={{ color: study.color }}
           >
             Deconstruct
+
             <ArrowRight
               size={14}
               className="transition-transform duration-150 group-hover:translate-x-1"
             />
           </span>
+
           <DotGrid color={study.color} />
         </div>
       </motion.button>
@@ -276,13 +432,38 @@ function CaseCard({
   );
 }
 
-function ExpandedCase({ study, index, onClose }: { study: Study; index: number; onClose: () => void }) {
+/* -------------------------------------------------------------------------- */
+/* Expanded Case Study                                                        */
+/* -------------------------------------------------------------------------- */
+
+function ExpandedCase({
+  study,
+  index,
+  onClose,
+}: {
+  study: Study;
+  index: number;
+  onClose: () => void;
+}) {
   const Diagram = diagrams[study.id as keyof typeof diagrams];
+
   const steps = [
-    { label: "Problem", body: study.problem },
-    { label: "Thinking", body: study.thinking },
-    { label: "Design Decision", body: study.decision },
-    { label: "Result", body: study.result },
+    {
+      label: "Problem",
+      body: study.problem,
+    },
+    {
+      label: "Thinking",
+      body: study.thinking,
+    },
+    {
+      label: "Design Decision",
+      body: study.decision,
+    },
+    {
+      label: "Result",
+      body: study.result,
+    },
   ];
 
   return (
@@ -292,13 +473,22 @@ function ExpandedCase({ study, index, onClose }: { study: Study; index: number; 
       exit={{ opacity: 0, y: 12 }}
       transition={{ duration: 0.4, ease }}
       className="relative border-2 p-6 md:p-10"
-      style={{ background: SURFACE, borderColor: "var(--design-border)", boxShadow: `10px 10px 0 0 ${study.color}` }}
+      style={{
+        background: SURFACE,
+        borderColor: "var(--design-border)",
+        boxShadow: `10px 10px 0 0 ${study.color}`,
+      }}
     >
+      {/* Header */}
       <div className="flex items-start justify-between gap-6">
         <div>
-          <span className="font-mono-label text-[10px] font-semibold" style={{ color: study.color }}>
+          <span
+            className="font-mono-label text-[10px] font-semibold"
+            style={{ color: study.color }}
+          >
             Case Study {String(index + 1).padStart(2, "0")} / Deconstructed
           </span>
+
           <h3
             className="font-display mt-2 text-2xl font-semibold tracking-tight md:text-3xl"
             style={{ color: INK }}
@@ -306,23 +496,40 @@ function ExpandedCase({ study, index, onClose }: { study: Study; index: number; 
             {study.title}
           </h3>
         </div>
+
         <button
           type="button"
           onClick={onClose}
           aria-label="Close case study"
           className="flex h-10 w-10 shrink-0 items-center justify-center border-2 transition-colors"
-          style={{ borderColor: INK, color: INK, background: "transparent" }}
+          style={{
+            borderColor: INK,
+            color: INK,
+            background: "transparent",
+          }}
         >
           <X size={16} />
         </button>
       </div>
 
+      {/* Main Case Study */}
       <div className="mt-8 grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-14">
         <div
           className="border-2 border-dashed p-4"
           style={{ borderColor: LINE }}
         >
-          <Diagram />
+          {Diagram ? (
+            <Diagram />
+          ) : (
+            <div
+              className="flex min-h-[280px] items-center justify-center text-center"
+              style={{ color: MUTED }}
+            >
+              <span className="font-mono-label text-[10px]">
+                Interaction diagram coming soon
+              </span>
+            </div>
+          )}
         </div>
 
         <ol className="relative space-y-6">
@@ -331,7 +538,11 @@ function ExpandedCase({ study, index, onClose }: { study: Study; index: number; 
               key={s.label}
               initial={{ opacity: 0, x: 12 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.4, delay: 0.15 + i * 0.09, ease }}
+              transition={{
+                duration: 0.4,
+                delay: 0.15 + i * 0.09,
+                ease,
+              }}
               className="relative pl-12"
             >
               <span
@@ -344,31 +555,135 @@ function ExpandedCase({ study, index, onClose }: { study: Study; index: number; 
               >
                 {String(i + 1).padStart(2, "0")}
               </span>
+
               <div
                 className="font-mono-label text-[10px] font-semibold"
                 style={{ color: study.color }}
               >
                 {s.label}
               </div>
-              <p className="mt-1.5 text-sm leading-relaxed" style={{ color: INK }}>
+
+              <p
+                className="mt-1.5 text-sm leading-relaxed"
+                style={{ color: INK }}
+              >
                 {s.body}
               </p>
             </motion.li>
           ))}
         </ol>
       </div>
+
+      {/* ------------------------------------------------------------------ */}
+      {/* Visual Evidence                                                     */}
+      {/* ------------------------------------------------------------------ */}
+
+      {study.evidence && study.evidence.length > 0 && (
+        <div
+          className="mt-12 border-t-2 pt-10"
+          style={{ borderColor: LINE }}
+        >
+          <div className="flex items-end justify-between gap-4">
+            <div>
+              <div
+                className="font-mono-label text-[10px] font-semibold"
+                style={{ color: study.color }}
+              >
+                VISUAL EVIDENCE
+              </div>
+
+              <h4
+                className="font-display mt-2 text-xl font-semibold tracking-tight"
+                style={{ color: INK }}
+              >
+                From problem to interaction
+              </h4>
+            </div>
+
+            <span
+              className="font-mono-label hidden text-[9px] sm:block"
+              style={{ color: MUTED }}
+            >
+              {study.evidence.length} ARTIFACTS
+            </span>
+          </div>
+
+          <div className="mt-6 grid gap-5 md:grid-cols-2">
+            {study.evidence.map((item, i) => (
+              <motion.figure
+                key={item.image}
+                initial={{
+                  opacity: 0,
+                  y: 14,
+                }}
+                animate={{
+                  opacity: 1,
+                  y: 0,
+                }}
+                transition={{
+                  duration: 0.4,
+                  delay: 0.25 + i * 0.08,
+                  ease,
+                }}
+                className="group"
+              >
+                <div
+                  className="overflow-hidden border-2 p-2 transition-transform duration-200 group-hover:-translate-y-1"
+                  style={{
+                    borderColor: LINE,
+                    background: SURFACE,
+                  }}
+                >
+                  <img
+                    src={item.image}
+                    alt={item.label}
+                    loading="lazy"
+                    decoding="async"
+                    className="w-full object-contain"
+                  />
+                </div>
+
+                <figcaption className="mt-3">
+                  <div
+                    className="font-mono-label text-[9px] font-semibold"
+                    style={{ color: study.color }}
+                  >
+                    {String(i + 1).padStart(2, "0")} / {item.label}
+                  </div>
+
+                  <p
+                    className="mt-1 text-xs leading-relaxed"
+                    style={{ color: MUTED }}
+                  >
+                    {item.caption}
+                  </p>
+                </figcaption>
+              </motion.figure>
+            ))}
+          </div>
+        </div>
+      )}
     </motion.div>
   );
 }
 
+/* -------------------------------------------------------------------------- */
+/* Design UX Section                                                          */
+/* -------------------------------------------------------------------------- */
+
 export function DesignUX() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const [designGalleryOpen, setDesignGalleryOpen] = useState(false);
+
   const studies = designUXContent.caseStudies;
-  const active = openIndex !== null ? studies[openIndex] : undefined;
+  const active =
+    openIndex !== null ? studies[openIndex] : undefined;
 
   return (
-    <section id="design" className="design-lab relative px-6 py-24 md:px-8 lg:px-12">
+    <section
+      id="design"
+      className="design-lab relative px-6 py-24 md:px-8 lg:px-12"
+    >
       <div className="mx-auto max-w-[1200px]">
         <AnimatedSection>
           <div className="font-mono-label mb-4 text-xs text-text-tertiary">
@@ -376,24 +691,28 @@ export function DesignUX() {
           </div>
         </AnimatedSection>
 
-
         {/* Inverted chalk design board */}
         <AnimatedSection distance={28}>
           <div
             className="relative mt-10 overflow-hidden rounded-3xl border-2 p-6 md:p-12"
-            style={{ background: BOARD, borderColor: "var(--design-border)" }}
+            style={{
+              background: BOARD,
+              borderColor: "var(--design-border)",
+            }}
           >
-            {/* paper grain */}
+            {/* Paper grain */}
             <div
               aria-hidden
               className="pointer-events-none absolute inset-0 opacity-[0.05]"
               style={{
-                backgroundImage: "radial-gradient(var(--design-pattern) 1px, transparent 1px)",
+                backgroundImage:
+                  "radial-gradient(var(--design-pattern) 1px, transparent 1px)",
                 backgroundSize: "16px 16px",
               }}
             />
 
             <div className="relative">
+              {/* Header */}
               <div className="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
                 <h2
                   className="font-display max-w-md text-3xl font-semibold leading-[1.1] tracking-tight md:text-4xl"
@@ -401,58 +720,114 @@ export function DesignUX() {
                 >
                   Designing the experience,
                   <br />
-                  not just the <em style={{ color: studies[0]?.color }}>interface.</em>
+                  not just the{" "}
+                  <em style={{ color: studies[0]?.color }}>
+                    interface.
+                  </em>
                 </h2>
-                <p className="max-w-md text-sm leading-relaxed" style={{ color: MUTED }}>
+
+                <p
+                  className="max-w-md text-sm leading-relaxed"
+                  style={{ color: MUTED }}
+                >
                   {designUXContent.intro}
                 </p>
               </div>
 
+              {/* Supporting row */}
               <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center">
                 <span
-                  className="font-mono-label text-[9px] md:whitespace-nowrap md:text-[10px] font-semibold"
+                  className="font-mono-label text-[9px] font-semibold md:whitespace-nowrap md:text-[10px]"
                   style={{ color: INK }}
                 >
                   {designUXContent.supporting}
                 </span>
-                <span className="hidden h-px flex-1 sm:block" style={{ background: LINE }} aria-hidden />
+
+                <span
+                  className="hidden h-px flex-1 sm:block"
+                  style={{ background: LINE }}
+                  aria-hidden
+                />
+
                 <div className="flex flex-wrap gap-2.5">
+                  {/* Certificate */}
                   <a
-                    href={designUXContent.certificateUrl || undefined}
-                    target={designUXContent.certificateUrl ? "_blank" : undefined}
-                    rel={designUXContent.certificateUrl ? "noreferrer" : undefined}
-                    aria-disabled={!designUXContent.certificateUrl}
+                    href={
+                      designUXContent.certificateUrl || undefined
+                    }
+                    target={
+                      designUXContent.certificateUrl
+                        ? "_blank"
+                        : undefined
+                    }
+                    rel={
+                      designUXContent.certificateUrl
+                        ? "noreferrer"
+                        : undefined
+                    }
+                    aria-disabled={
+                      !designUXContent.certificateUrl
+                    }
                     onClick={(event) => {
-                      if (!designUXContent.certificateUrl) event.preventDefault();
+                      if (!designUXContent.certificateUrl) {
+                        event.preventDefault();
+                      }
                     }}
                     className={`inline-flex h-9 items-center gap-2 rounded-full border-2 px-3.5 text-[10px] font-semibold transition-all duration-200 ${
                       designUXContent.certificateUrl
                         ? "hover:-translate-y-0.5"
                         : "cursor-not-allowed opacity-50"
                     }`}
-                    style={{ borderColor: "var(--design-border)", color: INK, background: "transparent" }}
-                    title={designUXContent.certificateUrl ? "Open certificate" : "Add your certificate link in src/lib/data.ts"}
+                    style={{
+                      borderColor: "var(--design-border)",
+                      color: INK,
+                      background: "transparent",
+                    }}
+                    title={
+                      designUXContent.certificateUrl
+                        ? "Open certificate"
+                        : "Add your certificate link in src/lib/data.ts"
+                    }
                   >
                     My Certificate
                     <ExternalLink size={12} />
                   </a>
+
+                  {/* My Design */}
                   <button
                     type="button"
-                    onClick={() => setDesignGalleryOpen(true)}
+                    onClick={() =>
+                      setDesignGalleryOpen(true)
+                    }
                     className="inline-flex h-9 items-center gap-2 rounded-full border-2 px-3.5 text-[10px] font-semibold transition-all duration-200 hover:-translate-y-0.5"
-                    style={{ borderColor: "var(--design-border)", color: INK, background: "transparent" }}
+                    style={{
+                      borderColor: "var(--design-border)",
+                      color: INK,
+                      background: "transparent",
+                    }}
                   >
                     <ImageIcon size={13} />
+
                     My Design
+
                     {designUXContent.gallery.length > 0 && (
-                      <span className="font-mono text-[9px]" style={{ color: MUTED }}>{designUXContent.gallery.length}</span>
+                      <span
+                        className="font-mono text-[9px]"
+                        style={{ color: MUTED }}
+                      >
+                        {designUXContent.gallery.length}
+                      </span>
                     )}
                   </button>
                 </div>
               </div>
 
+              {/* Case studies */}
               <div className="mt-10">
-                <AnimatePresence mode="wait" initial={false}>
+                <AnimatePresence
+                  mode="wait"
+                  initial={false}
+                >
                   {active ? (
                     <ExpandedCase
                       key={active.id}
@@ -466,17 +841,30 @@ export function DesignUX() {
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
-                      transition={{ duration: 0.3, ease }}
+                      transition={{
+                        duration: 0.3,
+                        ease,
+                      }}
                       className="grid gap-10 md:grid-cols-3 md:gap-6 lg:gap-10"
                     >
                       {studies.map((study, i) => (
                         <div
                           key={study.id}
                           className={
-                            i === 1 ? "md:-translate-y-6" : i === 2 ? "md:translate-y-8" : ""
+                            i === 1
+                              ? "md:-translate-y-6"
+                              : i === 2
+                                ? "md:translate-y-8"
+                                : ""
                           }
                         >
-                          <CaseCard study={study} index={i} onOpen={() => setOpenIndex(i)} />
+                          <CaseCard
+                            study={study}
+                            index={i}
+                            onOpen={() =>
+                              setOpenIndex(i)
+                            }
+                          />
                         </div>
                       ))}
                     </motion.div>
@@ -484,17 +872,27 @@ export function DesignUX() {
                 </AnimatePresence>
               </div>
 
+              {/* Footer */}
               <div
                 className="font-mono-label mt-16 text-center text-[10px]"
                 style={{ color: MUTED }}
               >
                 {active ? (
-                  <button type="button" onClick={() => setOpenIndex(null)} className="underline">
-                    <span className="inline-flex items-center gap-1">Back to all case studies</span>
+                  <button
+                    type="button"
+                    onClick={() => setOpenIndex(null)}
+                    className="underline"
+                  >
+                    <span className="inline-flex items-center gap-1">
+                      Back to all case studies
+                    </span>
                   </button>
                 ) : (
                   <span className="inline-flex items-center gap-2">
-                    <Plus size={12} /> Click any case study to deconstruct the thinking behind it
+                    <Plus size={12} />
+
+                    Click any case study to deconstruct
+                    the thinking behind it
                   </span>
                 )}
               </div>
@@ -503,6 +901,7 @@ export function DesignUX() {
         </AnimatedSection>
       </div>
 
+      {/* Global Design Gallery */}
       <DesignGallery
         images={designUXContent.gallery}
         open={designGalleryOpen}

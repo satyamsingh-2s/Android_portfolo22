@@ -46,11 +46,14 @@ const navLinks = [
 
 export function Nav() {
   /*
-   * compression
+   * -----------------------------------------
+   * Compression
    *
    * 0 = fully expanded
    * 1 = fully compressed
+   * -----------------------------------------
    */
+
   const [compression, setCompression] = useState(0);
 
   const targetCompression = useRef(0);
@@ -69,17 +72,13 @@ export function Nav() {
       const current = currentCompression.current;
       const target = targetCompression.current;
 
-      /*
-       * Smooth interpolation.
-       */
       const next = current + (target - current) * 0.1;
 
       currentCompression.current = next;
       setCompression(next);
 
       if (Math.abs(target - next) > 0.001) {
-        animationFrame.current =
-          requestAnimationFrame(animate);
+        animationFrame.current = requestAnimationFrame(animate);
       } else {
         currentCompression.current = target;
         setCompression(target);
@@ -89,16 +88,14 @@ export function Nav() {
 
     const startAnimation = () => {
       if (animationFrame.current === null) {
-        animationFrame.current =
-          requestAnimationFrame(animate);
+        animationFrame.current = requestAnimationFrame(animate);
       }
     };
 
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
 
-      const delta =
-        currentScrollY - lastScrollY.current;
+      const delta = currentScrollY - lastScrollY.current;
 
       /*
        * Always fully expanded at the top.
@@ -148,70 +145,96 @@ export function Nav() {
     });
 
     return () => {
-      window.removeEventListener(
-        "scroll",
-        handleScroll
-      );
+      window.removeEventListener("scroll", handleScroll);
 
       if (animationFrame.current !== null) {
-        cancelAnimationFrame(
-          animationFrame.current
-        );
+        cancelAnimationFrame(animationFrame.current);
       }
     };
   }, []);
 
   /*
    * -----------------------------------------
-   * Navbar dimensions
+   * Responsive navbar dimensions
+   * -----------------------------------------
+   *
+   * Desktop:
+   * Expanded  = 410px
+   * Compressed = 54px
+   *
+   * Tablet:
+   * Expanded  = 360px
+   * Compressed = 54px
+   *
+   * Mobile:
+   * Expanded  = 320px
+   * Compressed = 54px
    * -----------------------------------------
    */
 
-  /*
-   * Expanded width:
-   * 410px
-   *
-   * Compressed width:
-   * 54px
-   */
+  const getExpandedWidth = () => {
+    if (typeof window === "undefined") {
+      return 410;
+    }
+
+    if (window.innerWidth < 480) {
+      return Math.min(window.innerWidth - 24, 320);
+    }
+
+    if (window.innerWidth < 768) {
+      return 360;
+    }
+
+    return 410;
+  };
+
+  const expandedWidth = getExpandedWidth();
+
   const width =
-    410 - compression * 356;
+    expandedWidth - compression * (expandedWidth - 54);
 
   /*
-   * Expanded height:
-   * 58px
-   *
-   * Compressed height:
-   * 46px
+   * -----------------------------------------
+   * Height
+   * -----------------------------------------
    */
+
   const height =
     58 - compression * 12;
 
   /*
-   * Expanded padding:
-   * 6px
-   *
-   * Compressed padding:
-   * 3px
+   * -----------------------------------------
+   * Padding
+   * -----------------------------------------
    */
+
   const padding =
     6 - compression * 3;
 
   /*
-   * Gap between navigation elements.
+   * -----------------------------------------
+   * Gap
+   * -----------------------------------------
    */
+
   const gap =
     4 - compression * 3;
 
   /*
-   * Slight physical scaling.
+   * -----------------------------------------
+   * Slight physical scaling
+   * -----------------------------------------
    */
+
   const scale =
     1 - compression * 0.08;
 
   /*
-   * Fade only during the final stage.
+   * -----------------------------------------
+   * Fade only during final stage
+   * -----------------------------------------
    */
+
   const opacity = Math.max(
     0,
     1 -
@@ -223,8 +246,11 @@ export function Nav() {
   );
 
   /*
-   * Slight blur near the end.
+   * -----------------------------------------
+   * Slight blur near the end
+   * -----------------------------------------
    */
+
   const blur =
     Math.max(
       0,
@@ -232,9 +258,12 @@ export function Nav() {
     ) * 4;
 
   /*
-   * Navigation content fades
-   * faster than the outer pill.
+   * -----------------------------------------
+   * Navigation content fades faster
+   * than the outer pill.
+   * -----------------------------------------
    */
+
   const contentOpacity =
     Math.max(
       0,
@@ -242,15 +271,34 @@ export function Nav() {
     );
 
   /*
-   * Icons become slightly smaller.
+   * -----------------------------------------
+   * Responsive icon size
+   * -----------------------------------------
    */
+
+  const iconSize =
+    typeof window !== "undefined" &&
+    window.innerWidth < 640
+      ? 18
+      : 20;
+
+  /*
+   * -----------------------------------------
+   * Icons become slightly smaller
+   * while compressing.
+   * -----------------------------------------
+   */
+
   const iconScale =
     1 - compression * 0.18;
 
   /*
-   * Disable interaction when
-   * the navbar is practically gone.
+   * -----------------------------------------
+   * Disable interaction when navbar
+   * is practically gone.
+   * -----------------------------------------
    */
+
   const isHidden =
     compression > 0.97;
 
@@ -296,18 +344,16 @@ export function Nav() {
     /*
      * -----------------------------------------
      * OUTER CENTERING CONTAINER
-     *
-     * This never changes size.
-     * It guarantees the navbar remains
-     * exactly centered.
      * -----------------------------------------
      */
+
     <nav
       aria-label="Main navigation"
       className="
         fixed
         left-1/2
-        top-5
+        top-4
+        sm:top-5
         z-50
       "
       style={{
@@ -323,6 +369,7 @@ export function Nav() {
        * CENTERED NAVBAR WRAPPER
        * ---------------------------------------
        */}
+
       <div
         className="
           absolute
@@ -339,12 +386,10 @@ export function Nav() {
          * NAVBAR
          *
          * IMPORTANT:
-         * NO overflow-hidden here.
-         *
-         * Otherwise the hover tooltip gets
-         * clipped by the navbar.
+         * NO overflow-hidden.
          * -------------------------------------
          */}
+
         <div
           className="
             relative
@@ -374,6 +419,7 @@ export function Nav() {
            * NAVIGATION ITEMS
            * -----------------------------------
            */}
+
           <div
             className="
               flex
@@ -409,6 +455,7 @@ export function Nav() {
                    * ICON BUTTON
                    * --------------------------------
                    */}
+
                   <a
                     href={link.href}
                     aria-label={link.label}
@@ -418,25 +465,26 @@ export function Nav() {
                         link.href
                       )
                     }
-                   className={`
-                    flex
-                    h-full
-                    w-full
-                    items-center
-                    justify-center
-                    rounded-full
-                    transition-colors
-                    duration-200
-                    ${
-                      link.label === "Let's talk"
-                        ? "text-accent hover:text-accent"
-                        : "text-text-secondary hover:bg-bg-elevated-hover hover:text-text-primary"
-                    }
-                    active:scale-95
-                  `}
+                    className={`
+                      flex
+                      h-full
+                      w-full
+                      items-center
+                      justify-center
+                      rounded-full
+                      transition-colors
+                      duration-200
+                      ${
+                        link.label ===
+                        "Let's talk"
+                          ? "text-accent hover:text-accent"
+                          : "text-text-secondary hover:bg-bg-elevated-hover hover:text-text-primary"
+                      }
+                      active:scale-95
+                    `}
                   >
                     <Icon
-                      size={20}
+                      size={iconSize}
                       strokeWidth={1.9}
                       style={{
                         transform: `scale(${iconScale})`,
@@ -448,7 +496,12 @@ export function Nav() {
                    * --------------------------------
                    * HOVER LABEL
                    * --------------------------------
+                   *
+                   * Hidden on smaller screens
+                   * because mobile has no hover.
+                   * --------------------------------
                    */}
+
                   <div
                     className="
                       pointer-events-none
@@ -456,6 +509,7 @@ export function Nav() {
                       left-1/2
                       top-[calc(100%+9px)]
                       z-[100]
+                      hidden
                       -translate-x-1/2
                       translate-y-1
                       whitespace-nowrap
@@ -474,6 +528,7 @@ export function Nav() {
                       duration-200
                       group-hover:translate-y-0
                       group-hover:opacity-100
+                      sm:block
                     "
                     style={{
                       visibility:
@@ -487,6 +542,7 @@ export function Nav() {
                     {/*
                      * Tooltip arrow
                      */}
+
                     <span
                       className="
                         absolute
@@ -514,6 +570,7 @@ export function Nav() {
            * DIVIDER
            * -----------------------------------
            */}
+
           <div
             className="
               h-5
@@ -532,14 +589,16 @@ export function Nav() {
            * THEME TOGGLE
            * -----------------------------------
            */}
+
           <div
             className="
               flex
               h-full
-              w-10
+              w-9
               shrink-0
               items-center
               justify-center
+              sm:w-10
             "
             style={{
               opacity:

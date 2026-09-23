@@ -246,6 +246,104 @@ export const designUXContent = {
         { label: "Daily Record", code: "ZONE_03", color: "#E64980", shape: "ring" },
       ],
     },
+        {
+      id: "discoverability",
+
+      title: "Making Hidden Content Discoverable",
+      titleLines: ["Making Hidden", "Content", "Discoverable"],
+
+      summary:
+        "A subtle interaction designed to make a hidden card feel worth exploring.",
+
+      color: "#F76707",
+      colorSoft: "#FFB366",
+
+      palette: [
+        "#F76707",
+        "#FF922B",
+        "#E8590C",
+        "#FFD8A8",
+      ],
+
+      problem:
+        "The hero section had a profile card layered over a second “Currently Building” card. Although the underlying card was partially visible, users could easily overlook it while scanning the portfolio.",
+
+      thinking:
+        "How can I make the hidden layer noticeable and create enough curiosity to invite exploration without adding intrusive instructions like “Click here”?",
+
+      decision:
+        "Use the existing card peek as the foundation, reinforce the depth with shadow and motion, and introduce a playful orange Android-cat that periodically peeks over the hidden card. The animation acts as a visual affordance rather than an explicit instruction.",
+
+      result:
+        "The hidden card becomes a discoverable part of the hero experience. Instead of telling users to interact, the interface creates a small moment of curiosity that encourages them to explore what is underneath.",
+
+      interaction: [
+        {
+          label: "Peek",
+          code: "01",
+          color: "#F76707",
+        },
+        {
+          label: "Curiosity",
+          code: "02",
+          color: "#FF922B",
+        },
+        {
+          label: "Discover",
+          code: "03",
+          color: "#E8590C",
+        },
+        {
+          label: "Reveal",
+          code: "04",
+          color: "#FFD8A8",
+        },
+      ],
+
+      layers: [
+        {
+          label: "Profile Card",
+          color: "#22B8CF",
+        },
+        {
+          label: "Currently Building",
+          color: "#F76707",
+        },
+        {
+          label: "Android Cat",
+          color: "#FF922B",
+        },
+      ],
+
+      center: {
+        label: "Discoverability",
+        sub: "Curiosity as an Affordance",
+        color: "#F76707",
+      },
+
+      evidence: [
+        {
+          image: "/images/design/discoverability/01-before.png",
+          label: "Before",
+          caption: "The secondary card existed, but its partial visibility was easy to miss.",
+        },
+        {
+          image: "/images/design/discoverability/02-card-peek.png",
+          label: "Card Peek",
+          caption: "The hidden layer becomes visually distinguishable through depth and positioning.",
+        },
+        {
+          image: "/images/design/discoverability/03-cat-peek.png",
+          label: "Interaction",
+          caption: "The Android cat introduces a small animated cue without adding instructional UI.",
+        },
+        {
+          image: "/images/design/discoverability/04-reveal.png",
+          label: "Reveal",
+          caption: "The interaction creates curiosity around what is underneath the profile card.",
+        },
+      ],
+    },
   ],
 };
 

@@ -6,6 +6,8 @@ import { useIsMobile } from "@/hooks/use-mobile";
 
 const INK = "var(--design-text)";
 const MUTED = "var(--design-secondary)";
+const SURFACE = "var(--design-surface)";
+const LINE = "var(--design-border)";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -398,8 +400,658 @@ export function MarkDiagram() {
   );
 }
 
+function DiscoverabilityDiagram() {
+  return (
+    <div className="relative w-full overflow-hidden">
+      {/* Header */}
+      <div className="mb-6 flex items-start justify-between gap-4">
+        <div>
+          <div
+            className="font-mono-label text-[9px] font-semibold"
+            style={{ color: "#F76707" }}
+          >
+            INTERACTION MODEL
+          </div>
+
+          <h4
+            className="font-display mt-1 text-lg font-semibold tracking-tight"
+            style={{ color: INK }}
+          >
+            Curiosity as an affordance
+          </h4>
+        </div>
+
+        <div
+          className="font-mono-label text-[9px] font-semibold"
+          style={{ color: MUTED }}
+        >
+          DISCOVERABILITY / 04
+        </div>
+      </div>
+
+      {/* Diagram */}
+      <div
+        className="relative border-2 p-4 sm:p-6"
+        style={{
+          borderColor: LINE,
+          background: SURFACE,
+        }}
+      >
+        <svg
+          viewBox="0 0 760 430"
+          className="h-auto w-full"
+          role="img"
+          aria-labelledby="discoverability-diagram-title discoverability-diagram-desc"
+        >
+          <title id="discoverability-diagram-title">
+            Making hidden content discoverable
+          </title>
+
+          <desc id="discoverability-diagram-desc">
+            A profile card partially covers a Currently Building card.
+            An Android cat periodically peeks over the hidden card,
+            creating curiosity that encourages the user to discover it.
+          </desc>
+
+          {/* ---------------------------------------------------------------- */}
+          {/* Definitions                                                       */}
+          {/* ---------------------------------------------------------------- */}
+
+          <defs>
+            <filter
+              id="discoverability-shadow"
+              x="-20%"
+              y="-20%"
+              width="140%"
+              height="160%"
+            >
+              <feDropShadow
+                dx="5"
+                dy="6"
+                stdDeviation="0"
+                floodOpacity="0.16"
+              />
+            </filter>
+
+            <clipPath id="cat-clip">
+              <rect
+                x="0"
+                y="0"
+                width="760"
+                height="430"
+              />
+            </clipPath>
+          </defs>
+
+          {/* ---------------------------------------------------------------- */}
+          {/* Background grid                                                   */}
+          {/* ---------------------------------------------------------------- */}
+
+          <g opacity="0.35">
+            {[0, 1, 2, 3, 4, 5, 6, 7].map((i) => (
+              <line
+                key={`v-${i}`}
+                x1={70 + i * 90}
+                y1="25"
+                x2={70 + i * 90}
+                y2="405"
+                stroke={LINE}
+                strokeWidth="1"
+                strokeDasharray="3 6"
+              />
+            ))}
+
+            {[0, 1, 2, 3, 4].map((i) => (
+              <line
+                key={`h-${i}`}
+                x1="35"
+                y1={55 + i * 80}
+                x2="725"
+                y2={55 + i * 80}
+                stroke={LINE}
+                strokeWidth="1"
+                strokeDasharray="3 6"
+              />
+            ))}
+          </g>
+
+          {/* ---------------------------------------------------------------- */}
+          {/* Step 01 — Existing layout                                        */}
+          {/* ---------------------------------------------------------------- */}
+
+          <g>
+            {/* Step label */}
+            <circle
+              cx="78"
+              cy="78"
+              r="18"
+              fill={SURFACE}
+              stroke={INK}
+              strokeWidth="2"
+            />
+
+            <text
+              x="78"
+              y="82"
+              textAnchor="middle"
+              fontSize="10"
+              fontFamily="monospace"
+              fontWeight="700"
+              fill={INK}
+            >
+              01
+            </text>
+
+            <text
+              x="108"
+              y="74"
+              fontSize="11"
+              fontFamily="monospace"
+              fontWeight="700"
+              fill="#F76707"
+            >
+              HIDDEN LAYER
+            </text>
+
+            <text
+              x="108"
+              y="91"
+              fontSize="10"
+              fill={MUTED}
+            >
+              Existing card peek
+            </text>
+
+            {/* Currently Building card — behind */}
+            <g filter="url(#discoverability-shadow)">
+              <rect
+                x="150"
+                y="145"
+                width="310"
+                height="155"
+                rx="12"
+                fill="#FFF4E6"
+                stroke="#F76707"
+                strokeWidth="2"
+              />
+
+              <rect
+                x="172"
+                y="166"
+                width="78"
+                height="8"
+                rx="4"
+                fill="#F76707"
+                opacity="0.8"
+              />
+
+              <rect
+                x="172"
+                y="190"
+                width="210"
+                height="7"
+                rx="3.5"
+                fill="#FFB366"
+              />
+
+              <rect
+                x="172"
+                y="208"
+                width="170"
+                height="7"
+                rx="3.5"
+                fill="#FFD8A8"
+              />
+
+              <text
+                x="172"
+                y="260"
+                fontSize="10"
+                fontFamily="monospace"
+                fontWeight="700"
+                fill="#E8590C"
+              >
+                CURRENTLY BUILDING
+              </text>
+            </g>
+
+            {/* Profile card — front */}
+            <g filter="url(#discoverability-shadow)">
+              <rect
+                x="245"
+                y="115"
+                width="310"
+                height="155"
+                rx="12"
+                fill={SURFACE}
+                stroke={INK}
+                strokeWidth="2"
+              />
+
+              {/* Avatar */}
+              <circle
+                cx="285"
+                cy="155"
+                r="21"
+                fill="#22B8CF"
+                opacity="0.9"
+              />
+
+              <rect
+                x="320"
+                y="140"
+                width="120"
+                height="9"
+                rx="4"
+                fill={INK}
+                opacity="0.8"
+              />
+
+              <rect
+                x="320"
+                y="158"
+                width="155"
+                height="6"
+                rx="3"
+                fill={LINE}
+              />
+
+              <rect
+                x="275"
+                y="202"
+                width="215"
+                height="7"
+                rx="3.5"
+                fill={LINE}
+              />
+
+              <rect
+                x="275"
+                y="219"
+                width="180"
+                height="7"
+                rx="3.5"
+                fill={LINE}
+              />
+
+              <text
+                x="275"
+                y="250"
+                fontSize="9"
+                fontFamily="monospace"
+                fontWeight="700"
+                fill={MUTED}
+              >
+                PROFILE CARD
+              </text>
+            </g>
+
+            {/* Partial visibility indicator */}
+            <path
+              d="M475 286 C510 302 540 302 570 286"
+              fill="none"
+              stroke="#F76707"
+              strokeWidth="2"
+              strokeDasharray="4 5"
+            />
+
+            <text
+              x="520"
+              y="325"
+              textAnchor="middle"
+              fontSize="9"
+              fontFamily="monospace"
+              fill={MUTED}
+            >
+              easy to overlook
+            </text>
+          </g>
+
+          {/* ---------------------------------------------------------------- */}
+          {/* Transition arrow                                                   */}
+          {/* ---------------------------------------------------------------- */}
+
+          <g>
+            <path
+              d="M585 190 C625 190 625 190 665 190"
+              fill="none"
+              stroke={INK}
+              strokeWidth="1.8"
+            />
+
+            <path
+              d="M655 182 L667 190 L655 198"
+              fill="none"
+              stroke={INK}
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </g>
+
+          {/* ---------------------------------------------------------------- */}
+          {/* Step 02 — Android Cat                                             */}
+          {/* ---------------------------------------------------------------- */}
+
+          <g>
+            <circle
+              cx="665"
+              cy="78"
+              r="18"
+              fill={SURFACE}
+              stroke={INK}
+              strokeWidth="2"
+            />
+
+            <text
+              x="665"
+              y="82"
+              textAnchor="middle"
+              fontSize="10"
+              fontFamily="monospace"
+              fontWeight="700"
+              fill={INK}
+            >
+              02
+            </text>
+
+            <text
+              x="665"
+              y="112"
+              textAnchor="middle"
+              fontSize="10"
+              fontFamily="monospace"
+              fontWeight="700"
+              fill="#F76707"
+            >
+              PEEK
+            </text>
+
+            {/* Cat */}
+            <g transform="translate(605 128)">
+              {/* Ears */}
+              <path
+                d="M18 28 L10 7 L30 18"
+                fill="#FF922B"
+                stroke={INK}
+                strokeWidth="2"
+                strokeLinejoin="round"
+              />
+
+              <path
+                d="M76 18 L96 7 L88 28"
+                fill="#FF922B"
+                stroke={INK}
+                strokeWidth="2"
+                strokeLinejoin="round"
+              />
+
+              {/* Head */}
+              <rect
+                x="16"
+                y="17"
+                width="76"
+                height="63"
+                rx="25"
+                fill="#FF922B"
+                stroke={INK}
+                strokeWidth="2"
+              />
+
+              {/* Eyes */}
+              <circle
+                cx="39"
+                cy="45"
+                r="4"
+                fill={INK}
+              />
+
+              <circle
+                cx="69"
+                cy="45"
+                r="4"
+                fill={INK}
+              />
+
+              {/* Nose */}
+              <path
+                d="M52 51 L56 55 L52 58 L48 55 Z"
+                fill="#E8590C"
+              />
+
+              {/* Whiskers */}
+              <path
+                d="M25 56 L5 52 M25 62 L5 64"
+                stroke={INK}
+                strokeWidth="1.5"
+                strokeLinecap="round"
+              />
+
+              <path
+                d="M79 56 L99 52 M79 62 L99 64"
+                stroke={INK}
+                strokeWidth="1.5"
+                strokeLinecap="round"
+              />
+            </g>
+
+            {/* Peek motion */}
+            <path
+              d="M590 205 C575 220 575 235 590 248"
+              fill="none"
+              stroke="#FF922B"
+              strokeWidth="2"
+              strokeDasharray="4 5"
+            />
+
+            <path
+              d="M585 244 L590 251 L597 247"
+              fill="none"
+              stroke="#FF922B"
+              strokeWidth="2"
+            />
+          </g>
+
+          {/* ---------------------------------------------------------------- */}
+          {/* Step 03 — Curiosity                                               */}
+          {/* ---------------------------------------------------------------- */}
+
+          <g>
+            <circle
+              cx="250"
+              cy="365"
+              r="18"
+              fill="#F76707"
+            />
+
+            <text
+              x="250"
+              y="369"
+              textAnchor="middle"
+              fontSize="10"
+              fontFamily="monospace"
+              fontWeight="700"
+              fill="#ffffff"
+            >
+              03
+            </text>
+
+            <text
+              x="280"
+              y="360"
+              fontSize="11"
+              fontFamily="monospace"
+              fontWeight="700"
+              fill="#E8590C"
+            >
+              CURIOSITY
+            </text>
+
+            <text
+              x="280"
+              y="378"
+              fontSize="10"
+              fill={MUTED}
+            >
+              “What is underneath?”
+            </text>
+
+            {/* Curiosity markers */}
+            <circle
+              cx="500"
+              cy="355"
+              r="4"
+              fill="#FFD8A8"
+            />
+
+            <circle
+              cx="520"
+              cy="340"
+              r="3"
+              fill="#FFB366"
+            />
+
+            <circle
+              cx="538"
+              cy="358"
+              r="5"
+              fill="#FF922B"
+            />
+          </g>
+
+          {/* ---------------------------------------------------------------- */}
+          {/* Step 04 — Reveal                                                  */}
+          {/* ---------------------------------------------------------------- */}
+
+          <g>
+            <path
+              d="M380 300 C380 330 390 350 420 365"
+              fill="none"
+              stroke="#F76707"
+              strokeWidth="2"
+              strokeDasharray="5 5"
+            />
+
+            <path
+              d="M414 357 L421 367 L410 368"
+              fill="none"
+              stroke="#F76707"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+
+            <text
+              x="440"
+              y="365"
+              fontSize="11"
+              fontFamily="monospace"
+              fontWeight="700"
+              fill="#F76707"
+            >
+              REVEAL
+            </text>
+
+            <text
+              x="440"
+              y="382"
+              fontSize="10"
+              fill={MUTED}
+            >
+              User explores the hidden card
+            </text>
+          </g>
+
+          {/* ---------------------------------------------------------------- */}
+          {/* Bottom principle                                                  */}
+          {/* ---------------------------------------------------------------- */}
+
+          <g>
+            <line
+              x1="80"
+              y1="405"
+              x2="680"
+              y2="405"
+              stroke={LINE}
+              strokeWidth="1"
+            />
+
+            <text
+              x="380"
+              y="422"
+              textAnchor="middle"
+              fontSize="9"
+              fontFamily="monospace"
+              fontWeight="700"
+              fill={INK}
+            >
+              VISUAL AFFORDANCE  ≠  EXPLICIT INSTRUCTION
+            </text>
+          </g>
+        </svg>
+      </div>
+
+      {/* Bottom explanation */}
+      <div className="mt-4 grid gap-3 sm:grid-cols-3">
+        <div>
+          <div
+            className="font-mono-label text-[9px] font-semibold"
+            style={{ color: "#F76707" }}
+          >
+            01 / PEEK
+          </div>
+
+          <p
+            className="mt-1 text-[11px] leading-relaxed"
+            style={{ color: MUTED }}
+          >
+            Existing visual depth establishes that another layer exists.
+          </p>
+        </div>
+
+        <div>
+          <div
+            className="font-mono-label text-[9px] font-semibold"
+            style={{ color: "#FF922B" }}
+          >
+            02 / CURIOSITY
+          </div>
+
+          <p
+            className="mt-1 text-[11px] leading-relaxed"
+            style={{ color: MUTED }}
+          >
+            The cat creates a small moment of unexpected movement.
+          </p>
+        </div>
+
+        <div>
+          <div
+            className="font-mono-label text-[9px] font-semibold"
+            style={{ color: "#E8590C" }}
+          >
+            03 / DISCOVER
+          </div>
+
+          <p
+            className="mt-1 text-[11px] leading-relaxed"
+            style={{ color: MUTED }}
+          >
+            Curiosity becomes the reason to explore the hidden content.
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
+/* Diagram Registry                                                           */
+/* -------------------------------------------------------------------------- */
+
 export const diagrams = {
   identity: LayersDiagram,
   nested: TreeDiagram,
   mark: MarkDiagram,
+  discoverability: DiscoverabilityDiagram,
 } as const;
