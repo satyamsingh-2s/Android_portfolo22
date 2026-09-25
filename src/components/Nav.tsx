@@ -378,7 +378,7 @@ export function Nav() {
          */}
 
         <div
-          className="
+          className="nav-shell
             relative
             flex
             items-center
@@ -386,7 +386,7 @@ export function Nav() {
             border
             border-border-subtle
             bg-bg-elevated
-            shadow-[0_12px_40px_rgba(0,0,0,0.28)]
+            shadow-[0_10px_30px_rgba(0,0,0,0.28)]
             backdrop-blur-xl
           "
          style={{

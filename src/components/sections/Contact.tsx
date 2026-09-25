@@ -1,10 +1,11 @@
 "use client";
 
 import { Github, Linkedin, Mail, Phone, MapPin, Instagram } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { personalInfo } from "@/lib/data";
 import { AnimatedSection, StaggerContainer } from "@/components/AnimatedSection";
+import { OrangeCatWaiting } from "@/components/animation/GreenBirdWaiting";
 import {
   checkBackendAvailability,
   ContactRequestError,
@@ -66,9 +67,68 @@ const mapServerErrors = (errors: ContactValidationError[]): FieldErrors => {
 export function Contact() {
   const [isSending, setIsSending] = useState(false);
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
+  const [countdown, setCountdown] = useState<number | null>(null);
+  const [backendReady, setBackendReady] = useState(false);
+  const startupTimerRef = useRef<number | null>(null);
+
+  const elapsedStartupSeconds = countdown === null ? 0 : 53 - countdown;
+  const serverMoodMessage =
+    countdown !== null && countdown > 0 && elapsedStartupSeconds > 0 && elapsedStartupSeconds % 15 === 0
+      ? "I hate server"
+      : null;
+
+  useEffect(() => {
+    return () => {
+      if (startupTimerRef.current) {
+        window.clearInterval(startupTimerRef.current);
+      }
+    };
+  }, []);
+
+  const clearStartupTimer = () => {
+    if (startupTimerRef.current) {
+      window.clearInterval(startupTimerRef.current);
+      startupTimerRef.current = null;
+    }
+  };
+
+  const beginStartupCountdown = () => {
+    clearStartupTimer();
+    setBackendReady(false);
+    setCountdown(53);
+
+    let remainingSeconds = 53;
+    startupTimerRef.current = window.setInterval(async () => {
+      try {
+        await checkBackendAvailability();
+        clearStartupTimer();
+        setBackendReady(true);
+        setCountdown(0);
+        return;
+      } catch {
+        remainingSeconds = Math.max(remainingSeconds - 1, 0);
+        setCountdown(remainingSeconds);
+
+        if (remainingSeconds === 0) {
+          clearStartupTimer();
+          setBackendReady(false);
+          toast.warning("The contact service is still starting up. Please try again in a moment.", {
+            duration: 4000,
+          });
+        }
+      }
+    }, 1000);
+  };
+
+  const isStartupBlocked = countdown !== null && countdown > 0 && !backendReady;
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    if (isStartupBlocked) {
+      toast.error("The contact service is still starting up. Please wait for the countdown to finish.");
+      return;
+    }
 
     const form = event.currentTarget;
     const formData = new FormData(form);
@@ -100,6 +160,9 @@ export function Contact() {
         message: values.message.trim(),
       });
 
+      clearStartupTimer();
+      setBackendReady(false);
+      setCountdown(null);
       form.reset();
       setFieldErrors({});
       toast.success("Message sent successfully.", {
@@ -109,9 +172,15 @@ export function Contact() {
       const serverErrors = error instanceof ContactRequestError ? mapServerErrors(error.errors) : {};
       setFieldErrors(serverErrors);
 
+      const message =
+        error instanceof Error ? error.message : "Something went wrong. Please try again.";
+
+      if (/starting up|could not be reached|took too long to respond|is unavailable/i.test(message)) {
+        beginStartupCountdown();
+      }
+
       toast.error("Unable to send your message.", {
-        description:
-          error instanceof Error ? error.message : "Something went wrong. Please try again.",
+        description: message,
       });
     } finally {
       setIsSending(false);
@@ -269,11 +338,37 @@ export function Contact() {
 
                 <button
                   type="submit"
-                  disabled={isSending}
+                  disabled={isSending || isStartupBlocked}
                   className="w-full min-h-[44px] rounded-full bg-accent px-6 py-3 text-sm font-medium text-[var(--text-on-accent)] transition-all hover:bg-accent/90 active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-60"
                 >
-                  {isSending ? "Sending..." : "Send message"}
+                  {isSending ? (
+                    "Sending..."
+                  ) : isStartupBlocked ? (
+                    <span className="inline-flex items-center justify-center gap-2">
+                      <OrangeCatWaiting />
+                      <span className="tracking-[0.14em] uppercase text-[10px]">Waiting</span>
+                    </span>
+                  ) : backendReady ? (
+                    "Now you can send message"
+                  ) : (
+                    "Send message"
+                  )}
                 </button>
+
+                {countdown !== null && (
+                  <div className="mt-3 text-center">
+                    <p className="text-xs text-text-secondary">
+                      {backendReady
+                        ? "Now you can send message."
+                        : `The contact service is waking up. Please wait ${countdown}s.`}
+                    </p>
+                    {serverMoodMessage && (
+                      <p className="mt-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-orange-300/90">
+                        {serverMoodMessage}
+                      </p>
+                    )}
+                  </div>
+                )}
               </div>
             </form>
           </AnimatedSection>

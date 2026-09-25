@@ -156,9 +156,9 @@ export const designUXContent = {
   eyebrow: "---- Design / UX Sensibility -------",
   certificateUrl: "https://drive.google.com/file/d/19ZQNaoR1dawfLRJKT6KTvgp0WnYDsQJi/view",
   gallery: [
-    "/images/athletics/1.webp",
-    "/images/athletics/2.webp",
-    "/images/athletics/3.webp",
+    "/images/athletics/Screenshot_2026-09-23-02-24-49-986_com.instagram.android~2.jpg",
+    "/images/athletics/Screenshot_2026-09-23-02-24-55-340_com.instagram.android~2.jpg",
+    "/images/athletics/Screenshot_2026-09-23-02-25-02-848_com.instagram.android~2.jpg",
   ],
   header: "Designing the experience, not just the interface",
   supporting: "Four design decisions / select to deconstruct",
@@ -323,22 +323,22 @@ export const designUXContent = {
 
       evidence: [
         {
-          image: "/images/design/discoverability/01-before.png",
+          image: "/images/design_section_case_study_4/Screenshot 2026-09-23 000116.png",
           label: "Before",
           caption: "The secondary card existed, but its partial visibility was easy to miss.",
         },
         {
-          image: "/images/design/discoverability/02-card-peek.png",
+          image: "/images/design_section_case_study_4/Screenshot 2026-09-25 174434.png",
           label: "Card Peek",
           caption: "The hidden layer becomes visually distinguishable through depth and positioning.",
         },
         {
-          image: "/images/design/discoverability/03-cat-peek.png",
+          image: "/images/design_section_case_study_4/Screenshot 2026-09-25 174507.png",
           label: "Interaction",
           caption: "The Android cat introduces a small animated cue without adding instructional UI.",
         },
         {
-          image: "/images/design/discoverability/04-reveal.png",
+          image: "/images/design_section_case_study_4/Screenshot 2026-09-25 174525.png",
           label: "Reveal",
           caption: "The interaction creates curiosity around what is underneath the profile card.",
         },
@@ -365,10 +365,12 @@ export const leadership = {
     school: "Heritage Institute of Technology",
     instagramUrl: "https://www.instagram.com/dakshh_hitk",
     gallery: [
-      "/images/leadership/dakshh/1.webp",
-      "/images/leadership/dakshh/2.webp",
-      "/images/leadership/dakshh/3.webp",
-      "/images/leadership/dakshh/4.webp",
+      "/images/leadership/dakshh/Screenshot_2026-09-23-02-26-53-186_com.instagram.android~2.jpg",
+      "/images/leadership/dakshh/Screenshot_2026-09-23-02-27-47-285_com.instagram.android~2.jpg",
+      "/images/leadership/dakshh/Screenshot_2026-09-23-02-27-55-494_com.instagram.android~2.jpg",
+      "/images/leadership/dakshh/Screenshot_2026-09-23-02-27-58-229_com.instagram.android~2.jpg",
+      "/images/leadership/dakshh/Screenshot_2026-09-23-02-28-03-955_com.instagram.android~2.jpg",
+      "/images/leadership/dakshh/Screenshot_2026-09-23-02-28-37-185_com.instagram.android~2.jpg",
     ],
     description: [
       "Led end-to-end operations for Dakshh — the college's technical fest's first edition in 9 years — taking ownership of reviving it from scratch.",
@@ -387,9 +389,7 @@ export const leadership = {
     school: "Heritage Institute of Technology",
     instagramUrl: "https://www.instagram.com/lakshya.hitk",
     gallery: [
-      "/images/leadership/lakshaya/1.webp",
-      "/images/leadership/lakshaya/2.webp",
-      "/images/leadership/lakshaya/3.webp",
+      "/images/leadership/lakshaya/Screenshot_2026-09-23-02-26-28-768_com.instagram.android~2.jpg",
     ],
     description: [
       "Headed operations for the institute's annual sports fest — scheduling, resource allocation, and coordination across multiple sporting events.",
@@ -413,9 +413,15 @@ export const leadership = {
 export const athletics = {
   title: "100m & 200m Sprinter",
   gallery: [
-    "/images/athletics/1.webp",
-    "/images/athletics/2.webp",
-    "/images/athletics/3.webp",
+    "/images/athletics/Screenshot_2026-09-23-02-24-49-986_com.instagram.android~2.jpg",
+    "/images/athletics/Screenshot_2026-09-23-02-24-55-340_com.instagram.android~2.jpg",
+    "/images/athletics/Screenshot_2026-09-23-02-25-02-848_com.instagram.android~2.jpg",
+    "/images/athletics/Screenshot_2026-09-23-02-25-41-864_com.instagram.android.jpg",
+    "/images/athletics/Screenshot_2026-09-23-02-25-58-243_com.instagram.android~2.jpg",
+    "/images/athletics/Screenshot_2026-09-23-02-26-05-531_com.instagram.android~2.jpg",
+    "/images/athletics/Screenshot_2026-09-23-02-26-12-719_com.instagram.android~2.jpg",
+    "/images/athletics/Screenshot_2026-09-23-02-26-19-695_com.instagram.android~2.jpg",
+    "/images/athletics/Screenshot_2026-09-23-02-26-28-768_com.instagram.android~2.jpg",
   ],
   achievements: [
     "Gold medalist, East Singhbhum District (2019) — 100m & 200m",
