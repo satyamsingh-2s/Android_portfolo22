@@ -8,7 +8,7 @@ export const personalInfo = {
   github: "https://github.com/satyamsingh-2s",
   linkedin: "https://www.linkedin.com/in/satyamsingh-2s",
   instagram: "https://www.instagram.com/satyamsingh_2s",
-  resumeUrl: "https://drive.google.com/file/d/10_LD9NG1UtIu-M0O8YjjZNj5A5CFiTVL/view?usp=sharing",
+  resumeUrl: "https://drive.google.com/file/d/1CEao468dhfr1NLyDC7CbLm8MnVaB4MBe/view?usp=sharing",
 };
 
 export const profileCard = {
