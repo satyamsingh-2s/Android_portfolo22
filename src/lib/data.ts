@@ -45,7 +45,9 @@ export const omegaProject = {
     { value: 1, suffix: "", label: "AI Integration" },
   ],
   link: "https://github.com/satyamsingh-2s/Omega_v1_0",
-   website: "https://omega-productivity.vercel.app/",
+  website: "https://omega-productivity.vercel.app/",
+  playStore:
+    "https://play.google.com/store/apps/details?id=com.satyamsingh2s.productivity.omega&pcampaignid=web_share",
 };
 
 export const otherProjects = [

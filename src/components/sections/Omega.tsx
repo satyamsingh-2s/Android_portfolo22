@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 import useEmblaCarousel from "embla-carousel-react";
 import { omegaProject } from "@/lib/data";
+import { PlayStoreIcon } from "@/components/PlayStoreIcon";
 import { PatternCard } from "@/components/PatternCard";
 import { Tag } from "@/components/Tag";
 import { StatBlock } from "@/components/StatBlock";
@@ -157,6 +158,20 @@ export function Omega() {
                     group-hover:translate-x-0.5
                     group-hover:-translate-y-0.5
                   "
+                />
+              </a>
+
+              <a
+                href={omegaProject.playStore}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center gap-2 text-sm font-medium text-text-primary transition-colors hover:text-accent-secondary"
+              >
+                <PlayStoreIcon size={17} />
+                Available on Play Store
+                <ArrowUpRight
+                  size={16}
+                  className="transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
                 />
               </a>
             </div>

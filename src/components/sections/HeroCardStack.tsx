@@ -2,6 +2,7 @@ import { Globe2, Github } from "lucide-react";
 import { useState } from "react";
 import { omegaProject } from "@/lib/data";
 import { StaggerContainer } from "@/components/AnimatedSection";
+import { PlayStoreIcon } from "@/components/PlayStoreIcon";
 import { ProfileCard } from "./ProfileCard";
 
 type ActiveCard = "building" | "profile";
@@ -164,6 +165,15 @@ function CurrentlyBuildingCard() {
             className="website-nudge inline-flex h-9 w-9 items-center justify-center rounded-full border border-border-subtle bg-bg-primary text-text-secondary transition-all duration-200 hover:border-accent hover:text-accent"
           >
             <Globe2 size={17} strokeWidth={1.8} />
+          </a>
+          <a
+            href={omegaProject.playStore}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Get Omega on Google Play"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border-subtle bg-bg-primary text-text-secondary transition-all duration-200 hover:border-accent hover:text-accent"
+          >
+            <PlayStoreIcon size={18} />
           </a>
         </div>
         <div className="mt-5">

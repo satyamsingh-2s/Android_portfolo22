@@ -2,6 +2,7 @@
 import { ArrowDown, Download, Globe2, Github, ImageIcon, Mail } from "lucide-react";
 import { personalInfo, omegaProject } from "@/lib/data";
 import { AnimatedSection, StaggerContainer } from "@/components/AnimatedSection";
+import { PlayStoreIcon } from "@/components/PlayStoreIcon";
 import { HeroCardStack } from "./HeroCardStack";
 
 export function Hero() {
@@ -163,6 +164,15 @@ export function Hero() {
                   >
                     <Globe2 size={17} strokeWidth={1.8} />
                   </a>
+                  <a
+                    href={omegaProject.playStore}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Get Omega on Google Play"
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border-subtle bg-bg-primary text-text-secondary transition-all duration-200 hover:border-accent hover:text-accent"
+                  >
+                    <PlayStoreIcon size={18} />
+                  </a>
                 </div>
 
                 {/* CURRENT FOCUS */}
@@ -171,7 +181,7 @@ export function Hero() {
                     CURRENTLY
                   </p>
                   <p className="mt-2 font-display text-[0.65rem] font-semibold uppercase leading-[1.22] tracking-[0.02em] text-accent sm:text-[0.7rem]">
-                    Publishing on Playstore - Closed testing phase
+                    Published on Playstore.
                   </p>
                 </div>
 
