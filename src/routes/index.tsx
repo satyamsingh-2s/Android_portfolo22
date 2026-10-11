@@ -18,13 +18,13 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Portfolio of Satyam Singh, an Android Developer building AI-assisted productivity tools with Kotlin and Jetpack Compose.",
+          "Portfolio of Satyam Singh, an Android Developer building Omega, an AI-assisted productivity app published on Google Play and available for download.",
       },
       { property: "og:title", content: "Satyam Singh — Android Developer" },
       {
         property: "og:description",
         content:
-          "Portfolio of Satyam Singh, an Android Developer building AI-assisted productivity tools with Kotlin and Jetpack Compose.",
+          "Satyam Singh builds Omega, an AI-assisted productivity app published on Google Play and available for download.",
       },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "/" },

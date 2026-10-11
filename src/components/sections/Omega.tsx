@@ -90,6 +90,9 @@ export function Omega() {
             <p className="mt-8 max-w-3xl text-base leading-relaxed text-text-secondary">
               {omegaProject.description}
             </p>
+            <p className="mt-3 max-w-3xl text-sm leading-relaxed text-text-secondary">
+              {omegaProject.availability}
+            </p>
 
             <div className="mt-10 flex flex-wrap gap-12">
               {omegaProject.stats.map((stat) => (
@@ -168,7 +171,7 @@ export function Omega() {
                 className="group inline-flex items-center gap-2 text-sm font-medium text-text-primary transition-colors hover:text-accent-secondary"
               >
                 <PlayStoreIcon size={17} />
-                Available on Play Store
+                Available on Google Play
                 <ArrowUpRight
                   size={16}
                   className="transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"

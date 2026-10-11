@@ -8,7 +8,7 @@ export const personalInfo = {
   github: "https://github.com/satyamsingh-2s",
   linkedin: "https://www.linkedin.com/in/satyamsingh-2s",
   instagram: "https://www.instagram.com/satyamsingh_2s",
-  resumeUrl: "https://drive.google.com/file/d/1CEao468dhfr1NLyDC7CbLm8MnVaB4MBe/view?usp=sharing",
+  resumeUrl: "https://drive.google.com/file/d/1uceUfBzUATgGwo3ySyduRO2mPwhjpQF_/view?usp=sharing",
 };
 
 export const profileCard = {
@@ -27,7 +27,7 @@ export const profileCard = {
 export const omegaProject = {
   title: "Omega",
   subtitle: "AI-Assisted Productivity & Planning Platform",
-  status: "Ongoing",
+  status: "Available on Google Play",
   stack: [
     "Kotlin",
     "Java",
@@ -39,6 +39,8 @@ export const omegaProject = {
   ],
   description:
     "A modular Android productivity platform built from scratch — state-driven Compose UI, a layered ViewModel/Repository/Room architecture, and recursive tree rendering for nested project workspaces. Integrates Google Gemini API for AI-assisted features, with handling for requests, rate limits, and error cases.",
+  availability:
+    "Published on Google Play and available for download.",
   stats: [
     { value: 13, suffix: "+", label: "Screens" },
     { value: 5, suffix: "", label: "Core Workflows" },

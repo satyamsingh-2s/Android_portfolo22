@@ -181,7 +181,7 @@ function CurrentlyBuildingCard() {
             CURRENTLY
           </p>
           <p className="mt-2 font-display text-[0.65rem] font-semibold uppercase leading-[1.22] tracking-[0.02em] text-accent sm:text-[0.7rem]">
-            Publishing on Playstore - Closed testing phase
+            Available for download on Google Play
           </p>
         </div>
         <div className="mt-4">
