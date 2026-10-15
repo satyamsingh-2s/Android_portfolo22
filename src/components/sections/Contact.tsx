@@ -64,16 +64,24 @@ const mapServerErrors = (errors: ContactValidationError[]): FieldErrors => {
   return mapped;
 };
 
+const startupWaitSeconds = 30;
+
 export function Contact() {
   const [isSending, setIsSending] = useState(false);
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
   const [countdown, setCountdown] = useState<number | null>(null);
-  const [backendReady, setBackendReady] = useState(false);
   const startupTimerRef = useRef<number | null>(null);
+  const startupAttemptRef = useRef(0);
+  const startupCheckInFlightRef = useRef(false);
+  const pendingMessageRef = useRef<ContactFormValues | null>(null);
+  const formRef = useRef<HTMLFormElement | null>(null);
 
-  const elapsedStartupSeconds = countdown === null ? 0 : 53 - countdown;
+  const elapsedStartupSeconds = countdown === null ? 0 : startupWaitSeconds - countdown;
   const serverMoodMessage =
-    countdown !== null && countdown > 0 && elapsedStartupSeconds > 0 && elapsedStartupSeconds % 15 === 0
+    countdown !== null &&
+    countdown > 0 &&
+    elapsedStartupSeconds > 0 &&
+    elapsedStartupSeconds % 15 === 0
       ? "I hate server"
       : null;
 
@@ -82,6 +90,8 @@ export function Contact() {
       if (startupTimerRef.current) {
         window.clearInterval(startupTimerRef.current);
       }
+      startupAttemptRef.current += 1;
+      pendingMessageRef.current = null;
     };
   }, []);
 
@@ -90,47 +100,104 @@ export function Contact() {
       window.clearInterval(startupTimerRef.current);
       startupTimerRef.current = null;
     }
+    startupAttemptRef.current += 1;
   };
 
-  const beginStartupCountdown = () => {
+  const sendPendingMessage = async (values: ContactFormValues) => {
+    setIsSending(true);
+    setFieldErrors({});
+
+    try {
+      await sendMail({
+        name: values.name.trim(),
+        email: values.email.trim(),
+        message: values.message.trim(),
+      });
+
+      clearStartupTimer();
+      pendingMessageRef.current = null;
+      setCountdown(null);
+      formRef.current?.reset();
+      setFieldErrors({});
+      toast.success("Message sent successfully.", {
+        description: "Thanks for reaching out. I'll get back to you soon.",
+      });
+    } catch (error) {
+      pendingMessageRef.current = null;
+      const serverErrors =
+        error instanceof ContactRequestError ? mapServerErrors(error.errors) : {};
+      setFieldErrors(serverErrors);
+
+      const message =
+        error instanceof Error ? error.message : "Something went wrong. Please try again.";
+
+      toast.error("Unable to send your message.", {
+        description: message,
+      });
+    } finally {
+      setIsSending(false);
+    }
+  };
+
+  const beginStartupCountdown = (values: ContactFormValues) => {
     clearStartupTimer();
-    setBackendReady(false);
-    setCountdown(53);
+    pendingMessageRef.current = values;
+    setCountdown(startupWaitSeconds);
 
-    let remainingSeconds = 53;
-    startupTimerRef.current = window.setInterval(async () => {
-      try {
-        await checkBackendAvailability();
+    let remainingSeconds = startupWaitSeconds;
+    const startupAttempt = startupAttemptRef.current;
+    startupTimerRef.current = window.setInterval(() => {
+      remainingSeconds = Math.max(remainingSeconds - 1, 0);
+      setCountdown(remainingSeconds);
+
+      if (remainingSeconds === 0) {
         clearStartupTimer();
-        setBackendReady(true);
-        setCountdown(0);
+        pendingMessageRef.current = null;
+        setCountdown(null);
+        toast.warning("The contact service is still starting up. Please try again in a moment.", {
+          duration: 4000,
+        });
         return;
-      } catch {
-        remainingSeconds = Math.max(remainingSeconds - 1, 0);
-        setCountdown(remainingSeconds);
-
-        if (remainingSeconds === 0) {
-          clearStartupTimer();
-          setBackendReady(false);
-          toast.warning("The contact service is still starting up. Please try again in a moment.", {
-            duration: 4000,
-          });
-        }
       }
+
+      if (startupCheckInFlightRef.current) {
+        return;
+      }
+
+      startupCheckInFlightRef.current = true;
+      void checkBackendAvailability()
+        .then(() => {
+          if (startupAttempt !== startupAttemptRef.current) {
+            return;
+          }
+
+          clearStartupTimer();
+          setCountdown(null);
+          const pendingMessage = pendingMessageRef.current;
+          if (pendingMessage) {
+            void sendPendingMessage(pendingMessage);
+          }
+        })
+        .catch(() => {
+          // Keep polling until the countdown expires or the service becomes available.
+        })
+        .finally(() => {
+          startupCheckInFlightRef.current = false;
+        });
     }, 1000);
   };
 
-  const isStartupBlocked = countdown !== null && countdown > 0 && !backendReady;
+  const isStartupBlocked = countdown !== null && countdown > 0;
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (isStartupBlocked) {
-      toast.error("The contact service is still starting up. Please wait for the countdown to finish.");
       return;
     }
 
     const form = event.currentTarget;
+    formRef.current = form;
     const formData = new FormData(form);
     const values: ContactFormValues = {
       name: String(formData.get("name") ?? ""),
@@ -149,42 +216,30 @@ export function Contact() {
     }
 
     setIsSending(true);
-    setFieldErrors({});
-
     try {
       await checkBackendAvailability();
-
-      await sendMail({
-        name: values.name.trim(),
-        email: values.email.trim(),
-        message: values.message.trim(),
-      });
-
-      clearStartupTimer();
-      setBackendReady(false);
-      setCountdown(null);
-      form.reset();
-      setFieldErrors({});
-      toast.success("Message sent successfully.", {
-        description: "Thanks for reaching out. I'll get back to you soon.",
-      });
     } catch (error) {
-      const serverErrors = error instanceof ContactRequestError ? mapServerErrors(error.errors) : {};
-      setFieldErrors(serverErrors);
-
       const message =
         error instanceof Error ? error.message : "Something went wrong. Please try again.";
 
-      if (/starting up|could not be reached|took too long to respond|is unavailable/i.test(message)) {
-        beginStartupCountdown();
+      if (
+        /starting up|could not be reached|took too long to respond|is unavailable/i.test(message)
+      ) {
+        beginStartupCountdown({
+          name: values.name.trim(),
+          email: values.email.trim(),
+          message: values.message.trim(),
+        });
       }
 
       toast.error("Unable to send your message.", {
         description: message,
       });
-    } finally {
       setIsSending(false);
+      return;
     }
+
+    await sendPendingMessage(values);
   };
 
   const inputClass = (field: keyof ContactFormValues) =>
@@ -269,6 +324,7 @@ export function Contact() {
 
           <AnimatedSection delay={0.15}>
             <form
+              ref={formRef}
               onSubmit={handleSubmit}
               noValidate
               className="rounded-2xl border border-border-subtle bg-bg-elevated p-6 md:p-8"
@@ -282,6 +338,7 @@ export function Contact() {
                     type="text"
                     id="name"
                     name="name"
+                    disabled={isStartupBlocked}
                     aria-invalid={Boolean(fieldErrors.name)}
                     aria-describedby={fieldErrors.name ? "name-error" : undefined}
                     className={inputClass("name")}
@@ -303,6 +360,7 @@ export function Contact() {
                     type="email"
                     id="email"
                     name="email"
+                    disabled={isStartupBlocked}
                     aria-invalid={Boolean(fieldErrors.email)}
                     aria-describedby={fieldErrors.email ? "email-error" : undefined}
                     className={inputClass("email")}
@@ -323,6 +381,7 @@ export function Contact() {
                   <textarea
                     id="message"
                     name="message"
+                    disabled={isStartupBlocked}
                     rows={4}
                     aria-invalid={Boolean(fieldErrors.message)}
                     aria-describedby={fieldErrors.message ? "message-error" : undefined}
@@ -348,8 +407,6 @@ export function Contact() {
                       <OrangeCatWaiting />
                       <span className="tracking-[0.14em] uppercase text-[10px]">Waiting</span>
                     </span>
-                  ) : backendReady ? (
-                    "Now you can send message"
                   ) : (
                     "Send message"
                   )}
@@ -358,9 +415,8 @@ export function Contact() {
                 {countdown !== null && (
                   <div className="mt-3 text-center">
                     <p className="text-xs text-text-secondary">
-                      {backendReady
-                        ? "Now you can send message."
-                        : `The contact service is waking up. Please wait ${countdown}s.`}
+                      The contact service is waking up. Your message will be sent automatically when
+                      it is ready. Please wait {countdown}s.
                     </p>
                     {serverMoodMessage && (
                       <p className="mt-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-orange-300/90">
